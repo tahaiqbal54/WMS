@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>ASN/Order Deatils</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/users/add']">Create ASN
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <!--<th class="text-center">ID</th>-->
+                <th maxWidth="150" class="text-center">ASN No</th>
+                <th class="text-center">Receipt Date</th>
+                <!-- <th class="text-center">Extern Receipt No</th> -->
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Warehouse Name</th>
+                <th class="text-center">Status</th>
+               <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of users; let i = index">
+                <!--<td class="text-center">{{ user.id }}</td>-->
+                <td class="text-center">{{ data.ASNNo }}</td>
+                <td class="text-center">{{ data.ReceiptDate }}</td>
+                <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
+                <td class="text-center">{{ data.Customer }}</td>
+                <td class="text-center">{{ data.Warehouse }}</td>
+                <td class="text-center">{{ data.Status }}</td>
+                 <td class="text-center">
+                  <a [routerLink]="['/putaway/add/' + data.Id]" class="btn btn-default p-1">Put Away</a>
+                  <!-- <a class="btn btn-default p-1" (click)="DeleteASN(data.Id,i)">Delete</a> -->
+                  <!--<a [routerLink]="['/users/edit/']" class="btn btn-default p-1">Edit</a>
+                   <a  (click)="disablebutton(user.id, user.first_name)" class="btn btn-default p-1"  *ngIf="user.status == 'active'" ng-show="true" href="javascript:void(0)">Disable</a> 
+                   <a  (click)="enablebutton(user.id)" class="btn btn-default p-1" *ngIf="user.status == 'disabled'" ng-show="true" href="javascript:void(0)">Active</a> -->
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

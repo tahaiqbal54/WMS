@@ -1,0 +1,116 @@
+<div class="app" [ngClass]="
+    {
+    }">
+    <div class="layout" [ngClass]="headerSelected">
+
+        <div>
+            <!-- Side Nav START -->
+            <div class="side-nav" sideBar>
+                <div class="side-nav-inner">
+                    <!-- <div class="side-nav-logo">
+                        <a href="" [routerLink]="['/dashboard']">
+                            <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
+                            <div class="logo logo-white" style="background-image: url('assets/images/logo/logo-white.png')"></div>
+                        </a>
+                        <div class="mobile-toggle side-nav-toggle">
+                            <a href="javascript:void(0);" (click)="app.layout.isMenuCollapsed = !app.layout.isMenuCollapsed">
+                                <i class="ti-arrow-circle-left"></i>
+                            </a>
+                        </div>
+                    </div> -->
+                    <!-- <ul class="side-nav-menu scrollable">
+                        <li clas="nav-item" routerLinkActive="active">
+                            <a class="mrg-top-30" href="" [routerLink]="['/dashboard']">
+                                <span class="icon-holder">
+                                    <i class="ti-home"></i>
+                                </span>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown" >
+                            <a class="dropdown-toggle" href="javascript:void(0);" >
+                                <span class="icon-holder">
+                                    <i class="ti-layout-media-overlay"></i>
+                                </span>
+                                <span class="title">Dropdown</span>
+                                <span class="arrow">
+                                    <i class="ti-angle-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="">item 1</a>
+                                </li>
+                                <li>
+                                    <a href="">item 2</a>
+                                </li>                  
+                            </ul>
+                        </li> 
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="ti-view-list-alt"></i>
+                                </span>
+                                <span class="title">Multi Level</span>
+                                <span class="arrow">
+                                    <i class="ti-angle-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item dropdown">
+                                    <a href="javascript:void(0);">
+                                        <span>Level 1.2</span>
+                                    </a>
+                                </li>	
+                                <li class="nav-item dropdown">
+                                    <a href="javascript:void(0);">
+                                        <span>Level 1.1</span>
+                                        <span class="arrow">
+                                            <i class="ti-angle-right"></i>
+                                        </span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="javascript:void(0);">Level 2</a>
+                                        </li>         
+                                    </ul>
+                                </li>         
+                            </ul>
+                        </li>
+                    </ul> -->
+                </div>
+            </div>
+            <!-- Side Nav END -->
+
+            <!-- Page Container START -->
+            <div class="page-container">
+
+                <!-- Top Nav START -->
+                <div class="header navbar">
+                    <div class="header-container">
+                    </div>
+                </div>
+                <!-- Top Nav END -->
+
+                <!-- Content Wrapper START -->
+                <div class="main-content">
+                    <router-outlet></router-outlet>
+                </div>    
+                <!-- Content Wrapper END -->
+
+                <!-- Footer START -->
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span>VMS Copyright © 2019</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer END -->
+                
+            </div>
+            <!-- Page Container END -->
+
+         </div>
+    </div>    
+</div>
