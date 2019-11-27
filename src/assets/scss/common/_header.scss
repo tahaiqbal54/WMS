@@ -1,14 +1,14 @@
 .header {
 	display: block;
     height: $header-height;
-    width: calc(100% - #{$offscreen-size});
+    width: 100%;
 	position: fixed;
     padding: 0px;
     z-index: 800;
     background-color: $default-white;
 	border-bottom: 1px solid $border-color;
 	margin-bottom: 0px;
-	@include transition(all 0.2s ease); 
+	@include transition(all 0.2s ease);
 	@include print {
 		display: none;
 	}
@@ -16,36 +16,36 @@
 	@include screen-tablet {
 		width: 100%;
 	}
-	
+
 	@include screen-laptop-only {
 		width: calc(100% - #{$collapsed-size});
 	}
 
 	.header-container {
 		@include clearfix;
-		
+
 		.nav-left,
 		.nav-right {
 			position: relative;
 			list-style: none;
 			padding-left: 0;
 			margin-bottom: 0px;
-			
+
 			>li {
 				float: left;
-				
+
 				>a {
 					padding: 0 15px;
 					line-height: $header-height;
 					min-height: $header-height;
 					color: $default-text-color;
 					display: block;
-					@include transition(all 0.2s ease-in-out); 
-					
+					@include transition(all 0.2s ease-in-out);
+
 					i {
 						font-size: 18px;
 					}
-					
+
 					&:hover,
 					&:focus {
 						text-decoration: none;
@@ -57,15 +57,15 @@
 					}
 				}
 			}
-			
+
 			.user-profile {
 				border-right: 1px solid $border-color;
 
 				@include screen-tablet {
 					border-right: 0px;
 					border-left: 0px;
-				}	
-				
+				}
+
 				.profile-img {
 					display: inline-block;
 					width: 35px;
@@ -79,7 +79,7 @@
 						margin-right: 0px;
 					}
 				}
-				
+
 				.user-info {
 					display: inline-block;
 
@@ -96,10 +96,10 @@
 					}
 				}
 			}
-			
+
 			.notifications {
 				position: relative;
-				
+
 				.counter {
 					position: absolute;
 					right: 6px;
@@ -111,7 +111,7 @@
 					line-height: 1;
 					font-size: 10px;
 				}
-				
+
 				.dropdown-menu {
 					min-width: 350px;
 					padding: 0px;
@@ -126,7 +126,7 @@
 						position: relative;
 
 						> li {
-							
+
 							> a{
 								padding: 20px 15px;
 								font-size: 13px;
@@ -175,7 +175,7 @@
 				}
 			}
 		}
-		
+
 		.dropdown-menu {
 			@include transform-origin(top right);
 			@include transform(scale(0,0));
@@ -196,29 +196,29 @@
 				}
 			}
 		}
-		
+
 		.show {
-		
+
 			.dropdown-menu {
 				@include transform(scale(1,1));
 			}
 		}
-		
+
 		.nav-left {
 			float: left;
 			margin-left: 15px;
 		}
-		
+
 		.nav-right {
 			float: right;
-			
+
 			.dropdown-menu {
 				left: auto;
 				right: 0;
-				
+
 				>li {
 					width: 100%;
-					
+
 					>a {
 						line-height: 1.5;
 						min-height: auto;
@@ -265,13 +265,13 @@
 			@include screen-mobile {
 				width: 85px;
 			}
-			
+
 			@include placeholder {
 				font-style:italic;
 				color: lighten($default-text-color, 20%);
 			}
 		}
-		
+
 		.advanced-search {
 			display: none;
 			position: absolute;
@@ -286,19 +286,19 @@
 			@include screen-mobile {
 				left: 40px;
 			}
-			
+
 			&.active {
 				display: block;
 			}
-			
+
 			.search-wrapper {
 				position: relative;
-				
+
 				ul {
 					> li {
 						> a {
 							padding: 12px 20px;
-							
+
 							&:hover,
 							&:focus {
 								background-color: $default-gray;
@@ -308,7 +308,7 @@
 				}
 			}
 		}
-		
+
 		.search-footer {
 			border-top: 1px solid $border-color;
 			text-align: center;
@@ -325,7 +325,7 @@
 		width: calc(100% - #{$collapsed-size});
 
 		@include screen-tablet {
-			width: 100%;	
+			width: 100%;
 		}
 
 		@include screen-laptop-only {

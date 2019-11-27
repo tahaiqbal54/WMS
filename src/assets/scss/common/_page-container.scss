@@ -1,7 +1,7 @@
 .page-container {
 	min-height: 100vh;
 	padding-left: $offscreen-size;
-	@include transition(all 0.2s ease); 
+	@include transition(all 0.2s ease);
 	@include print {
 		padding-left: 0px;
 	}
@@ -12,7 +12,7 @@
 
 	@include screen-tablet {
 		padding-left: 0px;;
-	} 
+	}
 
 	.main-content {
 		padding: 95px 15px 15px 15px;
@@ -24,7 +24,7 @@
 
 		@include screen-tablet {
 			padding: 85px 5px 5px 5px;
-		}	
+		}
 	}
 }
 
@@ -34,7 +34,7 @@
     left: $offscreen-size;
     right: 0px;
     min-height: calc(100vh - #{$header-height});
-    @include transition(all 0.2s ease); 
+    @include transition(all 0.2s ease);
 
     @include screen-laptop-only {
 		padding-left: $collapsed-size;
@@ -61,24 +61,24 @@
 		padding-left: $collapsed-size;
 
 		@include screen-tablet {
-			padding-left: 0px;	
-		}	
+			padding-left: 0px;
+		}
 
 		@include screen-laptop-only {
 			padding-left: $offscreen-size;
-		}	
+		}
 	}
 
 	.full-container {
 		left: $collapsed-size;
 
 		@include screen-tablet {
-			left: 0px;	
+			left: 0px;
 		}
 
 		@include screen-laptop-only {
 			left: $offscreen-size;
 			padding-left: 0px;
-		}	
+		}
 	}
-} 
+}

@@ -1,39 +1,43 @@
-<!-- <a href="" class="btn btn-primary" style="height: 200px; width: 300px;" [routerLink]="['/users/list']">
-        <i class="ti-zip pdd-right-5"></i>
-        <span style="font-family: 'Times New Roman', Times, serif; font-size: large; padding-top: 100px;" ><b>ASN Orders</b></span>
-    </a> -->
 
-    <!-- <div class="card text-white bg-primary mb-3 text-center" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Purchase Order</h5>
-          <p class="card-text">Create,View And Edit Purchase Details.</p>
-          <a href="#" class="btn " [routerLink]="['/users/list']">ASN Orders</a>
-        </div>
-      </div> -->
-      <a href="" [routerLink]="['/users/list']">
-      <div class="card border-dark mb-3" style="max-width: 18rem;">
+<div class="container-fluid">
+  <div class="row">
+  <div class="col-md-4">
+    <a href="" [routerLink]="['/users/list']">
+      <div class="card border-dark mb-3" style="max-width: 18rem;min-height: 170px;">
         <div class="card-header">ASN Details</div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Purchase Order</h5>
-            <p class="card-text">Create,View And Edit Purchase Details.</p>
+          <h5 class="card-title">Purchase Order</h5>
+          <p class="card-text">Create,View And Edit Purchase Details.</p>
         </div>
       </div>
     </a>
+
+
+
+  </div>
+  <div class="col-md-4">
     <a href="" [routerLink]="['/receiving/list']">
-      <div class="card border-dark mb-3" style="max-width: 18rem;">
+      <div class="card border-dark mb-3" style="max-width: 18rem;min-height: 170px;">
         <div class="card-header">Recieving</div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Order Receiving</h5>
-            <p class="card-text">View And Recieve Purchase Details.</p>
+          <h5 class="card-title">Order Receiving</h5>
+          <p class="card-text">View And Recieve Purchase Details.</p>
         </div>
       </div>
     </a>
+  </div>
+  <div class="col-md-4">
     <a href="" [routerLink]="['/putaway/list']">
-      <div class="card border-dark mb-3" style="max-width: 18rem;">
+      <div class="card border-dark mb-3" style="max-width: 18rem;min-height: 170px;">
         <div class="card-header">PutAways</div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Order Putaway</h5>
-            <p class="card-text">View And Putaway Purchase Details.</p>
+          <h5 class="card-title">Order Putaway</h5>
+          <p class="card-text">View And Putaway Purchase Details.</p>
         </div>
       </div>
     </a>
+  </div>
+  </div>
+</div>
+
+

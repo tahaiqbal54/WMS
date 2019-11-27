@@ -1,7 +1,4 @@
-import { first } from 'rxjs/operators';
-//import { user_disable } from '../../_models/user_disable';
-//import { User } from '../../_models/user';
-import  swal  from 'sweetalert2';
+import Swal from "sweetalert2";
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {OrderService} from '../../_services';
@@ -28,7 +25,7 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
   tab: number = 0;
   currentUser: any;
   user_id : any;
-  
+
 
   constructor(private router: Router,private orderservice: OrderService, private route: ActivatedRoute) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -46,7 +43,7 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
             language: {
               emptyTable: "No users found"
             },
-            
+
           };
           this.rerender();
         (error: any) => {
@@ -58,26 +55,44 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   DeleteASN(Id:any,index){
-    this.orderservice.DeleteASN(Id)
-    .subscribe(
-      (data: any) => {
-        //this.users = data;
-        console.log(data);
-        this.users.splice(index,1);
-        this.dtOptions = {
-          pagingType: 'full_numbers',
-          language: {
-            emptyTable: "No users found"
-          },
-          
-        };
-        this.rerender();
-      (error: any) => {
-        console.log(error);
-        this.inserted = 'failure';
-        this.message = error.error.message;
+
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.orderservice.DeleteASN(Id)
+          .subscribe(
+            (data: any) => {
+              //this.users = data;
+              console.log(data);
+              this.users.splice(index,1);
+              this.dtOptions = {
+                pagingType: 'full_numbers',
+                language: {
+                  emptyTable: "No users found"
+                },
+
+              };
+              this.rerender();
+
+              (error: any) => {
+                console.log(error);
+                this.inserted = 'failure';
+                this.message = error.error.message;
+              }
+            });
+      }else{
+        console.log('cancelled');
       }
-      });
+    });
+
   }
 
   rerender(): void {
@@ -98,111 +113,5 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  // disable(){
-  //   this.user_disable= new user_disable();
-  //   this.user_disable.user_id = 
-  //   this.user_disable.status = 'disabled';
-  //   this.usersService.disabled(this.user_disable)
-  //     .subscribe(
-  //       (data: any) => {
-  //         if (data.success) {
-  //           this.inserted = 'success';
-  //           this.message = "The status has been updated.";
-  //         }
-  //         console.log(data);
-  //       },
-  //       (error: any) => {
-  //         console.log(error);
-  //         this.inserted = 'failure';
-  //         this.message = error.error.message;
-  //       }
-  //     );
-  // }
-
-//   disablebutton(id, name) {
-//     swal({
-//         title: "Are you sure?",   
-//         text: "",   
-//         type: "warning",   
-//         showCancelButton: true,   
-//         confirmButtonColor: "#DD6B55",   
-//         confirmButtonText: "Yes, disable it!",
-        
-//     }).then((result)=>{
-//       if(this.currentUser.first_name != name){
-//       if(result.value){
-//         this.user_disable= new user_disable();
-//         this.user_disable.user_id = id;
-//         this.user_disable.status = 'disabled';
-//         this.usersService.disabled(this.user_disable)
-//           .subscribe(
-//             (data: any) => {
-//               if (data.success) {
-//                 this.inserted = 'success';
-//                 this.message = "The status has been updated.";
-//                 location.reload(true);
-//               }
-//             },
-//             (error: any) => {
-//               console.log(error);
-//               this.inserted = 'failure';
-//               this.message = error.error.message;
-//             }
-//           );
-//       } else if(result.dismiss === swal.DismissReason.cancel) {
-//       swal(
-//         'Cancelled',
-//         'Your User is still Active :)',
-//         'error'
-//       )
-//     }
-//   }else{
-//     swal(
-//       'Cancelled',
-//       'You can not disable yourself :)',
-//       'error'
-//     )
-//   }
-//   })
-// }
-
-// enablebutton(id) {
-//   swal({
-//       title: "Are you sure?",   
-//       text: "",   
-//       type: "warning",   
-//       showCancelButton: true,   
-//       confirmButtonColor: "#DD6B55",   
-//       confirmButtonText: "Yes, enable it!",
-//   }).then((result)=>{
-//     if(result.value){
-//       this.user_disable= new user_disable();
-//       this.user_disable.user_id = id;
-//       this.user_disable.status = 'active';
-//       this.usersService.disabled(this.user_disable)
-//         .subscribe(
-//           (data: any) => {
-//             if (data.success) {
-//               this.inserted = 'success';
-//               this.message = "The status has been updated.";
-//               location.reload(true);
-//             }
-//           },
-//           (error: any) => {
-//             console.log(error);
-//             this.inserted = 'failure';
-//             this.message = error.error.message;
-//           }
-//         );
-//     } else if(result.dismiss === swal.DismissReason.cancel) {
-//       swal(
-//         'Cancelled',
-//         'Your User is still Disable :)',
-//         'error'
-//       )
-//     }   
-//   })
-  
-//}
 
 }

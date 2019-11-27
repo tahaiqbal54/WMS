@@ -5,8 +5,8 @@
 
         <div>
             <!-- Side Nav START -->
-            <div class="side-nav" sideBar>
-                <div class="side-nav-inner">
+            <div class="side-nav d-none" sideBar>
+                <div class=" side-nav-inner">
                     <!-- <div class="side-nav-logo">
                         <a href="" [routerLink]="['/dashboard']">
                             <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
@@ -43,9 +43,9 @@
                                 </li>
                                 <li>
                                     <a href="">item 2</a>
-                                </li>                  
+                                </li>
                             </ul>
-                        </li> 
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
@@ -61,7 +61,7 @@
                                     <a href="javascript:void(0);">
                                         <span>Level 1.2</span>
                                     </a>
-                                </li>	
+                                </li>
                                 <li class="nav-item dropdown">
                                     <a href="javascript:void(0);">
                                         <span>Level 1.1</span>
@@ -72,9 +72,9 @@
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a href="javascript:void(0);">Level 2</a>
-                                        </li>         
+                                        </li>
                                     </ul>
-                                </li>         
+                                </li>
                             </ul>
                         </li>
                     </ul> -->
@@ -82,35 +82,90 @@
             </div>
             <!-- Side Nav END -->
 
-            <!-- Page Container START -->
-            <div class="page-container">
 
-                <!-- Top Nav START -->
-                <div class="header navbar">
-                    <div class="header-container">
-                    </div>
-                </div>
-                <!-- Top Nav END -->
-
-                <!-- Content Wrapper START -->
-                <div class="main-content">
-                    <router-outlet></router-outlet>
-                </div>    
-                <!-- Content Wrapper END -->
-
-                <!-- Footer START -->
-                <footer class="content-footer">
-                    <div class="footer">
-                        <div class="copyright">
-                            <span>VMS Copyright © 2019</span>
+          <div class="header navbar">
+            <div class="header-container">
+                  <ul class="nav-left">
+                    <li class="d-none">
+                      <h4>Test</h4>
+                    </li>
+                    <li>
+                      <a class="side-nav-toggle d-none"  href="javascript:void(0);">
+                        <i class="ti-menu"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="nav-right">
+                    <li class="user-profile dropdown">
+                      <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                        <img id="userAvatar" class="profile-img img-fluid" src="../../assets/images/user_admin.png">
+                        <div class="user-info">
+                          <span class="name pdd-right-5">Admin</span>
+                          <i class="ti-angle-down font-size-10"></i>
                         </div>
-                    </div>
-                </footer>
-                <!-- Footer END -->
-                
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li role="separator" class="divider"></li>
+                        <li>
+                          <a href="">
+                            <a href="" [routerLink]="['/logout']"><b>
+                              <i class="ti-power-off pdd-right-10"></i>
+                              <span>Logout</span></b>
+                            </a>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
             </div>
+          </div>
+          <!-- Content Wrapper START -->
+          <div class="page-container">
+          <div class="main-content">
+            <router-outlet></router-outlet>
+          </div>
+          </div>
+          <!-- Content Wrapper END -->
+
+          <!-- Footer START -->
+          <footer class="content-footer">
+            <div class="footer">
+              <div class="copyright">
+                <span>VMS Copyright © 2019</span>
+              </div>
+            </div>
+          </footer>
+          <!-- Footer END -->
+
+            <!-- Page Container START -->
+            <!--<div class="page-container">-->
+
+                <!--&lt;!&ndash; Top Nav START &ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="header navbar">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="header-container">&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash; Top Nav END &ndash;&gt;-->
+
+                <!--&lt;!&ndash; Content Wrapper START &ndash;&gt;-->
+                <!--<div class="main-content">-->
+                    <!--<router-outlet></router-outlet>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Content Wrapper END &ndash;&gt;-->
+
+                <!--&lt;!&ndash; Footer START &ndash;&gt;-->
+                <!--<footer class="content-footer">-->
+                    <!--<div class="footer">-->
+                        <!--<div class="copyright">-->
+                            <!--<span>VMS Copyright © 2019</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</footer>-->
+                <!--&lt;!&ndash; Footer END &ndash;&gt;-->
+
+            <!--</div>-->
             <!-- Page Container END -->
 
          </div>
-    </div>    
+    </div>
 </div>
