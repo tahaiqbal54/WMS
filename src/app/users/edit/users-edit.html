@@ -24,7 +24,7 @@
                                             <div class="form-group">
                                                 <label>Custom Ref No</label>
                                                 <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                             <div class="form-group">
                                                 <label>Reference No 1 </label>
                                                 <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength1" #minlength1="ngModel" minlength="8"/>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -67,7 +67,7 @@
                                                 <label>Expected Receipt Date</label>
                                                 <input class="form-control" [value]="
                                                 OrderHeader.ExpectedRecvDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ExpectedRecvDate = parseDate($event.target.value)" placeholder="Enter Date" type="date"/>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -75,7 +75,7 @@
                                                 <label>ASN Date</label>
                                                 <input type="date" [value]="
                                                 OrderHeader.ASNDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ASNDate = parseDate($event.target.value)" class="form-control" placeholder="Enter ASN Date" name="email">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <input type="text" class="form-control" value="New" placeholder="Enter Status" disabled="true" name="email">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -103,10 +103,10 @@
 							                                  <label for="form-2-1">Require QC?</label>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <button class="btn btn-primary" type="submit" (click)="UpdateOrder()">Update</button>
-                                    <button class="btn btn-primary" type="submit">Cancel</button>
+                                    <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
                                 </form>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -130,7 +130,7 @@
                         <div class="row">
                           <div class="col-md-12">
                             <div class="card">
-                              <div class="card-block">   
+                              <div class="card-block">
                                           <div class="table-overflow">
                                               <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
@@ -175,22 +175,22 @@
                                                               </div>
                                                           </td>
                                                       </tr>
-                                                  </tbody> 
+                                                  </tbody>
                                               </table>
                                           </div>
-                                          <button class="btn btn-primary" (click)="SubmitASN()">Submit
-                                          </button>
+                                          <button class="btn btn-primary" (click)="SubmitASN()">Submit</button>
+                                          <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
-                      </div>    
+                      </div>
                 </div>
             </div>
         </div>
-    </div>	
-    			
+    </div>
+
 </div>
 
 <div class="modal fade" id="modaladddis">
@@ -257,7 +257,7 @@
                         />
                     </div>
                   </div>
-  
+
                   <div class="col-md-6">
                     <div class="form-group">
                         <label>Pack Key</label>
@@ -272,7 +272,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label>Batch No</label>
-                        <input 
+                        <input
                           class="form-control"
                           [(ngModel)]="BatchNo"
                           placeholder="Batch No"
@@ -283,7 +283,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label>Manufacture Date</label>
-                        <input 
+                        <input
                           class="form-control"
                           [value]="
                                   ManufactureDate
@@ -302,7 +302,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label>Expiry Date</label>
-                        <input 
+                        <input
                           class="form-control"
                           [value]="
                                   ExpiryDate

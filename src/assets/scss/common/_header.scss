@@ -18,7 +18,8 @@
 	}
 
 	@include screen-laptop-only {
-		width: calc(100% - #{$collapsed-size});
+		//width: calc(100% - #{$collapsed-size});
+		width: 100%;
 	}
 
 	.header-container {

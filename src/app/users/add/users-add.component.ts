@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { OrderService } from '../../_services/order.service';
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from 'rxjs';
+import Swal from "sweetalert2";
 declare var $: any;
 
 
@@ -79,7 +80,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
     valueField: 'id',
     searchField: ['ProductName']
   };
-  
+
 
   ngOnInit() {
     this.dtOptions = {
@@ -152,8 +153,8 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
       }else{
         this.OrderHeader.RequiredQC = false;
       }
-       
-      
+
+
       //this.OrderHeader.RequiredQC = value;
     }
 
@@ -200,7 +201,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
      setTimeout(() => {
               $("#modaladddis").modal("show");
             }, 1500);
-      
+
     }
 
     onProductChange(event){
@@ -258,7 +259,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
           console.log(data);
           this.OrderDetail = data;
           this.rerender();
-        }, 
+        },
         (error: any) => {
           console.log(error);
           swal(error.error['Message']);
@@ -277,7 +278,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
       this.UDF = [];
       this.UOM = '';
       $("#modaladddis").modal("hide");
-     
+
     }
 
 
@@ -289,37 +290,56 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.dtTrigger.next();
       });
     }
-  
+
     ngAfterViewInit(): void {
       this.dtTrigger.next();
     }
-  
+
     ngOnDestroy(): void {
       // Do not forget to unsubscribe the event
       this.dtTrigger.unsubscribe();
     }
 
     DeleteDetailItem(index:any,Id:any){
-      this.orderservice.DeletePurchaseDetail(Id,this.ASNNO)
-      .subscribe(
-        (data: any) => {
-          // if (data) {
-          //   this.inserted = 'success';
-          //   this.message = "The Order has been created.";
-          //   // setTimeout(() => {
-          //   //   this.router.navigate(['/users/list']);
-          //   // }, 3000);
-          // }
-          console.log(data);
-          this.OrderDetail.splice(index,1);
-          //this.OrderDetail = data;
-          //this.rerender();
-        }, 
-        (error: any) => {
-          console.log(error);
-          swal(error.error['Message']);
+
+
+      (Swal as any).fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+
+          this.orderservice.DeletePurchaseDetail(Id,this.ASNNO)
+            .subscribe(
+              (data: any) => {
+                // if (data) {
+                //   this.inserted = 'success';
+                //   this.message = "The Order has been created.";
+                //   // setTimeout(() => {
+                //   //   this.router.navigate(['/users/list']);
+                //   // }, 3000);
+                // }
+                console.log(data);
+                this.OrderDetail.splice(index,1);
+                //this.OrderDetail = data;
+                //this.rerender();
+              },
+              (error: any) => {
+                console.log(error);
+                swal(error.error['Message']);
+              }
+            );
+
+        }else{
+          console.log('cancelled');
         }
-      );
+      });
+
     }
 
     editDetail(Id: any, index:any){
@@ -352,8 +372,8 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
         setTimeout(() => {
           $("#modaladddis").modal("show");
         }, 1500);
-  
-        }, 
+
+        },
         (error: any) => {
           console.log(error);
           swal(error.error['Message']);
@@ -391,9 +411,9 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             // }, 3000);
           }
           console.log(data);
-          //this.OrderDetail[this.index].SKU = 
+          //this.OrderDetail[this.index].SKU =
           this.OrderDetail = data;
-        }, 
+        },
         (error: any) => {
           console.log(error);
           swal(error.error['Message']);
@@ -423,7 +443,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             this.message = "The Order has been created.";
           }
           console.log(data);
-        }, 
+        },
         (error: any) => {
           console.log(error);
           swal(error.error['Message']);
@@ -442,61 +462,5 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   }
 
- 
 
- 
-
-  // onRegionChange() {
-  //   this.territoriesEnabled = this.user.region_id && (this.user.role_id.toString() === '4');
-  //   this.regionsOptions.some((region) => {
-  //     this.user.territory_id = 0;
-  //     if (region.id === parseInt(this.user.region_id.toString(), 10)) {
-  //       this.territoriesOptions = region.Territories;
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  // }
-
-  // onStatusChange(value: string): void {
-  //   this.user.status = value;
-  // }
-
-  // onGenderChange(value: string): void {
-  //   this.user.gender = value;
-  // }
-
-  // addUser() {
-  //   this.user.username = this.user.email;
-  //   const formData = new FormData();
-  //   if (this.avatar) {
-  //     formData.append('image', this.avatar, this.avatar.name);
-  //   }
-  //   let user = Object.assign({}, this.user);
-  //   formData.append('data', JSON.stringify(user));
-  //   this.usersService.createUser(formData)
-  //     .subscribe(
-  //       (data: any) => {
-  //         if (data.success) {
-  //           this.inserted = 'success';
-  //           this.message = "The user has been created.";
-  //           setTimeout(() => {
-  //             this.router.navigate(['/users/list']);
-  //           }, 3000);
-  //         }
-  //         console.log(data);
-  //       },
-  //       (error: any) => {
-  //         console.log(error);
-  //         swal(error.error.message);
-  //       }
-  //     );
-  // }
-
-  // fileChange(event): void {
-  //   const fileList: FileList = event.target.files;
-  //   if (fileList.length > 0) {
-  //     this.avatar = fileList[0];
-  //   }
-  // }
 
