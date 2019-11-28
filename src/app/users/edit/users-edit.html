@@ -22,7 +22,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Custom Ref No</label>
+                                                <label>Custom Ref No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
 
                                             </div>
@@ -31,7 +31,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Customer</label>
+                                                <label>Customer <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="customerSelectConfig" [options]="customerOptions" (ngModelChange)="onCustomerChange($event)"
                                                 [(ngModel)]="OrderHeader.CustomerId" #customer="ngModel" name="customer"  placeholder="Select Customer"
                                                  ngDefaultControl required></ng-selectize>
@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Vendor</label>
+                                                <label>Vendor <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="role"
                                       name="role" placeholder="Select Vendor" #role="ngModel" [(ngModel)]="OrderHeader.VendorId"
                                        ngDefaultControl required></ng-selectize>
@@ -49,7 +49,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Reference No 1 </label>
+                                                <label>Reference No 1 <a class="text-danger" style="font-size: 10px;">&nbsp;*</a> </label>
                                                 <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength1" #minlength1="ngModel" minlength="8"/>
 
                                             </div>
@@ -64,7 +64,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Expected Receipt Date</label>
+                                                <label>Expected Receipt Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input class="form-control" [value]="
                                                 OrderHeader.ExpectedRecvDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ExpectedRecvDate = parseDate($event.target.value)" placeholder="Enter Date" type="date"/>
 
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ASN Date</label>
+                                                <label>ASN Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input type="date" [value]="
                                                 OrderHeader.ASNDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ASNDate = parseDate($event.target.value)" class="form-control" placeholder="Enter ASN Date" name="email">
 
@@ -82,7 +82,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Default WH</label>
+                                                <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role2"
                                       name="role2" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
                                        ngDefaultControl required></ng-selectize>
@@ -90,7 +90,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Status</label>
+                                                <label>Status <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input type="text" class="form-control" value="New" placeholder="Enter Status" disabled="true" name="email">
 
                                             </div>
@@ -192,7 +192,6 @@
     </div>
 
 </div>
-
 <div class="modal fade" id="modaladddis">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -358,3 +357,7 @@
         </div>
       </div>
     </div>
+    </div>
+</div>
+
+<ng2-toasty [position]="position"></ng2-toasty>

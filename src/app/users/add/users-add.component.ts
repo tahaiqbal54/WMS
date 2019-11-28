@@ -264,7 +264,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ADDDetail() {
-    if(this.products != '' && this.ManufactureDate && this.ExpiryDate && this.BatchNo != '' && this.Quantity){
+    if(this.products != 0 && this.ManufactureDate && this.ExpiryDate && this.BatchNo != '' && this.Quantity){
 
       let detail = {
         Id: 0,
@@ -326,8 +326,8 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
     }
     else{
       let toastOptions: ToastOptions = {
-        title: 'Warn',
-        msg: 'ASN Detail Add Detail',
+        title: 'Error',
+        msg: 'Fill All The Fields',
         showClose: true,
         timeout: 2000,
         theme: 'default',
@@ -453,14 +453,9 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   UpdateDetail() {
 
-    if(this.detailId &&
-      this.ASNNO &&
-      this.LineId &&
+    if(
       this.product.length > 0  &&
-      this.UnitId &&
       this.Quantity &&
-      this.OrderHeader.WarehouseId &&
-      this.PackId &&
       this.BatchNo &&
       this.ManufactureDate &&
       this.ExpiryDate
@@ -544,8 +539,18 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
       .subscribe(
         (data: any) => {
           if (data) {
-            this.inserted = 'success';
-            this.message = 'The Order has been created.';
+         //   this.inserted = 'success';
+         //   this.message = 'The Order has been created.';
+            let toastOptions: ToastOptions = {
+              title: 'Success',
+              msg: 'The Order has been created',
+              showClose: true,
+              timeout: 2000,
+              theme: 'default',
+
+            };
+            this.toastyService.success(toastOptions);
+            this.toastCommunicationService.setPosition(this.position);
           }
           console.log(data);
         },
