@@ -1,7 +1,9 @@
 <div class="container-fluid" >
-    <div class="page-title">
-        <h4>ASN ORDER</h4>
-    </div>
+
+  <div class="page-title row">
+    <div class="col-md-4"> <h4>ASN ORDER</h4></div>
+  </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -22,16 +24,16 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Custom Ref No</label>
+                                                <label>Custom Ref No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Customer</label>
+                                                <label>Customer <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="customerSelectConfig" [options]="customerOptions" (ngModelChange)="onCustomerChange($event)"
                                                 [(ngModel)]="OrderHeader.CustomerId" #customer="ngModel" name="customer"  placeholder="Select Customer"
                                                  ngDefaultControl required></ng-selectize>
@@ -39,7 +41,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Vendor</label>
+                                                <label>Vendor <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="role"
                                       name="role" placeholder="Select Vendor" [(ngModel)]="OrderHeader.VendorId"
                                        ngDefaultControl required></ng-selectize>
@@ -49,14 +51,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Reference No 1 </label>
+                                                <label>Reference No 1  <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Reference No 2</label>
+                                                <label>Reference No 2 <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo2" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
                                             </div>
                                         </div>
@@ -64,23 +66,23 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Expected Receipt Date</label>
+                                                <label>Expected Receipt Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input class="form-control" [(ngModel)]="OrderHeader.ExpectedRecvDate" placeholder="Enter Date" type="date" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ASN Date</label>
+                                                <label>ASN Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input type="date" [(ngModel)]="OrderHeader.ASNDate" class="form-control" placeholder="Enter ASN Date" ngModel name="email" #email="ngModel">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Default WH</label>
+                                                <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role"
                                       name="role" [ngClass]="{'error' : role?.errors?.required}" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
                                        ngDefaultControl required></ng-selectize>
@@ -90,7 +92,7 @@
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <input type="text" class="form-control" value="New" placeholder="Enter Status" disabled="true" name="email">
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -101,10 +103,10 @@
 							                                  <label for="form-2-1">Require QC?</label>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <button class="btn btn-primary" type="submit" (click)="SaveOrder()">Save</button>
-                                    <button class="btn btn-primary" type="submit">Cancel</button>
+                                  <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
                                 </form>
                             </div>
                         </div>
@@ -112,7 +114,7 @@
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -122,13 +124,13 @@
                 <div class="card-block">
                     <div class="container-fluid">
                         <div class="mrg-top-10 text-right">
-                            <button class="btn btn-primary text-right" float="right" (click)="adddismodal()">ADD Detail
+                            <button [disabled]="!ASNNO" class="btn btn-primary text-right" float="right" (click)="adddismodal()">ADD Detail
                             </button>
                           </div>
                         <div class="row">
                           <div class="col-md-12">
                             <div class="card">
-                              <div class="card-block">   
+                              <div class="card-block">
                                           <div class="table-overflow">
                                               <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
@@ -173,186 +175,192 @@
                                                               </div>
                                                           </td>
                                                       </tr>
-                                                  </tbody> 
+                                                  </tbody>
                                               </table>
                                           </div>
                                           <button class="btn btn-primary" (click)="SubmitASN()">Submit
                                           </button>
+                                          <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
                                       </div>
-                                      
+
                                   </div>
                               </div>
                           </div>
-                      </div>    
+                      </div>
                 </div>
             </div>
         </div>
-    </div>	
-    			
-</div>
+    </div>
 
-<div class="modal fade" id="modaladddis">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="padding-15">
-            <h3 class="mrg-btm-20">Product Details</h3>
-            <div class="col-md-8">
-              <div class="alert alert-danger" *ngIf="status == 'success'">
-                {{ error }}
+
+  <div class="modal fade" id="modaladddis"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+    <div class="modal-body">
+      <div class="padding-15">
+        <h3 class="mrg-btm-20">Product Details</h3>
+        <div class="col-md-8">
+          <!--<div class="alert alert-danger" *ngIf="status == 'success'">-->
+            <!--{{ error }}-->
+          <!--</div>-->
+        </div>
+        <div class="row">
+          <div class="ml-auto col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Product <a class="text-danger" style="font-size: 10px;">&nbsp;*</a> </label>
+                  <ng-selectize
+                    [config]="ProductConfig"
+                    [options]="ProductOptions"
+                    [(ngModel)]="products"
+                    (ngModelChange)="onProductChange($event)"
+                    name="Product"
+                    placeholder="Select Product"
+                    ngDefaultControl
+                  >
+                  </ng-selectize>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Description <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="Description"
+                         placeholder="Description"
+                         type="text"
+                  />
+                </div>
               </div>
             </div>
             <div class="row">
-              <div class="ml-auto col-md-12">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Product </label>
-                      <ng-selectize
-                        [config]="ProductConfig"
-                        [options]="ProductOptions"
-                        [(ngModel)]="products"
-                        (ngModelChange)="onProductChange($event)"
-                        name="Product"
-                        placeholder="Select Product"
-                        ngDefaultControl
-                      >
-                      </ng-selectize>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Description</label>
-                      <input [disabled]="true"
-                        class="form-control"
-                        [(ngModel)]="Description"
-                        placeholder="Description"
-                        type="text"
-                      />
-                    </div>
-                  </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Expected Quantity <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input
+                    class="form-control"
+                    [(ngModel)]="Quantity"
+                    placeholder="Expected Quantity"
+                    type="number"
+                  />
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Expected Quantity</label>
-                        <input
-                          class="form-control"
-                          [(ngModel)]="Quantity"
-                          placeholder="Expected Quantity"
-                          type="number"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>UOM</label>
-                        <input [disabled]="true"
-                          class="form-control"
-                          [(ngModel)]="UOM"
-                          placeholder="UOM"
-                          type="text"
-                        />
-                    </div>
-                  </div>
-  
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Pack Key</label>
-                        <input [disabled]="true"
-                          class="form-control"
-                          [(ngModel)]="Pack"
-                          placeholder="Pack Key"
-                          type="text"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Batch No</label>
-                        <input 
-                          class="form-control"
-                          [(ngModel)]="BatchNo"
-                          placeholder="Batch No"
-                          type="text"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Manufacture Date</label>
-                        <input 
-                          class="form-control"
-                          [value]="
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UOM <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="UOM"
+                         placeholder="UOM"
+                         type="text"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pack Key <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="Pack"
+                         placeholder="Pack Key"
+                         type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Batch No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input
+                    class="form-control"
+                    [(ngModel)]="BatchNo"
+                    placeholder="Batch No"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Manufacture Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input
+                    class="form-control"
+                    [value]="
                                   ManufactureDate
                                     | date: 'yyyy-MM-dd'
                                 "
-                                (input)="
+                    (input)="
                                 ManufactureDate = parseDate(
                                     $event.target.value
                                   )
                                 "
-                          placeholder="Manufacture Date"
-                          type="date"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Expiry Date</label>
-                        <input 
-                          class="form-control"
-                          [value]="
+                    placeholder="Manufacture Date"
+                    type="date"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Expiry Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input
+                    class="form-control"
+                    [value]="
                                   ExpiryDate
                                     | date: 'yyyy-MM-dd'
                                 "
-                                (input)="
+                    (input)="
                                 ExpiryDate = parseDate(
                                     $event.target.value
                                   )
                                 "
-                          placeholder="Expiry Date"
-                          type="date"
-                        />
-                    </div>
-                  </div>
+                    placeholder="Expiry Date"
+                    type="date"
+                  />
                 </div>
-                <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>UDF</label>
-                        <input [disabled]="true" *ngFor="let udf of UDF"
-                          class="form-control"
-                          value="{{udf}}"
-                          placeholder="UDF"
-                          type="text"
-                        />
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                <div class="mrg-top-20">
-                  <a *ngIf="detailId == 0"
-                    href="#"
-                    onclick="return false;"
-                    class="btn btn-info"
-                    (click)="ADDDetail()"
-                    >ADD</a
-                  >
-                  <a *ngIf="detailId != 0"
-                    href="#"
-                    onclick="return false;"
-                    class="btn btn-info"
-                    (click)="UpdateDetail()"
-                    >Update</a
-                  >
-                </div>
-                <!-- <div class="mrg-top-20" *ngIf="status == 'success'">
-                                      <a href="#" onclick="return false;" data-dismiss="modal" class="btn btn-info" (click)="add()" >ADD</a>
-                                  </div> -->
               </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UDF <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input [disabled]="true" *ngFor="let udf of UDF"
+                         class="form-control"
+                         value="{{udf}}"
+                         placeholder="UDF"
+                         type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mrg-top-20">
+                <a *ngIf="detailId == 0"
+                   href="#"
+                   onclick="return false;"
+                   class="btn btn-info"
+                   (click)="ADDDetail()"
+                >ADD</a
+                >
+                <a *ngIf="detailId != 0"
+                   href="#"
+                   onclick="return false;"
+                   class="btn btn-info"
+                   (click)="UpdateDetail()"
+                >Update</a
+                >
+              </div>
+              <!-- <div class="mrg-top-20" *ngIf="status == 'success'">
+                                    <a href="#" onclick="return false;" data-dismiss="modal" class="btn btn-info" (click)="add()" >ADD</a>
+                                </div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+
+
+<ng2-toasty [position]="position"></ng2-toasty>

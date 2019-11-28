@@ -3,7 +3,7 @@ export * from './authentication.service';
 export * from './order.service';
 export * from './receive.service';
 export * from './putaways.services';
-//export * from './users.service';
+export * from './notification.services';
 //export * from './outlets.service';
 //export * from './regions.service';
 //export * from './roles.service';
