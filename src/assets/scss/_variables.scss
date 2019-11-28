@@ -25,17 +25,17 @@ $default-danger:          #ff3c7e;
 // 	Inverse color
 //==================================
 $inverse-primary :        lighten($default-primary, 30%);
-$inverse-success :        lighten($default-success, 45%); 	   
-$inverse-info :           lighten($default-info, 45%);         
-$inverse-warning :        lighten($default-warning, 45%);	   
-$inverse-danger :         lighten($default-danger, 35%);	   
+$inverse-success :        lighten($default-success, 45%);
+$inverse-info :           lighten($default-info, 45%);
+$inverse-warning :        lighten($default-warning, 45%);
+$inverse-danger :         lighten($default-danger, 35%);
 
 //==================================
 // 	Misc
 //==================================
 $border-color:            #e6ecf5;
 $header-height:           65px;
-$offscreen-size:          280px;
+$offscreen-size:          100px;
 $collapsed-size:          70px;
 $side-nav-dark:           #313644;
 $side-nav-dark-font:      #99abb4;
