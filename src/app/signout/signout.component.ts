@@ -19,9 +19,9 @@ export class SignOutComponent implements OnInit {
 
   ngOnInit() {
 
-    // reset signin status
     this.authenticationService.logout();
     console.log(localStorage.getItem('currentUser'));
+    console.log('Logged Out');
 
     this.router.navigate(['/login']);
   }

@@ -18,7 +18,8 @@
 	}
 
 	@include screen-laptop-only {
-		width: calc(100% - #{$collapsed-size});
+		//width: calc(100% - #{$collapsed-size});
+		width: 100%;
 	}
 
 	.header-container {
@@ -96,6 +97,17 @@
 					}
 				}
 			}
+
+      .headerIcon {
+        font-size: 25px;
+        color: #0f9aee;
+      }
+
+      .headerTitle {
+        font-size: 30px;
+        color: #0f9aee;
+      }
+
 
 			.notifications {
 				position: relative;
