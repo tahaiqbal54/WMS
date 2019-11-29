@@ -2,6 +2,9 @@
     <div class="page-title">
         <h4>Recieving</h4>
     </div>
+    <div class="alert alert-danger" *ngIf="inserted == 'success'">
+      {{ message }}
+    </div>
     <!-- <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -197,11 +200,11 @@
         <div class="modal-body">
           <div class="padding-15">
             <h3 class="mrg-btm-20">Receiving Details</h3>
-            <div class="col-md-8">
-              <div class="alert alert-danger" *ngIf="status == 'success'">
-                {{ error }}
+            
+              <div class="alert alert-danger" *ngIf="inserted == 'success'">
+                {{ message }}
               </div>
-            </div>
+            
             <div class="row">
               <div class="ml-auto col-md-12">
                 <div class="row">

@@ -2,6 +2,9 @@
     <div class="page-title">
         <h4>Put Away</h4>
     </div>
+    <div class="alert alert-danger" *ngIf="inserted == 'success'">
+        {{ message }}
+      </div>
     <!-- <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -199,6 +202,9 @@
                     <div class="table-cell">
                         <div class="pdd-horizon-15">
                             <h4>Put Away</h4>
+                                <div class="alert alert-danger" *ngIf="inserted == 'success'">
+                                  {{ message }}
+                                </div>
                             <p class="mrg-btm-15 font-size-13">Please enter Location you want to move this product</p>
                             <form>
                                 <div class="form-group">

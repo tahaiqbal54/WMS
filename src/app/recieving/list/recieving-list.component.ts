@@ -1,7 +1,7 @@
 import { first } from 'rxjs/operators';
 //import { user_disable } from '../../_models/user_disable';
 //import { User } from '../../_models/user';
-import  swal  from 'sweetalert2';
+import Swal from "sweetalert2";
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 import { Subject } from 'rxjs';
 import {ReceiveService} from '../../_services';
@@ -55,6 +55,24 @@ export class RecievingListComponent implements AfterViewInit, OnDestroy, OnInit 
           this.message = error.error.message;
         }
         });
+  }
+
+  checkstatus(StatusId: any, Id: any) {
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/receiving/add/' + Id])
+      }else{
+        console.log('cancelled');
+      }
+    });
   }
 
   rerender(): void {

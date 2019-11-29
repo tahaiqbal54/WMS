@@ -94,8 +94,8 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
     .subscribe(
       (data: any) => {
         if (data) {
-          this.inserted = 'success';
-          this.message = "The Order has been created.";
+          // this.inserted = 'success';
+          // this.message = "The Order has been created.";
         }
         console.log(data);
       }, 
@@ -261,6 +261,12 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
   //   }
 
     ADDDetail(){
+      if(this.Quantity == null || this.Quantity == undefined || this.BatchNo == null || this.BatchNo == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined || this.ExpiryDate == null || this.ExpiryDate == undefined || this.ManufactureDate == null || this.ManufactureDate == undefined || this.ReceiptDate == null || this.ReceiptDate == undefined){
+        this.inserted = 'success';
+        this.message = 'Kindly fill All the fields'
+        
+      }
+      else {
       let detail = {
         Id:0,
         PurchaseId: this.Id,
@@ -284,14 +290,14 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         (data: any) => {
           if (data) {
             this.inserted = 'success';
-            this.message = "The Order has been created.";
+            this.message = "The Recieved Successfully.";
             // setTimeout(() => {
             //   this.router.navigate(['/users/list']);
             // }, 3000);
           }
           console.log(data);
-          this.OrderDetail = data;
-          this.rerender();
+          //this.OrderDetail = data;
+          //this.rerender();
         }, 
         (error: any) => {
           console.log(error);
@@ -311,7 +317,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
       this.UDF = [];
       this.UOM = '';
       $("#modaladddis").modal("hide");
-     
+    }
     }
 
 

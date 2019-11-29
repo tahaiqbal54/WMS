@@ -191,6 +191,11 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
    }
 
     ADDDetail(){
+      if(this.tolocation == null || this.tolocation == undefined){
+        this.inserted = 'success'
+        this.message = 'Fill the below field'
+      }
+      else {
       let detail = {
         Id:0,
         ProductId: this.productId,
@@ -206,7 +211,8 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
         (data: any) => {
           if (data) {
             this.inserted = 'success';
-            this.message = "The Order has been created.";
+            this.message = "Product PutAway Successful.";
+            $("#modal").modal("hide");
             // setTimeout(() => {
             //   this.router.navigate(['/users/list']);
             // }, 3000);
@@ -220,6 +226,7 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
           swal(error.error['Message']);
         }
       );
+    }
     }
 
 
