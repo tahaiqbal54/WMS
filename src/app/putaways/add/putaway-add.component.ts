@@ -9,6 +9,8 @@ import {PutAwayService} from '../../_services/putaways.services';
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from 'rxjs';
 declare var $: any;
+import {ToastOptions, ToastyService} from 'ng2-toasty';
+import {NotificationCommunicationService} from '../../_services';
 
 
 @Component({
@@ -56,8 +58,9 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
   fromlocationId: any;
   recieveId: any;
   tolocation: any;
+  position:any;
 
-  constructor(private router: Router,private putawayservice: PutAwayService,private receiveservice: ReceiveService,private route: ActivatedRoute) {
+  constructor(private router: Router,private putawayservice: PutAwayService,private receiveservice: ReceiveService,private route: ActivatedRoute,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.user_id=this.currentUser.User[0].Id;
     this.Id = parseInt(this.route.snapshot.paramMap.get('id').trim(), 10);
@@ -94,6 +97,7 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
   
 
   ngOnInit() {
+    this.position = "bottom-right";
     this.putawayservice.getPutawayDetail(this.Id)
       .subscribe(
         (data: any) => {
@@ -192,8 +196,16 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ADDDetail(){
       if(this.tolocation == null || this.tolocation == undefined){
-        this.inserted = 'success'
-        this.message = 'Fill the below field'
+        let toastOptions: ToastOptions = {
+          title: 'Error',
+          msg: 'Kindly give location',
+          showClose: true,
+          timeout: 2000,
+          theme: 'default',
+
+        };
+        this.toastyService.error(toastOptions);
+        this.toastCommunicationService.setPosition(this.position);
       }
       else {
       let detail = {
@@ -210,8 +222,16 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
       .subscribe(
         (data: any) => {
           if (data) {
-            this.inserted = 'success';
-            this.message = "Product PutAway Successful.";
+            let toastOptions: ToastOptions = {
+              title: 'Success',
+              msg: 'PutAway Successful',
+              showClose: true,
+              timeout: 2000,
+              theme: 'default',
+
+            };
+            this.toastyService.success(toastOptions);
+            this.toastCommunicationService.setPosition(this.position);
             $("#modal").modal("hide");
             // setTimeout(() => {
             //   this.router.navigate(['/users/list']);

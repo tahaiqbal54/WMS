@@ -42,8 +42,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Vendor <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="role"
-                                      name="role" placeholder="Select Vendor" [(ngModel)]="OrderHeader.VendorId"
+                                                <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="vendor"
+                                      name="vendor" placeholder="Select Vendor" [(ngModel)]="OrderHeader.VendorId"
                                        ngDefaultControl required></ng-selectize>
                                             </div>
                                         </div>
@@ -83,8 +83,8 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role"
-                                      name="role" [ngClass]="{'error' : role?.errors?.required}" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
+                                                <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
+                                      name="warehouse" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
                                        ngDefaultControl required></ng-selectize>
                                             </div>
                                         </div>

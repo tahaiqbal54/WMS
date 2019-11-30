@@ -18,7 +18,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomFormsModule } from 'ng2-validation';
 import {FormsModule} from '@angular/forms';
 //import {UserDetailResolver, UsersResolver, UserViewResolver} from '../_guards';
-import {OrderService} from '../_services';
+import {OrderService,PutAwayService,NotificationCommunicationService} from '../_services';
+import {ToastyModule} from 'ng2-toasty'
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {OrderService} from '../_services';
     NgSelectizeModule,
     NgbModule,
     CustomFormsModule,
-    FormsModule
+    FormsModule,
+    ToastyModule.forRoot()
     /*NgModule*/
   ],
   declarations: [
@@ -45,6 +47,8 @@ import {OrderService} from '../_services';
     //UsersResolver,
     //UserDetailResolver,
     OrderService,
+    PutAwayService,
+    NotificationCommunicationService
     //UserViewResolver
   ]
 })

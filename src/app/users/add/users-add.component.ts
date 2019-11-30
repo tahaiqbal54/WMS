@@ -157,10 +157,6 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   SaveOrder() {
-
-
-
-
     if(this.OrderHeader.ASNDate &&
       this.OrderHeader.CustomerId &&
       this.OrderHeader.ExpectedRecvDate &&

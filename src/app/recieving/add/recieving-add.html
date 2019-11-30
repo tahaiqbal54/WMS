@@ -139,6 +139,8 @@
                                                           <th>Sr. No</th>
                                                           <th class="text-center">Product</th>
                                                           <th class="text-center">Expected Quantity</th>
+                                                          <th class="text-center">Recieved Quantity</th>
+                                                          <th class="text-center">Remaining Quantity</th>
                                                           <th>UOM</th>
                                                           <th>Action</th>
                                                       </tr>
@@ -164,6 +166,16 @@
                                                                   <span class="text-center">{{detail.QtyOrdered}}</span>
                                                               </div>
                                                           </td>
+                                                          <td>
+                                                            <div class="list-info mrg-top-10 text-center">
+                                                                <span class="text-center">{{detail.QtyReceived}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                          <div class="list-info mrg-top-10 text-center">
+                                                              <span class="text-center">{{detail.QtyRemained}}</span>
+                                                          </div>
+                                                      </td>
                                                           <td>
                                                               <div class="mrg-top-15">
                                                                   <span class="text-info"><b>{{detail.UnitName}}</b></span>
@@ -191,7 +203,7 @@
             </div>
         </div>
     </div>	
-    			
+    <button class="btn btn-primary" type="submit" [routerLink]="['/receiving/list']"  >Cancel</button>			
 </div>
 
 <div class="modal fade" id="modaladddis">
@@ -377,3 +389,6 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+    <ng2-toasty [position]="position"></ng2-toasty>

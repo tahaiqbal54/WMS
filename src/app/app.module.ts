@@ -67,7 +67,8 @@ import {CalendarComponent} from "ap-angular-fullcalendar/src/calendar/calendar";
     // SigninComponent,
     cardPortletRefresh,
     cardPortletDelete,
-    SignOutComponent
+    SignOutComponent,
+    CalendarComponent
   ],
   providers: [
     AuthGuard,
