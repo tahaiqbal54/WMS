@@ -134,47 +134,63 @@
                                           <div class="table-overflow">
                                               <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
-                                                      <tr>
-                                                          <th>Sr. No</th>
-                                                          <th class="text-center">Product</th>
-                                                          <th class="text-center">Expected Quantity</th>
-                                                          <th>UOM</th>
-                                                          <th>Action</th>
-                                                      </tr>
+                                                    <tr>
+                                                      <th>Sr. No</th>
+                                                      <th class="text-center">Product</th>
+                                                      <th class="text-center">Product Description</th>
+                                                      <th class="text-center">Expected Quantity</th>
+                                                      <th class="text-center">Pack Key</th>
+                                                      <th>UOM</th>
+                                                      <th>Action</th>
+                                                  </tr>
                                                   </thead>
                                                   <tbody>
-                                                      <tr *ngFor="let detail of OrderDetail; let i = index">
-                                                          <td>
-                                                            <div class="mrg-top-10">
-                                                                <div class="info">
-                                                                    <span class="title">{{i + 1}}</span>
-                                                                </div>
+                                                    <tr *ngFor="let detail of OrderDetail; let i = index">
+                                                      <td>
+                                                        <div class="mrg-top-10">
+                                                            <div class="info">
+                                                                <span class="title">{{i + 1}}</span>
                                                             </div>
-                                                          </td>
-                                                          <td>
-                                                              <div class="list-info mrg-top-10">
-                                                                  <div class="info">
-                                                                      <span class="title">{{detail.SKU}}</span>
-                                                                  </div>
+                                                        </div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="list-info mrg-top-10">
+                                                              <div class="info">
+                                                                  <span class="title">{{detail.SKU}}</span>
                                                               </div>
-                                                          </td>
-                                                          <td>
-                                                              <div class="list-info mrg-top-10 text-center">
-                                                                  <span class="text-center">{{detail.QtyOrdered}}</span>
-                                                              </div>
-                                                          </td>
-                                                          <td>
-                                                              <div class="mrg-top-15">
-                                                                  <span class="text-info"><b>{{detail.UnitName}}</b></span>
-                                                              </div>
-                                                          </td>
-                                                          <td>
-                                                              <div class="mrg-top-15">
-                                                                <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1">Edit</a>
-                                                                <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1">Delete</a>
-                                                              </div>
-                                                          </td>
-                                                      </tr>
+                                                          </div>
+                                                      </td>
+                                                      <td>
+                                                        <div class="list-info mrg-top-10">
+                                                            <div class="info">
+                                                                <span class="title">{{detail.Description}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                      <td>
+                                                          <div class="list-info mrg-top-10 text-center">
+                                                              <span class="text-center">{{detail.QtyOrdered}}</span>
+                                                          </div>
+                                                      </td>
+                                                      <td>
+                                                        
+                                                            <div class="list-info mrg-top-10 text-center">
+                                                                <span class=" text-center">{{detail.PackKey}}</span>
+                                                            </div>
+                                                        
+                                                    </td>
+                                                      <td>
+                                                          <div class="mrg-top-15">
+                                                              <span class="text-info"><b>{{detail.UnitName}}</b></span>
+                                                          </div>
+                                                      </td>
+                                                      <td>
+                                                          <div class="mrg-top-15">
+                                                            <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1">Edit</a>
+                                                            <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1">Delete</a>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
                                                   </tbody>
                                               </table>
                                           </div>

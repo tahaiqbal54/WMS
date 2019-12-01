@@ -246,7 +246,7 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
           },
           (error: any) => {
             console.log(error);
-            swal(error.error);
+            swal(error.error['Message']);
           }
         );
 
@@ -281,6 +281,25 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
     this.ExpiryDate = null;
     this.UDF = [];
     this.UOM = '';
+    console.log(this.OrderHeader.CustomerId);
+    this.orderservice
+      .getProducts(this.OrderHeader.CustomerId)
+      .subscribe(
+        (data: any) => {
+          this.product = data;
+          console.log(data);
+          data.forEach(customer => {
+            let obj = {
+              id: customer.Id,
+              ProductName: customer.SKU
+            };
+            this.ProductOptions.push(obj);
+          });
+          //this.customerOptions = data['Customer'];
+          console.log(this.ProductOptions);
+        },
+        (error: any) => console.log(error)
+      );
     setTimeout(() => {
       $('#modaladddis').modal('show');
     }, 1500);
@@ -311,7 +330,7 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ADDDetail() {
 
-    if(this.products.length > 0 && this.ManufactureDate && this.ExpiryDate && this.BatchNo != '' && this.Quantity){
+    if(this.products.length > 0 && this.Quantity){
 
       let detail = {
         Id: 0,
@@ -523,10 +542,7 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
     if(this.product.length > 0  &&
-      this.Quantity &&
-      this.BatchNo &&
-      this.ManufactureDate &&
-      this.ExpiryDate
+      this.Quantity 
     ) {
 
 

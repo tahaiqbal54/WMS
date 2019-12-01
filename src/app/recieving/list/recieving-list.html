@@ -28,7 +28,7 @@
               <tr *ngFor="let data of users; let i = index">
                 <!--<td class="text-center">{{ user.id }}</td>-->
                 <td class="text-center">{{ data.ASNNo }}</td>
-                <td class="text-center">{{ data.ASNDate }}</td>
+                <td class="text-center">{{ data.ASNDate | date: 'MMM d, y' }}</td>
                 <td class="text-center">{{ data.WarehouseName }}</td>
                 <td class="text-center">{{ data.CustomerName }}</td>
                 <td class="text-center">{{ data.VendorName }}</td>

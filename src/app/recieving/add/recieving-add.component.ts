@@ -134,7 +134,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
     ADDDetail(){
-      if(this.Quantity == null || this.Quantity == undefined || this.BatchNo == null || this.BatchNo == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined || this.ExpiryDate == null || this.ExpiryDate == undefined || this.ManufactureDate == null || this.ManufactureDate == undefined || this.ReceiptDate == null || this.ReceiptDate == undefined){
+      if(this.Quantity == null || this.Quantity == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined || this.ReceiptDate == null || this.ReceiptDate == undefined){
         let toastOptions: ToastOptions = {
           title: 'Error',
           msg: 'Fill All Fields',
@@ -185,6 +185,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
             // }, 3000);
           }
           console.log(data);
+          window.location.reload();
           //this.OrderDetail = data;
           //this.rerender();
         }, 

@@ -109,14 +109,15 @@ export class OrderService {
       }),
       // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
     };
-    console.log(Customer_id);
     return this.http
       .get(this.APIConfig.getUrl(this.API.GET_PRODUCT, "CustomerId="+ Customer_id), httpOptions)
       .pipe(
         map((data: any) => {
           if (data.success) {
+            
             return data.data;
           }
+          console.log(data);
           return data;
         })
       );

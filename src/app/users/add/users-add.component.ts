@@ -260,7 +260,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ADDDetail() {
-    if(this.products != 0 && this.ManufactureDate && this.ExpiryDate && this.BatchNo != '' && this.Quantity){
+    if(this.products != 0 && this.Quantity){
 
       let detail = {
         Id: 0,
@@ -451,10 +451,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
     if(
       this.product.length > 0  &&
-      this.Quantity &&
-      this.BatchNo &&
-      this.ManufactureDate &&
-      this.ExpiryDate
+      this.Quantity
     ) {
 
       let detail = {
