@@ -36,7 +36,7 @@ export class APIConstants {
         LIST_ORDERS: '/Purchases/GetPurchases',
         SAVE_PURCHASE: '/Purchases',
         EDIT_USER: '/users',
-        GET_WAREHOUSES: '/Warehouses/GetWarehouseByUserId',
+        GET_WAREHOUSES: '/Warehouses/GetWarehouseByCustomerId',
         GET_CUSTOMER: '/Customers/GetCustomerByUserId',
         GET_VENDOR: '/Customers/GetVendorByCustomerID',
         GET_PRODUCT: '/Products/CustomerProducts',

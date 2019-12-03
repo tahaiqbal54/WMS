@@ -34,7 +34,7 @@ export class OrderService {
   //     .pipe(catchError(this.handleError));
   // }
 
-  getWarehouses(user_id: any) {
+  getWarehouses(Customer_Id: any) {
 
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
@@ -45,7 +45,7 @@ export class OrderService {
     };
     console.log(httpOptions);
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_WAREHOUSES,"Userid="+ user_id), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_WAREHOUSES,"Customerid="+ Customer_Id), httpOptions)
       .pipe(
         map((data: any) => {
           if (data) {
