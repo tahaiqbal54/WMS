@@ -47,7 +47,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   ManufactureDate: Date;
   ExpiryDate: Date;
   BatchNo: any;
-  ASNNO: any;
+  ASNNO: any = null;
   LineId: any;
   detailId: any = 0;
   index: any;
@@ -370,17 +370,9 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.orderservice.DeletePurchaseDetail(Id, this.ASNNO)
           .subscribe(
             (data: any) => {
-              // if (data) {
-              //   this.inserted = 'success';
-              //   this.message = "The Order has been created.";
-              //   // setTimeout(() => {
-              //   //   this.router.navigate(['/users/list']);
-              //   // }, 3000);
-              // }
-              console.log(data);
+
               this.OrderDetail.splice(index, 1);
-              //this.OrderDetail = data;
-              //this.rerender();
+
 
               let toastOptions: ToastOptions = {
                 title: 'Delete',
@@ -422,18 +414,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             this.BatchNo = data.BatchNo;
             this.ManufactureDate = new Date(data.ManDate);
             this.ExpiryDate = new Date(data.ExpDate);
-            // console.log(this.LineId);
-            // console.log(this.products);
-            // console.log(this.UnitId);
-            // console.log(this.Quantity);
-            // console.log(this.PackId);
-            // console.log(this.Pack);
-            // console.log(this.BatchNo);
-            console.log(this.ManufactureDate);
-            console.log(this.ExpiryDate);
-            // console.log(this.UDF);
-            // console.log(detailId);
-            // console.log(this.ASNNO);
+
           });
           setTimeout(() => {
             $('#modaladddis').modal('show');
