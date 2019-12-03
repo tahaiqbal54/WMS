@@ -70,28 +70,20 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>ASN Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="date" [value]="
-                                                OrderHeader.ASNDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ASNDate = parseDate($event.target.value)" class="form-control" placeholder="Enter ASN Date" name="email">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role2"
-                                      name="role2" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
-                                       ngDefaultControl required></ng-selectize>
-                                            </div>
-                                        </div>
+                                       
+                                          <div class="col-md-6">
+                                              <div class="form-group">
+                                                  <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                  <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role2"
+                                        name="role2" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
+                                         ngDefaultControl required></ng-selectize>
+                                              </div>
+                                          </div>
+                                    
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Status <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="text" class="form-control" value="New" placeholder="Enter Status" disabled="true" name="email">
+                                                <input type="text" class="form-control" [(ngModel)]="status" placeholder="Enter Status" disabled="true" name="status">
 
                                             </div>
                                         </div>

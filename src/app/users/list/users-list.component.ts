@@ -33,18 +33,39 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        emptyTable: "No users found"
+      },
+      columnDefs: [
+        { width: "20%", searchable: true, targets: 1 },
+        { orderData: 6, targets: 2},
+        { visible: false, targets: 6 }
+      ]
+    };
     this.orderservice.getPurchase(this.user_id)
       .subscribe(
         (data: any) => {
-          this.users = data;
-          console.log(this.users);
-          this.dtOptions = {
-            pagingType: 'full_numbers',
-            language: {
-              emptyTable: "No users found"
-            },
+          data.sort(function(o) {
+            return new Date(o.ASNDate);
+          });
+          data.reverse();
+          let count = 0;
 
-          };
+          data.forEach(order => {
+              if (order.ASNDate != null) {
+                order[
+                  "ASNDate_formatted"
+                ] = order.ASNDate.split("T").shift();
+                order.sortOrder = count++;
+              } else order.sortOrder = data.length;
+              order[
+                "ASNDate_formatted"
+              ] = order.ASNDate.split("T").shift();
+              this.users.push(order);
+          });
+          console.log(this.users);
           this.rerender();
         (error: any) => {
           console.log(error);

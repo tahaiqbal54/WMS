@@ -53,6 +53,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   index: any;
 
   position:any;
+  AsnNo: any;
 
 
   constructor(private router: Router, private orderservice: OrderService,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
@@ -102,15 +103,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.OrderDetail = [];
     this.dtTrigger.next();
     this.OrderHeader = new OrderHeader();
-    this.orderservice
-      .getWarehouses(this.user_id)
-      .subscribe(
-        (data: any) => {
-          this.warehouseOptions = data['Warehouse'];
-          console.log(this.warehouseOptions);
-        },
-        (error: any) => console.log(error)
-      );
+    
 
     this.orderservice
       .getCustomers(this.user_id)
@@ -142,6 +135,15 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
         },
         (error: any) => console.log(error)
       );
+      this.orderservice
+      .getWarehouses(event)
+      .subscribe(
+        (data: any) => {
+          this.warehouseOptions = data['CustomerWrehouseList'];
+          console.log(this.warehouseOptions);
+        },
+        (error: any) => console.log(error)
+      );
   }
 
   onQCChange(event: any, value: boolean): void {
@@ -157,7 +159,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   SaveOrder() {
-    if(this.OrderHeader.ASNDate &&
+    if(this.OrderHeader.ExternReceiptNo &&
       this.OrderHeader.CustomerId &&
       this.OrderHeader.ExpectedRecvDate &&
       this.OrderHeader.ReferenceNo1 !== '' &&
@@ -185,10 +187,11 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             }
 
             this.ASNNO = data.Id;
+            this.AsnNo = data.ASNNo;
           },
           (error: any) => {
             console.log(error);
-            swal(error.error);
+            swal(error.error['Message']);
 
 
           }
@@ -517,7 +520,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
          //   this.message = 'The Order has been created.';
             let toastOptions: ToastOptions = {
               title: 'Success',
-              msg: 'The Order has been created',
+              msg: 'The Order has been Submitted',
               showClose: true,
               timeout: 2000,
               theme: 'default',
@@ -527,6 +530,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             this.toastCommunicationService.setPosition(this.position);
           }
           console.log(data);
+          this.router.navigate(['/users/list']);
         },
         (error: any) => {
           console.log(error);

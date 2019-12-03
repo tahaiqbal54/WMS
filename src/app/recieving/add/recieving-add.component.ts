@@ -134,7 +134,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
     ADDDetail(){
-      if(this.Quantity == null || this.Quantity == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined || this.ReceiptDate == null || this.ReceiptDate == undefined){
+      if(this.Quantity == null || this.Quantity == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined){
         let toastOptions: ToastOptions = {
           title: 'Error',
           msg: 'Fill All Fields',
@@ -161,7 +161,6 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         BatchNo: this.BatchNo,
         ManDate:this.ManufactureDate,
         ExpDate: this.ExpiryDate,
-        ReceiptDate: this.ReceiptDate,
         LocationId : 1,
         QCRequired: true,        
       }

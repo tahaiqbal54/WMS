@@ -13,9 +13,9 @@ export class OrderHeader {
   public ExpectedRecvDate: Date;
 
   constructor(data?: any) {
-    console.log('Enter1');
+    
     if (data) {
-      console.log('Enter2');
+      
       this.Id = parseInt(data.id, 0);
       this.ASNNO = data.ASNNO || '';
       this.ASNDate = (data.ASNDate) ? new Date(data.ASNDate) : null;

@@ -349,25 +349,6 @@
                         />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Receipt Date</label>
-                        <input 
-                          class="form-control"
-                          [value]="
-                          ReceiptDate
-                                    | date: 'yyyy-MM-dd'
-                                "
-                                (input)="
-                                ReceiptDate = parseDate(
-                                    $event.target.value
-                                  )
-                                "
-                          placeholder="Expiry Date"
-                          type="date"
-                        />
-                    </div>
-                  </div>
                 </div>
                 
                 <div class="row">

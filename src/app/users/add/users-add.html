@@ -19,7 +19,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ASN NO</label>
-                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="ASNNO" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
+                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="AsnNo" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -72,22 +72,15 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>ASN Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="date" [(ngModel)]="OrderHeader.ASNDate" class="form-control" placeholder="Enter ASN Date" ngModel name="email" #email="ngModel">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                          <div class="form-group">
+                                              <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                              <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
+                                    name="warehouse" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
+                                     ngDefaultControl required></ng-selectize>
+                                          </div>
+                                      </div>
+                                   </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
-                                      name="warehouse" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
-                                       ngDefaultControl required></ng-selectize>
-                                            </div>
-                                        </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Status</label>
@@ -105,7 +98,7 @@
                                         </div>
 
                                     </div>
-                                    <button [disabled]="ASNNO" class="btn btn-primary" type="submit" (click)="SaveOrder()">Save</button>
+                                    <button [disabled]="AsnNo" class="btn btn-primary" type="submit" (click)="SaveOrder()">Save</button>
                                   <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
                                 </form>
                             </div>

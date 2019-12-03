@@ -21,6 +21,7 @@
                 <th class="text-center">Customer Name</th>
                 <th class="text-center">Supplier Name</th>
                 <th class="text-center">Status</th>
+                <th class="text-center">Order</th>
                <th class="text-center">Actions</th>
               </tr>
               </thead>
@@ -28,11 +29,16 @@
               <tr *ngFor="let data of users; let i = index">
                 <!--<td class="text-center">{{ user.id }}</td>-->
                 <td class="text-center">{{ data.ASNNo }}</td>
-                <td class="text-center">{{ data.ASNDate | date: 'MMM d, y' }}</td>
+                <td class="text-center">{{ data.ASNDate_formatted}}</td>
                 <td class="text-center">{{ data.WarehouseName }}</td>
                 <td class="text-center">{{ data.CustomerName }}</td>
                 <td class="text-center">{{ data.VendorName }}</td>
                 <td class="text-center">{{ data.Status }}</td>
+                <td>
+                  <div class="text-center">
+                    <span class=""><b>{{data.sortOrder }}</b></span>
+                  </div>
+                </td>
                  <td class="text-center">
                   <a [routerLink]="['/receiving/add/' + data.Id]" *ngIf="data.StatusId != 2" class="btn btn-default p-1">Receive</a>
                   <a (click)="checkstatus(data.StatusId,data.Id)" *ngIf="data.StatusId == 2" class="btn btn-default p-1">Receive</a>

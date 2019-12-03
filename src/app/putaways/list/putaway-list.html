@@ -17,6 +17,7 @@
                 <th class="text-center">Customer Name</th>
                 <th class="text-center">Warehouse Name</th>
                 <th class="text-center">Status</th>
+                <th class="text-center">Order</th>
                <th class="text-center">Actions</th>
               </tr>
               </thead>
@@ -24,11 +25,16 @@
               <tr *ngFor="let data of users; let i = index">
                 <!--<td class="text-center">{{ user.id }}</td>-->
                 <td class="text-center">{{ data.ASNNo }}</td>
-                <td class="text-center">{{ data.ReceiptDate | date: 'MMM d, y' }}</td>
+                <td class="text-center">{{ data.ReceiptDate_formatted}}</td>
                 <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
                 <td class="text-center">{{ data.Customer }}</td>
                 <td class="text-center">{{ data.Warehouse }}</td>
                 <td class="text-center">{{ data.Status }}</td>
+                <td>
+                  <div class="text-center">
+                    <span class=""><b>{{data.sortOrder }}</b></span>
+                  </div>
+                </td>
                  <td class="text-center">
                   <a [routerLink]="['/putaway/add/' + data.PurchaseId]" class="btn btn-default p-1">Put Away</a>
                   <!-- <a class="btn btn-default p-1" (click)="DeleteASN(data.Id,i)">Delete</a> -->

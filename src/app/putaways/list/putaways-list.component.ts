@@ -36,18 +36,39 @@ export class PutawaysListComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        emptyTable: "No users found"
+      },
+      columnDefs: [
+        { width: "20%", searchable: true, targets: 1 },
+        { orderData: 5, targets: 2},
+        { visible: false, targets: 5 }
+      ]
+    };
     this.orderservice.getPutaway(this.user_id)
       .subscribe(
         (data: any) => {
-          this.users = data;
-          console.log(this.users);
-          this.dtOptions = {
-            pagingType: 'full_numbers',
-            language: {
-              emptyTable: "No users found"
-            },
-            
-          };
+          console.log(data);
+          data.sort(function(o) {
+            return new Date(o.ReceiptDate);
+          });
+          data.reverse();
+          let count = 0;
+
+          data.forEach(order => {
+              if (order.ReceiptDate != null) {
+                order[
+                  "ReceiptDate_formatted"
+                ] = order.ReceiptDate.split("T").shift();
+                order.sortOrder = count++;
+              } else order.sortOrder = data.length;
+              order[
+                "ReceiptDate_formatted"
+              ] = order.ReceiptDate.split("T").shift();
+              this.users.push(order);
+          });
           this.rerender();
         (error: any) => {
           console.log(error);
