@@ -309,20 +309,20 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   }
 
-  onProductChange(event) {
+  onProductChange(event) {  
     console.log(this.product);
     this.product.forEach(product => {
       if (event == product.Id) {
         this.Description = product.Description;
-        this.UOM = product.Unit.UnitName;
-        this.Pack = product.Pack.PackCode;
+        this.UOM = product.UnitName;
+        this.Pack = product.PackKey;
         this.UDF.push(product.UDF1);
         this.UDF.push(product.UDF2);
         this.UDF.push(product.UDF3);
         this.UDF.push(product.UDF4);
         this.UDF.push(product.UDF5);
-        this.UnitId = product.Unit.Id;
-        this.PackId = product.Pack.Id;
+        this.UnitId = product.UnitId;
+        this.PackId = product.PackId;
       }
       console.log(this.Description);
       console.log(this.UOM);
@@ -472,6 +472,10 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   }
 
+  CloseDetail(){
+    $("#modaladddis").modal("hide");
+  }
+
   editDetail(Id: any, index: any) {
     this.products = '';
     this.UnitId = '';
@@ -513,8 +517,16 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
             this.products = data.ProductId;
             this.Quantity = data.QtyOrdered;
             this.BatchNo = data.BatchNo;
-            this.ManufactureDate = new Date(data.ManDate);
-            this.ExpiryDate = new Date(data.ExpDate);
+            if(data.ManDate){
+              this.ManufactureDate = new Date(data.ManDate);
+            }else{
+              this.ManufactureDate = null;
+            }
+            if(data.ExpDate){
+              this.ExpiryDate = new Date(data.ExpDate);
+            }else{
+              this.ExpiryDate = null;
+            }
             //this.onProductChange(this.products);
             // console.log(this.LineId);
             // console.log(this.products);

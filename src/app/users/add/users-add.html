@@ -244,7 +244,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Expected Quantity <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>Expected Quantity </label>
                   <input
                     class="form-control"
                     [(ngModel)]="Quantity"
@@ -255,7 +255,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>UOM <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>UOM </label>
                   <input [disabled]="true"
                          class="form-control"
                          [(ngModel)]="UOM"
@@ -267,7 +267,7 @@
 
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Pack Key <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>Pack Key </label>
                   <input [disabled]="true"
                          class="form-control"
                          [(ngModel)]="Pack"
@@ -278,7 +278,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Batch No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>Batch No </label>
                   <input
                     class="form-control"
                     [(ngModel)]="BatchNo"
@@ -289,7 +289,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Manufacture Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>Manufacture Date </label>
                   <input
                     class="form-control"
                     [value]="
@@ -308,7 +308,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Expiry Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>Expiry Date </label>
                   <input
                     class="form-control"
                     [value]="
@@ -329,7 +329,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>UDF <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <label>UDF </label>
                   <input [disabled]="true" *ngFor="let udf of UDF"
                          class="form-control"
                          value="{{udf}}"
@@ -355,6 +355,13 @@
                    (click)="UpdateDetail()"
                 >Update</a
                 >
+                <a 
+                    href="#"
+                    onclick="return false;"
+                    class="btn btn-info"
+                    (click)="CloseDetail()"
+                    >Close</a
+                  >
               </div>
               <!-- <div class="mrg-top-20" *ngIf="status == 'success'">
                                     <a href="#" onclick="return false;" data-dismiss="modal" class="btn btn-info" (click)="add()" >ADD</a>

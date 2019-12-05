@@ -36,7 +36,7 @@ export class UsersListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
       language: {
-        emptyTable: "No users found"
+        emptyTable: "No orders found"
       },
       columnDefs: [
         { width: "20%", searchable: true, targets: 1 },

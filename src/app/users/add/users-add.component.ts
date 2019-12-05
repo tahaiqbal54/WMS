@@ -217,6 +217,17 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   adddismodal() {
+    this.products = '';
+    this.UnitId = '';
+    this.Quantity = '';
+    this.PackId = '';
+    this.Pack = '';
+    this.Description = '';
+    this.BatchNo = '';
+    this.ManufactureDate = null;
+    this.ExpiryDate = null;
+    this.UDF = [];
+    this.UOM = '';
     this.orderservice
       .getProducts(this.customer_id)
       .subscribe(
@@ -245,21 +256,25 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.product.forEach(product => {
       if (event == product.Id) {
         this.Description = product.Description;
-        this.UOM = product.Unit.UnitName;
-        this.Pack = product.Pack.PackCode;
+        this.UOM = product.UnitName;
+        this.Pack = product.PackKey;
         this.UDF.push(product.UDF1);
         this.UDF.push(product.UDF2);
         this.UDF.push(product.UDF3);
         this.UDF.push(product.UDF4);
         this.UDF.push(product.UDF5);
-        this.UnitId = product.Unit.Id;
-        this.PackId = product.Pack.Id;
+        this.UnitId = product.UnitId;
+        this.PackId = product.PackId;
       }
       console.log(this.Description);
       console.log(this.UOM);
       console.log(this.Pack);
       console.log(this.UDF);
     });
+  }
+
+  CloseDetail(){
+    $("#modaladddis").modal("hide");
   }
 
   ADDDetail() {
@@ -302,25 +317,14 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             }
             this.OrderDetail = data;
             this.rerender();
+            $('#modaladddis').modal('hide');
           },
           (error: any) => {
             console.log(error);
             swal(error.error['Message']);
           }
         );
-
-      this.products = '';
-      this.UnitId = '';
-      this.Quantity = '';
-      this.PackId = '';
-      this.Pack = '';
-      this.Description = '';
-      this.BatchNo = '';
-      this.ManufactureDate = null;
-      this.ExpiryDate = null;
-      this.UDF = [];
-      this.UOM = '';
-      $('#modaladddis').modal('hide');
+      
 
     }
     else{
@@ -415,9 +419,16 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             this.products = data.ProductId;
             this.Quantity = data.QtyOrdered;
             this.BatchNo = data.BatchNo;
-            this.ManufactureDate = new Date(data.ManDate);
-            this.ExpiryDate = new Date(data.ExpDate);
-
+            if(data.ManDate){
+              this.ManufactureDate = new Date(data.ManDate);
+            }else{
+              this.ManufactureDate = null;
+            }
+            if(data.ExpDate){
+              this.ExpiryDate = new Date(data.ExpDate);
+            }else{
+              this.ExpiryDate = null;
+            }
           });
           setTimeout(() => {
             $('#modaladddis').modal('show');
@@ -477,6 +488,18 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
             }
             console.log(data);
             this.OrderDetail = data;
+            this.products = '';
+            this.UnitId = '';
+            this.Quantity = '';
+            this.PackId = '';
+            this.BatchNo = '';
+            this.ManufactureDate = null;
+            this.ExpiryDate = null;
+            this.UDF = [];
+            this.Pack = '';
+            this.Description = '';
+            this.UOM = '';
+            $('#modaladddis').modal('hide');
           },
           (error: any) => {
             console.log(error);
@@ -484,19 +507,6 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
           }
         );
       //this.ASNNO = '';
-      this.products = '';
-      this.UnitId = '';
-      this.Quantity = '';
-      this.PackId = '';
-      this.BatchNo = '';
-      this.ManufactureDate = null;
-      this.ExpiryDate = null;
-      this.UDF = [];
-      this.Pack = '';
-      this.Description = '';
-      this.UOM = '';
-      $('#modaladddis').modal('hide');
-
     }else{
       let toastOptions: ToastOptions = {
         title: 'Missing Field',
