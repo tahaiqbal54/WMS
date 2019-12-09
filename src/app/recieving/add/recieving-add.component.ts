@@ -134,7 +134,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
     ADDDetail(){
-      if(this.Quantity == null || this.Quantity == undefined || this.LPNNo == null || this.LPNNo == undefined || this.LOTNo == null ||this.LOTNo == undefined){
+      if(this.Quantity == null || this.Quantity == undefined || this.LPNNo == null || this.LPNNo == undefined){
         let toastOptions: ToastOptions = {
           title: 'Error',
           msg: 'Fill All Fields',
@@ -155,7 +155,6 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         ProductId:this.productId,
         UnitId: this.UnitId,
         QtyOrdered: this.Quantity,
-        LOTNo: this.LOTNo,
         LPNNo: this.LPNNo,
         PackId: this.PackId,
         BatchNo: this.BatchNo,
@@ -185,6 +184,18 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
           }
           console.log(data);
           window.location.reload();
+          this.products = '';
+          this.UnitId = '';
+          this.Quantity = '';
+          this.PackId = '';
+          this.Pack = '';
+          this.Description = '';
+          this.BatchNo = '';
+          this.ManufactureDate = null;
+          this.ExpiryDate = null;
+          this.UDF = [];
+          this.UOM = '';
+          $("#modaladddis").modal("hide");
           //this.OrderDetail = data;
           //this.rerender();
         }, 
@@ -194,19 +205,12 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         }
       );
       //this.ASNNO = '';
-      this.products = '';
-      this.UnitId = '';
-      this.Quantity = '';
-      this.PackId = '';
-      this.Pack = '';
-      this.Description = '';
-      this.BatchNo = '';
-      this.ManufactureDate = null;
-      this.ExpiryDate = null;
-      this.UDF = [];
-      this.UOM = '';
-      $("#modaladddis").modal("hide");
+      
     }
+    }
+
+    CloseDetail(){
+      $("#modaladddis").modal("hide");
     }
 
 
@@ -241,7 +245,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.LineId = data.LineId;
         this.products= data.SKU;
         this.productId = data.ProductId;
-        this.Quantity = data.QtyOrdered;
+        this.Quantity = data.QtyRemained;
         this.BatchNo = data.BatchNo;
         this.ManufactureDate = new Date(data.ManDate);
         this.ExpiryDate = new Date(data.ExpDate);

@@ -86,7 +86,7 @@
                           <p class="mrg-btm-15 font-size-13">Please enter your user name and password to login</p>
                           <form class="ng-pristine ng-valid" #loginForm="ngForm">
                             <div class="form-group">
-                              <input type="email" class="form-control" placeholder="User name" [(ngModel)]="email" name="email" id="email"  #username="ngModel" [ngClass]="{'error': username?.errors?.email}" email required>
+                              <input type="email" class="form-control" placeholder="User name" [(ngModel)]="email" name="email" id="email"  #username="ngModel" required>
                             </div>
                             <div class="form-group">
                               <input type="password" class="form-control" placeholder="Password" [(ngModel)]="password" name="password" #pwd="ngModel" [ngClass]="{'error': pwd?.errors?.minlength}" minlength="5" required>
