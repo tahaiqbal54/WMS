@@ -96,7 +96,20 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
       .subscribe(
         (data: any) => {
           console.log(data);
-          this.OrderDetail = data;
+          data.sort(function(o) {
+            return new Date(o.ManDate);
+          });
+          data.reverse();
+          let count = 0;
+
+          data.forEach(order => {
+              if (order.ManDate != null) {
+                order.ManDate = order.ManDate.split("T").shift();
+                
+              } 
+              this.OrderDetail.push(order);
+          });
+         // this.OrderDetail = data;
           this.dtOptions = {
             pagingType: 'full_numbers',
             language: {
@@ -372,8 +385,24 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
             }
             console.log(data);
-            this.OrderDetail = data;
+            data.sort(function(o) {
+              return new Date(o.ManDate);
+            });
+            data.reverse();
+            let count = 0;
+  
+            data.forEach(order => {
+                if (order.ManDate != null) {
+                  order.ManDate = order.ManDate.split("T").shift();
+                  
+                } else 
+                order.ManDate = order.ManDate.split("T").shift();
+                this.OrderDetail.push(order);
+            });
+  
+            //this.OrderDetail = data;
             this.rerender();
+            $('#modaladddis').modal('hide');
           },
           (error: any) => {
             console.log(error);
@@ -381,9 +410,6 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
           }
         );
       //this.ASNNO = '';
-
-      $('#modaladddis').modal('hide');
-
     }
     else{
       let toastOptions: ToastOptions = {

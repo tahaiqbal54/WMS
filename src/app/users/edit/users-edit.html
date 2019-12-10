@@ -131,6 +131,8 @@
                                                       <th class="text-center">Product</th>
                                                       <th class="text-center">Product Description</th>
                                                       <th class="text-center">Expected Quantity</th>
+                                                      <th class="text-center">Batch No</th>
+                                                      <th class="text-center">Manufacture Date</th>
                                                       <th class="text-center">Pack Key</th>
                                                       <th>UOM</th>
                                                       <th>Action</th>
@@ -147,32 +149,42 @@
                                                       </td>
                                                       <td>
                                                           <div class="list-info mrg-top-10">
-                                                              <div class="info">
+                                                              <div class="info text-left">
                                                                   <span class="title">{{detail.SKU}}</span>
                                                               </div>
                                                           </div>
                                                       </td>
                                                       <td>
                                                         <div class="list-info mrg-top-10">
-                                                            <div class="info">
+                                                            <div class="info text-left">
                                                                 <span class="title">{{detail.Description}}</span>
                                                             </div>
                                                         </div>
                                                     </td>
                                                       <td>
-                                                          <div class="list-info mrg-top-10 text-center">
+                                                          <div class="list-info mrg-top-10 text-right">
                                                               <span class="text-center">{{detail.QtyOrdered}}</span>
                                                           </div>
                                                       </td>
                                                       <td>
+                                                        <div class="list-info mrg-top-10 text-left">
+                                                            <span class="text-center">{{detail.BatchNo}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                      <div class="list-info mrg-top-10 text-left">
+                                                          <span class="text-center">{{detail.ManDate}}</span>
+                                                      </div>
+                                                  </td>
+                                                      <td>
                                                         
-                                                            <div class="list-info mrg-top-10 text-center">
+                                                            <div class="list-info mrg-top-10 text-left">
                                                                 <span class=" text-center">{{detail.PackKey}}</span>
                                                             </div>
                                                         
                                                     </td>
                                                       <td>
-                                                          <div class="mrg-top-15">
+                                                          <div class="mrg-top-15 text-left">
                                                               <span class="text-info"><b>{{detail.UnitName}}</b></span>
                                                           </div>
                                                       </td>

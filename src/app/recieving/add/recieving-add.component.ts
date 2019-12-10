@@ -54,6 +54,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
   LOTNo: any;
   LPNNo: any;
   position:any;
+  expQuantity: any;
 
   constructor(private router: Router,private orderservice: OrderService,private receiveservice: ReceiveService,private route: ActivatedRoute,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -114,8 +115,8 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.receiveservice.getReceiveDetails(this.Id)
       .subscribe(
         (data: any) => {
-          this.OrderDetail = data;
-          console.log(this.OrderDetail);
+          // this.OrderDetail = data;
+          // console.log(this.OrderDetail);
           this.dtOptions = {
             pagingType: 'full_numbers',
             language: {
@@ -123,6 +124,19 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
             },
             
           };
+          data.sort(function(o) {
+            return new Date(o.ManDate);
+          });
+          data.reverse();
+          let count = 0;
+
+          data.forEach(order => {
+              if (order.ManDate) {
+                order.ManDate = order.ManDate.split("T").shift();
+                
+              } 
+              this.OrderDetail.push(order);
+          });
           this.rerender();
         (error: any) => {
           console.log(error);
@@ -246,8 +260,11 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.products= data.SKU;
         this.productId = data.ProductId;
         this.Quantity = data.QtyRemained;
+        this.expQuantity = data.QtyOrdered;
         this.BatchNo = data.BatchNo;
+        if(data.ManDate)
         this.ManufactureDate = new Date(data.ManDate);
+        if(data.ExpDate)
         this.ExpiryDate = new Date(data.ExpDate);
         this.UOM = data.UnitName;
         this.Description = data.Description;
