@@ -315,21 +315,7 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
               this.toastyService.success(toastOptions);
               this.toastCommunicationService.setPosition(this.position);
             }
-            console.log(data);
-            data.sort(function(o) {
-              return new Date(o.ManDate);
-            });
-            data.reverse();
-            let count = 0;
-  
-            data.forEach(order => {
-                if (order.ManDate != null) {
-                  order.ManDate = order.ManDate.split("T").shift();
-                  
-                } 
-                this.OrderDetail.push(order);
-            });
-            //this.OrderDetail = data;
+            this.OrderDetail = data;
             this.rerender();
             $('#modaladddis').modal('hide');
           },

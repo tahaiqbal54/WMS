@@ -141,8 +141,6 @@
                                                           <th class="text-center">Expected Quantity</th>
                                                           <th class="text-center">Recieved Quantity</th>
                                                           <th class="text-center">Remaining Quantity</th>
-                                                          <th class="text-center">Batch No</th>
-                                                          <th class="text-center">Manufacture Date</th>
                                                           <th>UOM</th>
                                                           <th>Action</th>
                                                       </tr>
@@ -178,16 +176,6 @@
                                                               <span class="text-center">{{detail.QtyRemained}}</span>
                                                           </div>
                                                       </td>
-                                                      <td>
-                                                        <div class="list-info mrg-top-10 text-center">
-                                                            <span class="text-center">{{detail.BatchNo}}</span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                      <div class="list-info mrg-top-10 text-center">
-                                                          <span class="text-center">{{detail.ManDate}}</span>
-                                                      </div>
-                                                  </td>
                                                           <td>
                                                               <div class="mrg-top-15">
                                                                   <span class="text-info"><b>{{detail.UnitName}}</b></span>
@@ -215,7 +203,7 @@
             </div>
         </div>
     </div>	
-    <button class="btn btn-primary" type="submit" [routerLink]="['/receiving/list']"  >Close</button>			
+    <button class="btn btn-primary" type="submit" [routerLink]="['/receiving/list']"  >Cancel</button>			
 </div>
 
 <div class="modal fade" id="modaladddis">
@@ -256,23 +244,12 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-6">
                     <div class="form-group">
                         <label>Recieved Quantity</label>
                         <input
                           class="form-control"
                           [(ngModel)]="Quantity"
-                          placeholder="Expected Quantity"
-                          type="number"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                        <label>Expected Quantity</label>
-                        <input [disabled]="true"
-                          class="form-control"
-                          [(ngModel)]="expQuantity"
                           placeholder="Expected Quantity"
                           type="number"
                         />

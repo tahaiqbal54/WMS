@@ -101,8 +101,8 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.putawayservice.getPutawayDetail(this.Id)
       .subscribe(
         (data: any) => {
-          // this.OrderDetail = data;
-          // console.log(this.OrderDetail);
+          this.OrderDetail = data;
+          console.log(this.OrderDetail);
           this.dtOptions = {
             pagingType: 'full_numbers',
             language: {
@@ -110,19 +110,6 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
             },
             
           };
-          data.sort(function(o) {
-            return new Date(o.ManDate);
-          });
-          data.reverse();
-          let count = 0;
-
-          data.forEach(order => {
-              if (order.ManDate) {
-                order.ManDate = order.ManDate.split("T").shift();
-                
-              } 
-              this.OrderDetail.push(order);
-          });
           this.rerender();
         (error: any) => {
           console.log(error);
@@ -198,8 +185,6 @@ export class PutAwayAddComponent implements AfterViewInit, OnDestroy, OnInit {
    }
 
    OpenModal(index: any){
-     this.fromlocation = '';
-     this.tolocation = '';
      this.fromlocation = this.OrderDetail[index].Location;
      this.productId = this.OrderDetail[index].ProductId;
      this.LPNNo = this.OrderDetail[index].LPNNo;
