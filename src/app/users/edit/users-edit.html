@@ -127,77 +127,63 @@
                                               <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
                                                     <tr>
-                                                      <th>Sr. No</th>
+                                                      <th class="text-center">Sr. No</th>
                                                       <th class="text-center">Product</th>
                                                       <th class="text-center">Product Description</th>
                                                       <th class="text-center">Expected Quantity</th>
+                                                      <th class="text-center">Batch No</th>
+                                                      <th class="text-center">UOM</th>
                                                       <th class="text-center">Pack Key</th>
-                                                      <th>UOM</th>
+                                                      <th class="text-center">Unit Name</th>
                                                       <th>Action</th>
                                                   </tr>
                                                   </thead>
                                                   <tbody>
                                                     <tr *ngFor="let detail of OrderDetail; let i = index">
                                                       <td>
-                                                        <div class="mrg-top-10">
-                                                            <div class="info">
+                                                            <div class="info mrg-top-5 text-center">
                                                                 <span class="title">{{i + 1}}</span>
                                                             </div>
-                                                        </div>
                                                       </td>
                                                       <td>
-                                                          <div class="list-info mrg-top-10">
-                                                              <div class="info">
+                                                              <div class="info mrg-top-5 text-center">
                                                                   <span class="title">{{detail.SKU}}</span>
                                                               </div>
-                                                          </div>
                                                       </td>
                                                       <td>
-                                                        <div class="list-info mrg-top-10">
-                                                            <div class="info">
+                                                            <div class="info mrg-top-5 text-center">
                                                                 <span class="title">{{detail.Description}}</span>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                      </td>
                                                       <td>
-                                                          <div class="list-info mrg-top-10 text-center">
+                                                          <div class="list-info mrg-top-5 text-center">
                                                               <span class="text-center">{{detail.QtyOrdered}}</span>
                                                           </div>
                                                       </td>
                                                       <td>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                        <div class="list-info mrg-top-10 text-left">
+                                                        <div class="list-info mrg-top-5 text-center">
                                                             <span class="text-center">{{detail.BatchNo}}</span>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                      <div class="list-info mrg-top-10 text-left">
-                                                          <span class="text-center">{{detail.ManDate}}</span>
+                                                     </td>
+                                                      <td>
+                                                      <div class="list-info mrg-top-5 text-center">
+                                                          <span class="text-center">{{detail.ManDate | date : 'dd-MMM-yyyy'}}</span>
                                                       </div>
                                                   </td>
                                                       <td>
-                                                        
-                                                            <div class="list-info mrg-top-10 text-left">
-=======
 
-                                                            <div class="list-info mrg-top-10 text-center">
->>>>>>> 6bad4b68a3a07664d0d033ccdbe0954bbe86b3c3
-=======
-                                                        
-                                                            <div class="list-info mrg-top-10 text-center">
->>>>>>> parent of e037a4f... Build
-                                                                <span class=" text-center">{{detail.PackKey}}</span>
+                                                            <div class="list-info mrg-top-5 text-center">
+                                                                <span class="title">{{detail.PackKey}}</span>
                                                             </div>
 
-                                                    </td>
+                                                     </td>
                                                       <td>
-                                                          <div class="mrg-top-15">
+                                                          <div class="mrg-top-5 text-center">
                                                               <span class="text-info"><b>{{detail.UnitName}}</b></span>
                                                           </div>
                                                       </td>
                                                       <td>
-                                                          <div class="mrg-top-15">
+                                                          <div class="mrg-top-5">
                                                             <div class="d-inline-block">
                                                               <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
                                                               <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1"><i class="ei-delete"></i></a>
