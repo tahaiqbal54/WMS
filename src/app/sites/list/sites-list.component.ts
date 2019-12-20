@@ -2,7 +2,7 @@ import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/c
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
-
+import Swal from "sweetalert2";
 
 
 declare var $: any;
@@ -19,7 +19,8 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
   dtTrigger: Subject<any> = new Subject();
   sites: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
     this.dtOptions = {
@@ -27,22 +28,22 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
     };
     this.sites = [
       {
-        "id" : 1,
+        "id": 1,
         "site_name": "Site A",
         "created_at": "19-12-2019"
       },
       {
-        "id" : 2,
+        "id": 2,
         "site_name": "Site B",
         "created_at": "19-12-2019"
       },
       {
-        "id" : 3,
+        "id": 3,
         "site_name": "Site C",
         "created_at": "19-12-2019"
       },
       {
-        "id" : 4,
+        "id": 4,
         "site_name": "Site D",
         "created_at": "19-12-2019"
       },
@@ -58,12 +59,32 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
       this.dtTrigger.next();
     });
   }
+
   ngAfterViewInit(): void {
     this.dtTrigger.next();
   }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  deleteSite(siteId:any) {
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+      } else {
+        console.log('cancelled');
+      }
+    });
   }
 
 }
