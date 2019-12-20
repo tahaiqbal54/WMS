@@ -63,8 +63,6 @@ import {CalendarComponent} from "ap-angular-fullcalendar/src/calendar/calendar";
     CommonLayoutComponent,
     AuthenticationLayoutComponent,
     Sidebar_Directives,
-    //Page404Component,
-    // SigninComponent,
     cardPortletRefresh,
     cardPortletDelete,
     SignOutComponent,

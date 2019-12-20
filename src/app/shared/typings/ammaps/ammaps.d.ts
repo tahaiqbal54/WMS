@@ -4,7 +4,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 /// AmCharts object (it's not a class) is create automatically when amcharts.js or amstock.js file is included in a web page.
 declare namespace AmCharts {
-    
+
     /** Set it to true if you have base href set for your page. This will fix rendering problems in Firefox caused by base href. */
     var baseHref: boolean;
 
@@ -537,7 +537,7 @@ If you do not set properties such as dashLength, lineAlpha, lineColor, etc - val
         /** Defines on which day week starts. 0 - Sunday, 1 - Monday..
             @default 1 */
         firstDayOfWeek: number;
-        /** If set to true the scope of the data view will be set to the end after data update. */
+        /** If set to true the scope of the data view will be set to the end after data edit. */
         glueToTheEnd: boolean;
         /** Legend settings. */
         legendSettings: LegendSettings;
@@ -876,7 +876,7 @@ If you do not set properties such as dashLength, lineAlpha, lineColor, etc - val
         drawOnAxis: ValueAxis;
         /** Specifies if all trend lines should be erased when erase button is clicked. If false, trend lines can be erased one by one. */
         eraseAll: boolean;
-        /** Size of trend line drawing icons. If you change this size, you should update icon images if you want them to look properly.
+        /** Size of trend line drawing icons. If you change this size, you should edit icon images if you want them to look properly.
             @default 18
         */
         iconSize: number;
