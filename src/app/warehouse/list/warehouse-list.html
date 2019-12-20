@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Site Details</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/warehouse/add']">Create Warehouse
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <th class="text-center">Warehouse Id</th>
+                <th class="text-center">Warehouse Name</th>
+                <th class="text-center">Created At</th>
+                <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let warehouse of warehouses; let i = index">
+                <td class="text-center">{{ warehouse.id }}</td>
+                <td class="text-center">{{ warehouse.warehouse_name}}</td>
+                <td class="text-center">{{ warehouse.created_at }}</td>
+                <td class="text-center">
+                  <div class="d-inline-block">
+                    <a [routerLink]="['/warehouse/edit/' + warehouse.id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                    <a class="btn btn-default p-1"><i class="ei-delete"></i></a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

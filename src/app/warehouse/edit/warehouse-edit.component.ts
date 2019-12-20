@@ -10,15 +10,16 @@ declare var $: any;
 
 
 @Component({
-  selector: 'site-add',
-  templateUrl: 'sites-add.html',
-  styleUrls: ['./sites-add.css']
+  selector: 'site-edit',
+  templateUrl: 'warehouse-edit.html',
+  styleUrls: ['./warehouse-edit.css']
 })
 
-export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
+export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
-  siteForm = this.fb.group({});
+
+  warehouseForm = this.fb.group({});
   cities : any []  = [];
   selectedCity: any = {};
   countries : any []  = [];
@@ -33,16 +34,20 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   ngOnInit() {
-    this.siteForm = new FormGroup({
+    this.warehouseForm = new FormGroup({
       siteId: new FormControl('',Validators.required),
       siteName: new FormControl('',Validators.required),
-      siteCity: new FormControl(''),
-      siteCountry: new FormControl(''),
-      siteAddress: new FormControl('',Validators.required),
-      siteContact: new FormControl('',Validators.required),
+      warehouseId: new FormControl('',Validators.required),
+      warehouseName: new FormControl('',Validators.required),
+      warehouseCity: new FormControl(''),
+      warehouseCountry: new FormControl(''),
+      warehouseAddress: new FormControl('',Validators.required),
+      warehouseContact: new FormControl('',Validators.required),
       isActive: new FormControl('')
     });
 
+
+    this.warehouseForm.patchValue({siteId: 2});
     this.position = "bottom-right";
 
     this.cities = [
@@ -92,7 +97,6 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
     };
     this.selectedCountry = [{id: 1,country:'Pakistan'}];
 
-
   }
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {}
@@ -117,22 +121,22 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
   onSelectAllCity(item: any) {
   }
 
-  get f() { return this.siteForm.controls; }
+  get f() { return this.warehouseForm.controls; }
 
   routeBack(){
 
   }
 
-  saveSite(){
+  saveWarehouse(){
 
     this.formSubmitted = true;
-    if(!this.siteForm.valid){
+    if(!this.warehouseForm.valid){
       return;
     }else{
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
         let toastOptions: ToastOptions = {
           title: 'Success',
-          msg: 'Site Saved Success',
+          msg: 'Warehouse Saved Success',
           showClose: true,
           timeout: 2000,
           theme: 'default',
@@ -156,6 +160,7 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
   }
+
 
 }
 

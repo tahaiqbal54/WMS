@@ -38,7 +38,6 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       siteCountry: new FormControl(''),
       siteAddress: new FormControl('',Validators.required),
       siteContact: new FormControl('',Validators.required),
-      siteStatus: new FormControl(''),
       isActive: new FormControl('')
     });
 
@@ -50,10 +49,6 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       {id:3, city: 'Larkana'},
       {id:4, city: 'Rahim Yar Khan'},
     ];
-    this.countries = [
-      {id:1,country: 'Pakistan'}
-    ];
-
     this.dropdownSettingsCity = {
       singleSelection: false,
       idField: 'id',
@@ -71,6 +66,11 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false
     };
+
+    this.countries = [
+      {id:1,country: 'Pakistan'},
+      {id:2,country: 'Dubai'}
+    ];
     this.dropdownSettingsCountry = {
       singleSelection: false,
       idField: 'id',
@@ -88,6 +88,7 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false
     };
+    this.selectedCountry = [{id: 1,country:'Pakistan'}];
   }
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {}
