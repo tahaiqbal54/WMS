@@ -10,7 +10,7 @@ declare var $: any;
 
 
 @Component({
-  selector: 'site-edit',
+  selector: 'warehouse-edit',
   templateUrl: 'warehouse-edit.html',
   styleUrls: ['./warehouse-edit.css']
 })
@@ -57,12 +57,12 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
       {id:4, city: 'Rahim Yar Khan'},
     ];
     this.dropdownSettingsCity = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'id',
       textField: 'city',
       selectAllText: 'Select All',
       itemsShowLimit: this.cities.length,
-      enableCheckAll: true,
+      enableCheckAll: false,
       unSelectAllText: 'UnSelect All',
       allowSearchFilter: true,
       limitSelection: -1,
@@ -79,12 +79,12 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
       {id:2,country: 'Dubai'}
     ];
     this.dropdownSettingsCountry = {
-      singleSelection: false,
+      singleSelection: true,
       idField: 'id',
       textField: 'country',
       selectAllText: 'Select All',
       itemsShowLimit: this.countries.length,
-      enableCheckAll: true,
+      enableCheckAll: false,
       unSelectAllText: 'UnSelect All',
       allowSearchFilter: true,
       limitSelection: -1,
@@ -106,25 +106,18 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
   }
   onItemDeSelectCountry(item: any) {
   }
-  onDeSelectAllCountry(item: any) {
-  }
-  onSelectAllCountry(item: any) {
-  }
+
 
 
   onItemSelectCity(item: any) {
   }
   onItemDeSelectCity(item: any) {
   }
-  onDeSelectAllCity(item: any) {
-  }
-  onSelectAllCity(item: any) {
-  }
 
   get f() { return this.warehouseForm.controls; }
 
   routeBack(){
-
+    this.router.navigate(['/warehouse/list'])
   }
 
   saveWarehouse(){
@@ -160,6 +153,16 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
     }
 
   }
+
+  toggleEditableIsActive(event) {
+    if(this.isActive){
+      this.isActive = !this.isActive;
+    }else{
+      this.isActive = !this.isActive;
+    }
+  }
+
+
 
 
 }

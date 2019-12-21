@@ -113,8 +113,6 @@
                       [settings]="dropdownSettingsCountry"
                       (onSelect)="onItemSelectCountry($event)"
                       (onDeSelect)="onItemDeSelectCountry($event)"
-                      (onSelectAll)="onSelectAllCountry($event)"
-                      (onDeSelectAll)="onDeSelectAllCountry($event)"
                     >
                     </ng-multiselect-dropdown>
                     <div *ngIf="formSubmitted && selectedCity.length == 0" class="error-msg">
@@ -132,8 +130,6 @@
                       [settings]="dropdownSettingsCity"
                       (onSelect)="onItemSelectCity($event)"
                       (onDeSelect)="onItemDeSelectCity($event)"
-                      (onSelectAll)="onSelectAllCity($event)"
-                      (onDeSelectAll)="onDeSelectAllCity($event)"
                     >
                     </ng-multiselect-dropdown>
                     <div *ngIf="formSubmitted && selectedCity.length == 0" class="error-msg">
@@ -145,15 +141,12 @@
 
 
                 <div class="col-sm-12">
-                  <div class="checkbox">
+                  <div class="checkbox" (click)="toggleEditableIsActive($event)">
                     <input type="checkbox" class="popup_checkbox "
                            formControlName="isActive" value="{{isActive}}" [(ngModel)]="isActive">
                     <label>Is Active</label>
                   </div>
                 </div>
-
-
-
 
 
               </div>

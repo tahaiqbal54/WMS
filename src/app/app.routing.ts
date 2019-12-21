@@ -60,6 +60,11 @@ export const AppRoutes: Routes = [
         loadChildren: './warehouse/warehouse.module#WarehouseModule',
         //canActivate: [AuthGuard]
       },
+      {
+        path: 'location',
+        loadChildren: './location/location.module#LocationModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'retail-outlets',
       //   loadChildren: './retail-outlets/outlets.modules#OutletsModule',
