@@ -45,6 +45,7 @@ import {cardPortletRefresh, cardPortletDelete} from "./shared/directives/cards.d
 import {CalendarComponent} from "ap-angular-fullcalendar/src/calendar/calendar";
 
 
+
 // Outlet
 // import { OutletViewService } from './retail-outlets/outlet-view.service';
 
