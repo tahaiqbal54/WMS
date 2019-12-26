@@ -16,15 +16,21 @@
               <tr>
                 <th class="text-center">Site Id</th>
                 <th class="text-center">Site Name</th>
-                <th class="text-center">Created At</th>
+                <th class="text-center">Site Address</th>
+                <th class="text-center">Site Contact</th>
+                <th class="text-center">Country</th>
+                <th class="text-center">City</th>
                 <th class="text-center">Actions</th>
               </tr>
               </thead>
               <tbody>
               <tr  *ngFor="let site of sites; let i = index">
-                <td class="text-center">{{ site.id }}</td>
-                <td class="text-center">{{ site.site_name}}</td>
-                <td class="text-center">{{ site.created_at }}</td>
+                <td class="text-center">{{ site.Id }}</td>
+                <td class="text-center">{{ site.SiteName}}</td>
+                <td class="text-center">{{ site.SiteAddress}}</td>
+                <td class="text-center">{{ site.SiteContactNo}}</td>
+                <td class="text-center">{{ site.Country}}</td>
+                <td class="text-center">{{ site.City}}</td>
                 <td class="text-center">
                   <div class="d-inline-block">
                     <a [routerLink]="['/sites/edit/' + site.id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>

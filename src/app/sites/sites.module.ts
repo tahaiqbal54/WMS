@@ -25,6 +25,8 @@ import {SitesAddComponent} from './add/sites-add.component';
 import {SitesEditComponent} from './edit/sites-edit.component';
 import {SitesListComponent} from './list/sites-list.component';
 
+import {SitesService} from "../_services/sites.service";
+
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import {SitesListComponent} from './list/sites-list.component';
   providers: [
     ThemeConstants,
     APIConstants,
-    NotificationCommunicationService
+    NotificationCommunicationService,
+    SitesService
   ]
 })
 

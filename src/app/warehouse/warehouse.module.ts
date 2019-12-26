@@ -25,6 +25,8 @@ import {WarehouseAddComponent} from './add/warehouse-add.component';
 import {WarehouseEditComponent} from './edit/warehouse-edit.component';
 import {WarehouseListComponent} from './list/warehouse-list.component';
 
+import {WarehouseService} from '../_services/warehouse.service';
+
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import {WarehouseListComponent} from './list/warehouse-list.component';
   providers: [
     ThemeConstants,
     APIConstants,
-    NotificationCommunicationService
+    NotificationCommunicationService,
+    WarehouseService
   ]
 })
 

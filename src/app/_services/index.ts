@@ -4,6 +4,8 @@ export * from './order.service';
 export * from './receive.service';
 export * from './putaways.services';
 export * from './notification.services';
+export * from './sites.service';
+export * from './warehouse.service';
 //export * from './outlets.service';
 //export * from './regions.service';
 //export * from './roles.service';

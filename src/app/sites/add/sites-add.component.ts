@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService} from '../../_services';
+import {SitesService} from "../../_services/sites.service";
 
 
 
@@ -29,7 +30,7 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
   isActive: boolean = false;
   position:any;
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService,private SitesService: SitesService) {}
 
 
   ngOnInit() {
@@ -45,52 +46,36 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
     this.position = "bottom-right";
 
-    this.cities = [
-      {id:1, city: 'Karachi'},
-      {id:2, city: 'Hyderabad'},
-      {id:3, city: 'Larkana'},
-      {id:4, city: 'Rahim Yar Khan'},
-    ];
-    this.dropdownSettingsCity = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'city',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.cities.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
-    this.countries = [
-      {id:1,country: 'Pakistan'},
-      {id:2,country: 'Dubai'}
-    ];
-    this.dropdownSettingsCountry = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'country',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.countries.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-    this.selectedCountry = [{id: 1,country:'Pakistan'}];
+    this.SitesService.getCountry()
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.countries = data;
+          this.dropdownSettingsCountry = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'Name',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.countries.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: true,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+      
+        (error: any) => {
+          console.log(error);
+          // this.inserted = 'failure';
+          // this.message = error.error.message;
+        }
+        });
 
 
   }
@@ -99,6 +84,37 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   onItemSelectCountry(item: any) {
+    console.log(item);
+    this.SitesService.getCity(item.Id)
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.cities = data;
+          this.dropdownSettingsCity = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'Name',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.cities.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: true,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+      
+        (error: any) => {
+          console.log(error);
+          // this.inserted = 'failure';
+          // this.message = error.error.message;
+        }
+        });
+
   }
   onItemDeSelectCountry(item: any) {
   }
@@ -132,6 +148,14 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
       return;
     }else{
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
+        console.log('SiteForm',this.siteForm.value);
+        console.log('siteNameok',this.siteForm.get('siteName').value);
+     
+        let obj = {
+          SiteId: this.siteForm.get('siteId').value,
+          SiteName: this.siteForm.get('siteName').value,
+          
+        }
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Site Saved Success',

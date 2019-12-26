@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from 'sweetalert2';
+import {WarehouseService} from '../../_services/warehouse.service';
 
 
 
@@ -20,34 +21,52 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
   dtTrigger: Subject<any> = new Subject();
   warehouses: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private WarehouseService:WarehouseService) {}
 
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
+      language: {
+        emptyTable: "No warehouses found"
+      },
+      columnDefs: [
+        { width: "20%", searchable: true, targets: 1 },
+        { orderData: 5, targets: 2},
+        { visible: false, targets: 5 }
+      ]
     };
-    this.warehouses = [
-      {
-        "id" : 1,
-        "warehouse_name": "Warehouse A",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 2,
-        "warehouse_name": "Warehouse B",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 3,
-        "warehouse_name": "Warehouse C",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 4,
-        "warehouse_name": "Warehouse D",
-        "created_at": "19-12-2019"
-      },
-    ];
+    this.WarehouseService.getWarehouses()
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          this.warehouses = data;
+          // data.sort(function(o) {
+          //   return new Date(o.ReceiptDate);
+          // });
+          // data.reverse();
+          // let count = 0;
+
+          // data.forEach(order => {
+          //     if (order.ReceiptDate != null) {
+          //       order[
+          //         "ReceiptDate_formatted"
+          //       ] = order.ReceiptDate.split("T").shift();
+          //       order.sortOrder = count++;
+          //     } else order.sortOrder = data.length;
+          //     order[
+          //       "ReceiptDate_formatted"
+          //     ] = order.ReceiptDate.split("T").shift();
+          //     this.users.push(order);
+          // });
+        
+          this.rerender();
+        (error: any) => {
+          console.log(error);
+          // this.inserted = 'failure';
+          // this.message = error.error.message;
+        }
+        });
+
 
   }
 

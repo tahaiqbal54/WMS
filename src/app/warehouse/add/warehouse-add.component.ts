@@ -25,9 +25,11 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
   selectedCountry: any = {};
   dropdownSettingsCity: any = {};
   dropdownSettingsCountry: any = {};
+  dropdownSettingsSite: any = {};
   formSubmitted: boolean = false;
   isActive: boolean = false;
   position:any;
+  sites: any[] = [];
 
   constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
 
@@ -56,6 +58,27 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
       {id:4, city: 'Rahim Yar Khan'},
     ];
     this.dropdownSettingsCity = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'city',
+      selectAllText: 'Select All',
+      itemsShowLimit: this.cities.length,
+      enableCheckAll: false,
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No data available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+
+
+    this.sites = []
+
+    this.dropdownSettingsSite = {
       singleSelection: true,
       idField: 'id',
       textField: 'city',
