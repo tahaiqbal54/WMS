@@ -116,7 +116,7 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
       .subscribe(
         (data: any) => {
           // this.OrderDetail = data;
-          // console.log(this.OrderDetail);
+          console.log(data);
           this.dtOptions = {
             pagingType: 'full_numbers',
             language: {
