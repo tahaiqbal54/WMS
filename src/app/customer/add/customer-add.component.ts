@@ -30,6 +30,12 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
   selectedTypes: any = {};
   rotateBy: any [] = [];
   selectedRotateBy: any = {};
+  strategies: any [] = [];
+  selectedStrategies: any = {};
+  stages: any [] = [];
+  selectedDefaultStages:  any = {};
+
+
   defaultQCLocations: any [] = [];
   selectedDefaultQCLocation: any  = {};
   defaultPackLocation: any [] = [];
@@ -55,6 +61,8 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
   dropdownSettingsPutawayLocation: any = {};
   dropdownSettingsSortLocation: any = {};
   dropdownSettingsHoldLocation: any = {};
+  dropdownSettingsStrategies: any = {};
+  dropdownSettingsDefaultStageLocation: any = {};
 
 
   formSubmitted: boolean = false;
@@ -70,26 +78,30 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit() {
     this.customerForm = new FormGroup({
       wmsKey: new FormControl('',Validators.required),
-      whsId: new FormControl(''),
+      whsId: new FormControl('',Validators.required),
       type: new FormControl(''),
-      customerId: new FormControl(''),
+      customerId: new FormControl('',Validators.required),
       name: new FormControl('',Validators.required),
       customerCity: new FormControl(''),
       customerCountry: new FormControl(''),
-      address1: new FormControl('',Validators.required),
-      address2: new FormControl('',Validators.required),
-      address3: new FormControl('',Validators.required),
-      address4: new FormControl('',Validators.required),
-      primaryContact: new FormControl('',Validators.required),
-      secondaryContact: new FormControl('',Validators.required),
-      creditLimit: new FormControl('',Validators.required),
+      address1: new FormControl(''),
+      address2: new FormControl(''),
+      address3: new FormControl(''),
+      address4: new FormControl(''),
+      primaryContact: new FormControl(''),
+      secondaryContact: new FormControl(''),
+      primaryContactEmail: new FormControl(''),
+      secondaryContactEmail: new FormControl(''),
+      primaryContactNumber: new FormControl(''),
+      secondaryContactNumber: new FormControl(''),
+      creditLimit: new FormControl(''),
       rotateBy: new FormControl(''),
       allowOverShipment: new FormControl(''),
       allowAutoClose: new FormControl(''),
       allowSystemGeneratedLPN: new FormControl(''),
-      nopnLength: new FormControl('',Validators.required),
-      location: new FormControl('',Validators.required),
-      adminEmail: new FormControl('',Validators.required),
+      lpnLength: new FormControl(''),
+      location: new FormControl(''),
+      adminEmail: new FormControl(''),
       allowMixedProduct: new FormControl(''),
       description: new FormControl(''),
       defaultQCLocation: new FormControl(''),
@@ -98,8 +110,9 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
       defaultPutawayLocation:  new FormControl(''),
       defaultSortLocation:  new FormControl(''),
       defaultHoldLocation:  new FormControl(''),
-      notes: new FormControl('',Validators.required),
-      isActive: new FormControl('')
+      defaultStageLocation:  new FormControl(''),
+      notes: new FormControl(''),
+      strategies: new FormControl(''),
     });
 
 
@@ -346,6 +359,49 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
       defaultOpen: false
     };
 
+    this.strategies = [
+      {id: 1, strategies: 'Strategy 1'},
+      {id: 2, strategies: 'Strategy 2'},
+    ];
+    this.dropdownSettingsStrategies = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'strategies',
+      selectAllText: 'Select All',
+      itemsShowLimit: this.strategies.length,
+      enableCheckAll: false,
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No data available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+
+    this.stages = [
+      {id: 1, stage: 'Stage 1'},
+      {id: 2, stage: 'Stage 2'},
+    ];
+    this.dropdownSettingsDefaultStageLocation = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'stage',
+      selectAllText: 'Select All',
+      itemsShowLimit: this.stages.length,
+      enableCheckAll: false,
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No data available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
 
 
 
@@ -404,17 +460,33 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
   onItemDeSelectDefaultPickLocation(item: any) {
   }
 
+  onItemSelectDefaultPutAwayLocation(item: any) {
+  }
+  onItemDeSelectDefaultPutAwayLocation(item: any) {
+  }
+
+
+  onItemSelectDefaultStage(item: any) {
+  }
+  onItemDeSelectDefaultStage(item: any) {
+  }
+
 
   onItemSelectCity(item: any) {
   }
   onItemDeSelectCity(item: any) {
   }
 
+  onItemSelectStrategies(item: any) {
+  }
+  onItemDeSelectStrategies(item: any) {
+  }
+
 
   get f() { return this.customerForm.controls; }
 
   routeBack(){
-    this.router.navigate(['/warehouse/list'])
+    this.router.navigate(['/customer/list'])
   }
 
   saveCustomer(){
@@ -423,7 +495,7 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
     if(!this.customerForm.valid){
       return;
     }else{
-      if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
+      if(this.selectedWarehouse.length > 0 && this.selectedTypes.length > 0){
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Customer Saved Success',

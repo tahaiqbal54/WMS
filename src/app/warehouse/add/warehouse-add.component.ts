@@ -19,17 +19,21 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   warehouseForm = this.fb.group({});
+
+  siteNames: any [] = [];
+  selectedSiteName: any = {};
   cities : any []  = [];
   selectedCity: any = {};
   countries : any []  = [];
   selectedCountry: any = {};
+  dropdownSettingsSiteName: any = {};
   dropdownSettingsCity: any = {};
   dropdownSettingsCountry: any = {};
   dropdownSettingsSite: any = {};
   formSubmitted: boolean = false;
   isActive: boolean = false;
   position:any;
-  sites: any[] = [];
+
 
   constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
 
@@ -37,18 +41,17 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit() {
     this.warehouseForm = new FormGroup({
       siteId: new FormControl('',Validators.required),
-      siteName: new FormControl('',Validators.required),
+      siteName: new FormControl(''),
       warehouseId: new FormControl('',Validators.required),
       warehouseName: new FormControl('',Validators.required),
       warehouseCity: new FormControl(''),
       warehouseCountry: new FormControl(''),
-      warehouseAddress: new FormControl('',Validators.required),
-      warehouseContact: new FormControl('',Validators.required),
-      isActive: new FormControl('')
+      warehouseAddress: new FormControl(''),
+      warehouseContact: new FormControl('')
     });
 
 
-    this.warehouseForm.patchValue({siteId: 2});
+
     this.position = "bottom-right";
 
     this.cities = [
@@ -76,25 +79,6 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
     };
 
 
-    this.sites = []
-
-    this.dropdownSettingsSite = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'city',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.cities.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
     this.countries = [
       {id:1,country: 'Pakistan'},
@@ -119,6 +103,29 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
     };
     this.selectedCountry = [{id: 1,country:'Pakistan'}];
 
+    this.siteNames = [
+      {id:1, site_name: 'Site A'},
+      {id:2, site_name: 'Site B'}
+    ];
+
+    this.dropdownSettingsSite = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'site_name',
+      selectAllText: 'Select All',
+      itemsShowLimit: this.siteNames.length,
+      enableCheckAll: false,
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No data available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false
+    };
+
   }
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {}
@@ -134,6 +141,13 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
   onItemSelectCity(item: any) {
   }
   onItemDeSelectCity(item: any) {
+  }
+
+  onItemSelectSiteName(item: any) {
+    this.warehouseForm.patchValue({siteId:item.id});
+  }
+  onItemDeSelectSiteName(item: any) {
+    this.warehouseForm.patchValue({siteId:''});
   }
 
 
@@ -177,13 +191,7 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   }
 
-  toggleEditableIsActive(event) {
-    if(this.isActive){
-      this.isActive = !this.isActive;
-    }else{
-      this.isActive = !this.isActive;
-    }
-  }
+
 
 
 

@@ -39,9 +39,9 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
       siteName: new FormControl('',Validators.required),
       siteCity: new FormControl(''),
       siteCountry: new FormControl(''),
-      siteAddress: new FormControl('',Validators.required),
-      siteContact: new FormControl('',Validators.required),
-      isActive: new FormControl('')
+      siteAddress: new FormControl(''),
+      siteContact: new FormControl(''),
+      notes: new FormControl('')
     });
 
     this.position = "bottom-right";
@@ -69,7 +69,7 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
             showSelectedItemsAtTop: false,
             defaultOpen: false
           };
-      
+
         (error: any) => {
           console.log(error);
           // this.inserted = 'failure';
@@ -107,7 +107,7 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
             showSelectedItemsAtTop: false,
             defaultOpen: false
           };
-      
+
         (error: any) => {
           console.log(error);
           // this.inserted = 'failure';
@@ -133,13 +133,7 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.router.navigate(['/sites/list'])
   }
 
-  toggleEditableIsActive(event) {
-    if(this.isActive){
-      this.isActive = !this.isActive;
-    }else{
-      this.isActive = !this.isActive;
-    }
-  }
+
 
   saveSite(){
 
@@ -150,11 +144,11 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
         console.log('SiteForm',this.siteForm.value);
         console.log('siteNameok',this.siteForm.get('siteName').value);
-     
+
         let obj = {
           SiteId: this.siteForm.get('siteId').value,
           SiteName: this.siteForm.get('siteName').value,
-          
+
         }
         let toastOptions: ToastOptions = {
           title: 'Success',

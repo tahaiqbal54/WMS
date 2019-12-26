@@ -39,21 +39,20 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.locationForm = new FormGroup({
       warehouseId: new FormControl('',Validators.required),
       warehouseName: new FormControl(''),
+      locationId: new FormControl('',Validators.required),
       locationName: new FormControl('',Validators.required),
       locationType: new FormControl(''),
       locationDescription: new FormControl(''),
       ABCClassification: new FormControl(''),
-      cubicCapacity: new FormControl('',Validators.required),
-      weightCapacity: new FormControl('',Validators.required),
-      width: new FormControl('',Validators.required),
-      height: new FormControl('',Validators.required),
-      length: new FormControl('',Validators.required),
-      notes: new FormControl('',Validators.required),
-      isActive: new FormControl('')
+      cubicCapacity: new FormControl(''),
+      weightCapacity: new FormControl(''),
+      width: new FormControl(''),
+      height: new FormControl(''),
+      length: new FormControl(''),
+      notes: new FormControl(''),
     });
 
 
-    this.locationForm.patchValue({warehouseId: 2});
     this.position = "bottom-right";
 
     this.warehouses = [
@@ -144,8 +143,11 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   onItemSelectWarehouse(item: any) {
+
+    this.locationForm.patchValue({warehouseId: item.id});
   }
   onItemDeSelectWarehouse(item: any) {
+    this.locationForm.patchValue({warehouseId: ''});
   }
 
 
@@ -167,7 +169,7 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
     if(!this.locationForm.valid){
       return;
     }else{
-      if(this.selectedLocationType.length > 0 && this.selectedWarehouse.length > 0 && this.selectedABCClassification.length > 0){
+      if(this.selectedLocationType.length > 0 && this.selectedWarehouse.length > 0){
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Location Saved Success',
@@ -196,13 +198,6 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
 
-  toggleEditableIsActive(event) {
-    if(this.isActive){
-      this.isActive = !this.isActive;
-    }else{
-      this.isActive = !this.isActive;
-    }
-  }
 
 
 }

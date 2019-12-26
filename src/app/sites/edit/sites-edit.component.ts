@@ -36,9 +36,9 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       siteName: new FormControl('',Validators.required),
       siteCity: new FormControl(''),
       siteCountry: new FormControl(''),
-      siteAddress: new FormControl('',Validators.required),
-      siteContact: new FormControl('',Validators.required),
-      isActive: new FormControl('')
+      siteAddress: new FormControl(''),
+      siteContact: new FormControl(''),
+      notes: new FormControl('')
     });
 
     this.position = "bottom-right";
@@ -148,13 +148,6 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
 
-  toggleEditableIsActive(event) {
-    if(this.isActive){
-      this.isActive = !this.isActive;
-    }else{
-      this.isActive = !this.isActive;
-    }
-  }
 
 
 }
