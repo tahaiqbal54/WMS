@@ -1,8 +1,8 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService} from '../../_services';
+import {NotificationCommunicationService, SitesService, WarehouseService} from '../../_services';
 
 
 
@@ -34,12 +34,29 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
   formSubmitted: boolean = false;
   isActive: boolean = false;
   position:any;
+  warehouseId: any;
+  warehouse:any = null;
 
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private router: Router,private route: ActivatedRoute, private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService,private siteService: SitesService,private warehouseService: WarehouseService) {}
 
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      this.warehouseId = +params['id'];
+    });
+
+
+
+
+
+
+
+
+
+
+
     this.warehouseForm = new FormGroup({
       siteId: new FormControl('',Validators.required),
       siteName: new FormControl(''),
@@ -50,82 +67,148 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
       warehouseAddress: new FormControl(''),
       warehouseContact: new FormControl('')
     });
+    if(this.warehouseId){
+      this.warehouseService.getWarehouse(this.warehouseId).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data){
+            data.map((warehouse) =>{
+              if(warehouse.Id == this.warehouseId){
+                this.warehouse = warehouse;
+              }
+            });
+
+            if(this.warehouse){
+
+
+              this.warehouseForm.patchValue({
+                warehouseId : this.warehouse.Id,
+                siteId:  this.warehouse.SiteId,
+                warehouseName: this.warehouse.WarehouseName,
+                warehouseAddress: this.warehouse.WarehouseAddress ? this.warehouse.WarehouseAddress : '-',
+                warehouseContact: this.warehouse.WarehouseContactNo ? this.warehouse.WarehouseContactNo : '-',
+              });
+
+
+              this.warehouseService.getCountry()
+                .subscribe(
+                  (data: any) => {
+                    this.countries = data;
+                    this.dropdownSettingsCountry = {
+                      singleSelection: true,
+                      idField: 'Id',
+                      textField: 'Name',
+                      selectAllText: 'Select All',
+                      itemsShowLimit: this.countries.length,
+                      enableCheckAll: false,
+                      unSelectAllText: 'UnSelect All',
+                      allowSearchFilter: true,
+                      limitSelection: -1,
+                      clearSearchFilter: true,
+                      searchPlaceholderText: 'Search',
+                      noDataAvailablePlaceholderText: 'No data available',
+                      closeDropDownOnSelection: true,
+                      showSelectedItemsAtTop: false,
+                      defaultOpen: false
+                    };
+
+                    this.selectedCountry = [{Id: this.warehouse.CountryId, Name:this.warehouse.Country }]
+
+                  },
+                  (error: any) => {
+                    console.log(error);
+                  });
+
+
+                 this.siteService.getCity(this.warehouse.CountryId)
+                 .subscribe(
+                  (data: any) => {
+                    this.cities = data;
+                    this.dropdownSettingsCity = {
+                      singleSelection: true,
+                      idField: 'Id',
+                      textField: 'Name',
+                      selectAllText: 'Select All',
+                      itemsShowLimit: this.cities.length,
+                      enableCheckAll: false,
+                      unSelectAllText: 'UnSelect All',
+                      allowSearchFilter: true,
+                      limitSelection: -1,
+                      clearSearchFilter: true,
+                      searchPlaceholderText: 'Search',
+                      noDataAvailablePlaceholderText: 'No data available',
+                      closeDropDownOnSelection: true,
+                      showSelectedItemsAtTop: false,
+                      defaultOpen: false
+                    };
+
+                    this.selectedCity= [{Id: this.warehouse.CityId,Name: this.warehouse.City}]
+
+                  },(error: any) => {
+                    console.log(error);
+                  });
+
+
+
+
+
+              this.siteService.getSites()
+                .subscribe(
+                  (data: any) => {
+                    this.siteNames = data;
+                    this.dropdownSettingsSite = {
+                      singleSelection: true,
+                      idField: 'Id',
+                      textField: 'SiteName',
+                      selectAllText: 'Select All',
+                      itemsShowLimit: this.siteNames.length,
+                      enableCheckAll: false,
+                      unSelectAllText: 'UnSelect All',
+                      allowSearchFilter: true,
+                      limitSelection: -1,
+                      clearSearchFilter: true,
+                      searchPlaceholderText: 'Search',
+                      noDataAvailablePlaceholderText: 'No data available',
+                      closeDropDownOnSelection: false,
+                      showSelectedItemsAtTop: false,
+                      defaultOpen: false
+                    };
+
+                    let selectedSite = this.siteNames.filter((site) => site.Id == this.warehouse.SiteId);
+                    this.selectedSiteName  =  [{Id: this.warehouse.SiteId,SiteName: selectedSite[0].SiteName }];
+
+                  },
+                  (error: any) => {
+                    console.log(error);
+                  });
+
+            }
+
+
+
+
+          }
+
+        },(error: any) => {
+          console.log(error);
+        });
+    }
+
+
+
+
+
 
 
 
     this.position = "bottom-right";
 
-    this.cities = [
-      {id:1, city: 'Karachi'},
-      {id:2, city: 'Hyderabad'},
-      {id:3, city: 'Larkana'},
-      {id:4, city: 'Rahim Yar Khan'},
-    ];
-    this.dropdownSettingsCity = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'city',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.cities.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
 
 
-    this.countries = [
-      {id:1,country: 'Pakistan'},
-      {id:2,country: 'Dubai'}
-    ];
-    this.dropdownSettingsCountry = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'country',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.countries.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+
     this.selectedCountry = [{id: 1,country:'Pakistan'}];
 
-    this.siteNames = [
-      {id:1, site_name: 'Site A'},
-      {id:2, site_name: 'Site B'}
-    ];
-
-    this.dropdownSettingsSite = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'site_name',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.siteNames.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
   }
   ngAfterViewInit(): void {}
@@ -133,6 +216,32 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
 
 
   onItemSelectCountry(item: any) {
+    this.siteService.getCity(item.Id)
+      .subscribe(
+        (data: any) => {
+          this.cities = data;
+          this.dropdownSettingsCity = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'Name',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.cities.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: true,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+
+        },(error: any) => {
+          console.log(error);
+
+        });
   }
   onItemDeSelectCountry(item: any) {
   }
@@ -164,7 +273,27 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
     if(!this.warehouseForm.valid){
       return;
     }else{
-      if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
+      if(this.selectedCity.length > 0 && this.selectedCountry.length > 0 && this.selectedSiteName.length > 0){
+
+        let warehouseObj = {
+          Id: this.warehouseForm.get('warehouseId').value,
+          WarehouseCode: '',
+          WarehouseName: this.warehouseForm.get('warehouseName').value,
+          WarehouseAddress: this.warehouseForm.get('warehouseAddress').value,
+          WarehouseContactNo: this.warehouseForm.get('warehouseContact').value,
+          CountryId: this.warehouseForm.get('warehouseCountry').value[0].Id,
+          Country: this.warehouseForm.get('warehouseCountry').value[0].Name,
+          CityId: this.warehouseForm.get('warehouseCity').value[0].Id,
+          City: this.warehouseForm.get('warehouseCity').value[0].Name,
+          SiteId: this.warehouseForm.get('siteId').value ,
+          SiteCode: this.warehouse.SiteCode,
+          IsActive: true,
+          IsDefault: true,
+        };
+
+
+        console.log('this.warehouse',warehouseObj);
+
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Warehouse Saved Success',

@@ -121,8 +121,8 @@ export class SitesService {
       );
   }
 
-  getSite(site_ID: string) {
-    site_ID = site_ID.trim();
+  getSite(site_ID: any) {
+    //site_ID = site_ID.trim();
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
       headers: new HttpHeaders({

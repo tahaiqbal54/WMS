@@ -40,31 +40,11 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
         (data: any) => {
           console.log(data);
           this.sites = data;
-          // data.sort(function(o) {
-          //   return new Date(o.ReceiptDate);
-          // });
-          // data.reverse();
-          // let count = 0;
 
-          // data.forEach(order => {
-          //     if (order.ReceiptDate != null) {
-          //       order[
-          //         "ReceiptDate_formatted"
-          //       ] = order.ReceiptDate.split("T").shift();
-          //       order.sortOrder = count++;
-          //     } else order.sortOrder = data.length;
-          //     order[
-          //       "ReceiptDate_formatted"
-          //     ] = order.ReceiptDate.split("T").shift();
-          //     this.users.push(order);
-          // });
-        
           this.rerender();
+        },
         (error: any) => {
           console.log(error);
-          // this.inserted = 'failure';
-          // this.message = error.error.message;
-        }
         });
 
   }

@@ -18,7 +18,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import {ToastyModule} from 'ng2-toasty'
 import {WarehouseRoutes} from './warehouse-routing.module';
-import {NotificationCommunicationService} from '../_services';
+import {NotificationCommunicationService, SitesService} from '../_services';
 
 
 import {WarehouseAddComponent} from './add/warehouse-add.component';
@@ -51,7 +51,8 @@ import {WarehouseService} from '../_services/warehouse.service';
     ThemeConstants,
     APIConstants,
     NotificationCommunicationService,
-    WarehouseService
+    WarehouseService,
+    SitesService
   ]
 })
 

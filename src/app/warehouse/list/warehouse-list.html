@@ -28,14 +28,14 @@
               <tr  *ngFor="let warehouse of warehouses; let i = index">
                 <td class="text-center">{{ warehouse.Id }}</td>
                 <td class="text-center">{{ warehouse.WarehouseName}}</td>
-                <td class="text-center">{{ warehouse.WarehouseAddress }}</td>
-                <td class="text-center">{{ warehouse.WarehouseContactNo }}</td>
-                <td class="text-center">{{ warehouse.Country }}</td>
-                <td class="text-center">{{ warehouse.City }}</td>
-                <td class="text-center">{{ warehouse.SiteCode }}</td>
+                <td class="text-center">{{ warehouse.WarehouseAddress ? warehouse.WarehouseAddress : '-'  }}</td>
+                <td class="text-center">{{ warehouse.WarehouseContactNo ?  warehouse.WarehouseContactNo : '-' }}</td>
+                <td class="text-center">{{ warehouse.Country ? warehouse.Country : '-' }}</td>
+                <td class="text-center">{{ warehouse.City ? warehouse.City : '-' }}</td>
+                <td class="text-center">{{ warehouse.SiteCode ? warehouse.SiteCode : '-' }}</td>
                 <td class="text-center">
                   <div class="d-inline-block">
-                    <a [routerLink]="['/warehouse/edit/' + warehouse.id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                    <a [routerLink]="['/warehouse/edit/' + warehouse.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
                     <a class="btn btn-default p-1" (click)="deleteWarehouse(warehouse.id)"><i class="ei-delete"></i></a>
                   </div>
                 </td>

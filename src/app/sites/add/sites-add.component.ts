@@ -84,7 +84,6 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   onItemSelectCountry(item: any) {
-    console.log(item);
     this.SitesService.getCity(item.Id)
       .subscribe(
         (data: any) => {
@@ -142,14 +141,13 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
       return;
     }else{
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
-        console.log('SiteForm',this.siteForm.value);
-        console.log('siteNameok',this.siteForm.get('siteName').value);
+
 
         let obj = {
           SiteId: this.siteForm.get('siteId').value,
           SiteName: this.siteForm.get('siteName').value,
 
-        }
+        };
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Site Saved Success',

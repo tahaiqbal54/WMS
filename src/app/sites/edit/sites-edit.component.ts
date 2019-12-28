@@ -1,8 +1,8 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService} from '../../_services';
+import {NotificationCommunicationService, SitesService} from '../../_services';
 
 
 
@@ -27,10 +27,18 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
   formSubmitted: boolean = false;
   isActive: boolean = false;
   position:any;
+  siteId:any = null;
+  site: any;
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private router: Router,private route: ActivatedRoute,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService,private siteService: SitesService) {}
 
   ngOnInit() {
+
+     this.route.params.subscribe(params => {
+      this.siteId = +params['id'];
+    });
+
+
     this.siteForm = new FormGroup({
       siteId: new FormControl('',Validators.required),
       siteName: new FormControl('',Validators.required),
@@ -41,60 +49,121 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       notes: new FormControl('')
     });
 
+
+    if(this.siteId){
+       this.siteService.getSite(this.siteId)
+         .subscribe(
+           (data: any) => {
+             console.log(data);
+             if(data){
+               data.map((site) =>{
+                 if(site.Id == this.siteId){
+                   this.site = site;
+                 }
+               })
+             }
+
+             if(this.site){
+
+               this.siteForm.patchValue({
+                 siteId: this.site.Id,
+                 siteName: this.site.SiteName,
+                 siteAddress: this.site.SiteAddress,
+                 siteContact: this.site.SiteContactNo,
+                 notes: this.site.SiteNote
+               });
+
+
+
+               this.siteService.getCountry()
+                 .subscribe(
+                   (data: any) => {
+                     this.countries = data;
+                     this.dropdownSettingsCountry = {
+                       singleSelection: true,
+                       idField: 'Id',
+                       textField: 'Name',
+                       selectAllText: 'Select All',
+                       itemsShowLimit: this.countries.length,
+                       enableCheckAll: false,
+                       unSelectAllText: 'UnSelect All',
+                       allowSearchFilter: true,
+                       limitSelection: -1,
+                       clearSearchFilter: true,
+                       searchPlaceholderText: 'Search',
+                       noDataAvailablePlaceholderText: 'No data available',
+                       closeDropDownOnSelection: true,
+                       showSelectedItemsAtTop: false,
+                       defaultOpen: false
+                     };
+                     this.selectedCountry = [{Id: this.site.CountryId,Name: this.site.Country}];
+
+                   },(error: any) => {
+                     console.log(error);
+                   });
+
+
+
+               this.siteService.getCity(this.site.CountryId)
+                   .subscribe(
+                     (data: any) => {
+                       this.cities = data;
+                       this.dropdownSettingsCity = {
+                         singleSelection: true,
+                         idField: 'Id',
+                         textField: 'Name',
+                         selectAllText: 'Select All',
+                         itemsShowLimit: this.cities.length,
+                         enableCheckAll: false,
+                         unSelectAllText: 'UnSelect All',
+                         allowSearchFilter: true,
+                         limitSelection: -1,
+                         clearSearchFilter: true,
+                         searchPlaceholderText: 'Search',
+                         noDataAvailablePlaceholderText: 'No data available',
+                         closeDropDownOnSelection: true,
+                         showSelectedItemsAtTop: false,
+                         defaultOpen: false
+                       };
+
+                       this.selectedCity= [{Id: this.site.CityId,Name: this.site.City}]
+
+                     },(error: any) => {
+                       console.log(error);
+                     });
+
+             }
+
+           },
+           (error: any) => {
+             console.log(error);
+           });
+
+
+
+     }
+
     this.position = "bottom-right";
 
-    this.cities = [
-      {id:1, city: 'Karachi'},
-      {id:2, city: 'Hyderabad'},
-      {id:3, city: 'Larkana'},
-      {id:4, city: 'Rahim Yar Khan'},
-    ];
-    this.dropdownSettingsCity = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'city',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.cities.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
-    this.countries = [
-      {id:1,country: 'Pakistan'},
-      {id:2,country: 'Dubai'}
-    ];
-    this.dropdownSettingsCountry = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'country',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.countries.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-    this.selectedCountry = [{id: 1,country:'Pakistan'}];
+
+
+
   }
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {}
 
 
   onItemSelectCountry(item: any) {
+    this.siteService.getCity(item.Id)
+      .subscribe(
+        (data: any) => {
+          this.cities = data;
+
+        },(error: any) => {
+            console.log(error);
+
+        });
   }
   onItemDeSelectCountry(item: any) {
   }

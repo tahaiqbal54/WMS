@@ -122,7 +122,7 @@ export class WarehouseService {
   }
 
   getWarehouse(Warehouse_Id: any) {
-    Warehouse_Id = Warehouse_Id.trim();
+  //  Warehouse_Id = Warehouse_Id.trim();
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
       headers: new HttpHeaders({
@@ -130,6 +130,8 @@ export class WarehouseService {
       }),
       // params: user_id ? new HttpParams().set('id', user_id) : {}
     };
+
+
 
     return this.http
       .get(this.APIConfig.getUrl(this.API.LIST_WAREHOUSE, + "Id=" + Warehouse_Id), httpOptions)
