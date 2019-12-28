@@ -55,6 +55,7 @@
                   <label class="col-md-12 control-label">Location Id <a class="text-danger">*</a></label>
                   <div class="col-md-12 form-group">
                     <input
+                      readonly="readonly"
                       required
                       [ngClass]="{ 'is-invalid': formSubmitted && f.locationId.errors }"
                       type="number" class="form-control" placeholder="Enter Location Name"

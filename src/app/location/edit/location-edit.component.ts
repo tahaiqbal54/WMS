@@ -1,8 +1,9 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService} from '../../_services';
+import {LocationService} from '../../_services/location.service';
 
 
 
@@ -31,8 +32,10 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
   formSubmitted: boolean = false;
   isActive: boolean = false;
   position:any;
+  locationId: any;
+  location: any = null;
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private router: Router,private route: ActivatedRoute,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService,private  locationService: LocationService) {}
 
 
   ngOnInit() {
@@ -51,83 +54,140 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
       length: new FormControl(''),
       notes: new FormControl(''),
     });
-
-
+    this.route.params.subscribe(params => {
+      this.locationId = +params['id'];
+    });
     this.position = "bottom-right";
 
-    this.warehouses = [
-      {id:1, warehouse: 'Warehouse A'},
-      {id:2, warehouse: 'Warehouse B'},
-      {id:3, warehouse: 'Warehouse C'},
-    ];
-    this.dropdownSettingsWarehouse = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'warehouse',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.warehouses.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+    if(this.locationId){
+      this.locationService.getLocations().subscribe((data: any) =>{
+
+        if(data){
+          data.map((location) =>{
+              if(location.Id == this.locationId){
+                console.log('location',location);
+                this.location = location;
+                this.locationForm.patchValue({
+                  locationId : location.Id,
+                  warehouseId: location.WarehouseId,
+                  locationName: location.LocationName,
+                  locationDescription: location.LocationDescription ?  location.LocationDescription : "",
+                  cubicCapacity: location.CubicCapacity ? Number(location.CubicCapacity) : '',
+                  weightCapacity: location.WeightCapacity ? Number(location.WeightCapacity): '',
+                  length: location.Length ? Number(location.Length): '',
+                  width: location.Width ? Number(location.Width): '',
+                  height: location.Height ? Number(location.Height): '',
+                })
+              }
+          });
+
+          if(this.location){
 
 
-    this.locationTypes = [
-      {id:1, type: 'Pick'},
-      {id:2, type: 'Sort'},
-      {id:3, type: 'QC'},
-      {id:4, type: 'Hold'},
-      {id:5, type: 'Stage'},
-      {id:6, type: 'Putaway'},
-      {id:7, type: 'Pack'}
-    ];
-    this.dropdownSettingsLocationType = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'type',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.locationTypes.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+            this.locationService.getWarehouses().subscribe((data :any) =>{
+              this.warehouses = data;
+              this.dropdownSettingsWarehouse = {
+                singleSelection: true,
+                idField: 'Id',
+                textField: 'WarehouseName',
+                selectAllText: 'Select All',
+                itemsShowLimit: this.warehouses.length,
+                enableCheckAll: false,
+                unSelectAllText: 'UnSelect All',
+                allowSearchFilter: true,
+                limitSelection: -1,
+                clearSearchFilter: true,
+                searchPlaceholderText: 'Search',
+                noDataAvailablePlaceholderText: 'No data available',
+                closeDropDownOnSelection: false,
+                showSelectedItemsAtTop: false,
+                defaultOpen: false
+              };
+              this.selectedWarehouse = [{Id: this.location.WarehouseId, WarehouseName : this.location.WarehouseName}];
 
-    this.ABCClassification = [
-      {id:1, classification: 'Fast Mover'},
-      {id:2, classification: 'Slow Mover'},
-      {id:3, classification: 'Average Mover'}
-    ];
-    this.dropdownSettingsABCClassification = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'classification',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.ABCClassification.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+            },(err) =>{
+              console.log('err',err);
+            });
+
+            this.locationService.getLocationTypes().subscribe((data: any) =>{
+              this.locationTypes = data;
+              this.dropdownSettingsLocationType = {
+                singleSelection: true,
+                idField: 'Id',
+                textField: 'LocationTypeCode',
+                selectAllText: 'Select All',
+                itemsShowLimit: this.locationTypes.length,
+                enableCheckAll: false,
+                unSelectAllText: 'UnSelect All',
+                allowSearchFilter: true,
+                limitSelection: -1,
+                clearSearchFilter: true,
+                searchPlaceholderText: 'Search',
+                noDataAvailablePlaceholderText: 'No data available',
+                closeDropDownOnSelection: false,
+                showSelectedItemsAtTop: false,
+                defaultOpen: false
+              };
+              this.selectedLocationType = [{Id: this.location.LocationTypeId, LocationTypeCode: this.location.LocationTypeCode}];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            },(err) =>{
+              console.log('err',err);
+            });
+
+            this.ABCClassification = [
+              {id:1, classification: 'Fast Mover'},
+              {id:2, classification: 'Slow Mover'},
+              {id:3, classification: 'Average Mover'}
+            ];
+            this.dropdownSettingsABCClassification = {
+              singleSelection: true,
+              idField: 'id',
+              textField: 'classification',
+              selectAllText: 'Select All',
+              itemsShowLimit: this.ABCClassification.length,
+              enableCheckAll: false,
+              unSelectAllText: 'UnSelect All',
+              allowSearchFilter: true,
+              limitSelection: -1,
+              clearSearchFilter: true,
+              searchPlaceholderText: 'Search',
+              noDataAvailablePlaceholderText: 'No data available',
+              closeDropDownOnSelection: false,
+              showSelectedItemsAtTop: false,
+              defaultOpen: false
+            };
+            this.selectedABCClassification = [{
+                id: this.location.ClassificationId,
+                classification: this.location.Classification
+
+            }]
+
+
+
+          }
+        }
+
+      },(err) =>{
+        console.log('err',err);
+      });
+
+    }
+
+
 
 
   }
@@ -169,7 +229,31 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
     if(!this.locationForm.valid){
       return;
     }else{
+
       if(this.selectedLocationType.length > 0 && this.selectedWarehouse.length > 0){
+        let selectedWarehouse: any = this.warehouses.filter((warehouse) => warehouse.Id ==  this.locationForm.get('warehouseId').value);
+        let locationObj = {
+          Id: this.locationForm.get('locationId').value,
+          LocationCode: this.locationForm.get('locationName').value,
+          LocationName: this.locationForm.get('locationName').value,
+          Description: this.locationForm.get('locationDescription').value,
+          LocationNotes: this.locationForm.get('notes').value,
+          WarehouseId: this.locationForm.get('warehouseId').value,
+          WarehouseCode: selectedWarehouse[0] && selectedWarehouse[0].WarehouseCode ? selectedWarehouse[0].WarehouseCode : "" ,
+          WarehouseName: this.locationForm.get('warehouseName').value[0] &&  this.locationForm.get('warehouseName').value[0].WarehouseName ? this.locationForm.get('warehouseName').value[0].WarehouseName : "" ,
+          LocationTypeId: this.locationForm.get('locationType').value[0] && this.locationForm.get('locationType').value[0].Id ? this.locationForm.get('locationType').value[0].Id : "",
+          LocationType: this.locationForm.get('locationType').value[0] && this.locationForm.get('locationType').value[0].LocationTypeCode ? this.locationForm.get('locationType').value[0].LocationTypeCode : "" ,
+          ClassificationId: this.locationForm.get('ABCClassification').value[0] && this.locationForm.get('ABCClassification').value[0].id ? this.locationForm.get('ABCClassification').value[0].id : "" ,
+          Classification: this.locationForm.get('ABCClassification').value[0] && this.locationForm.get('ABCClassification').value[0].classification ? this.locationForm.get('ABCClassification').value[0].classification : "",
+          CubicCapacity: this.locationForm.get('cubicCapacity').value,
+          WeightCapacity: this.locationForm.get('weightCapacity').value,
+          Length: this.locationForm.get('length').value,
+          Width: this.locationForm.get('width').value,
+          Height: this.locationForm.get('height').value,
+          IsActive: true
+        };
+
+        console.log('location',locationObj);
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Location Saved Success',
@@ -181,6 +265,9 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
         this.toastyService.success(toastOptions);
         this.toastCommunicationService.setPosition(this.position);
       }else{
+
+
+
         let toastOptions: ToastOptions = {
           title: 'Warning',
           msg: 'Make sure you fill all the required fields',

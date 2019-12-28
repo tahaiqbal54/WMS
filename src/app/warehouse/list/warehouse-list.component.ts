@@ -68,10 +68,10 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
     this.dtTrigger.unsubscribe();
   }
 
-  deleteWarehouse(warehouseId:any) {
+  inActiveWarehouse(warehouseId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You won't be able to disable this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -79,6 +79,12 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+
+        this.warehouses.map((warehouse) =>{
+          if(warehouse.Id == warehouseId){
+            warehouse.IsActive = !warehouse.IsActive
+          }
+        })
 
       } else {
         console.log('cancelled');

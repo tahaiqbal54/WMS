@@ -24,6 +24,7 @@ import {NotificationCommunicationService} from '../_services';
 import {LocationAddComponent} from './add/location-add.component';
 import {LocationListComponent} from './list/location-list.component';
 import {LocationEditComponent} from './edit/location-edit.component';
+import {LocationService} from '../_services/location.service';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {LocationEditComponent} from './edit/location-edit.component';
   providers: [
     ThemeConstants,
     APIConstants,
-    NotificationCommunicationService
+    NotificationCommunicationService,
+    LocationService
   ]
 })
 

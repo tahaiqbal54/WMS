@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from 'sweetalert2';
+import {LocationService} from '../../_services/location.service';
+import {d} from '@angular/core/src/render3';
 
 
 
@@ -20,34 +22,22 @@ export class LocationListComponent implements AfterViewInit, OnDestroy, OnInit {
   dtTrigger: Subject<any> = new Subject();
   locations: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private locationService: LocationService) {}
 
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
     };
-    this.locations = [
-      {
-        "id" : 1,
-        "location_name": "Location A",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 2,
-        "location_name": "Location B",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 3,
-        "location_name": "Location C",
-        "created_at": "19-12-2019"
-      },
-      {
-        "id" : 4,
-        "location_name": "Location D",
-        "created_at": "19-12-2019"
-      },
-    ];
+
+    this.locationService.getLocations().subscribe( (data) =>{
+        this.locations = data;
+        this.rerender();
+
+    },(err) =>{
+        console.log('err',err);
+    });
+
+
 
   }
 
@@ -67,10 +57,10 @@ export class LocationListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  deleteWarehouse(warehouseId:any) {
+  inActiveWarehouse(locationId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You won't be able to disable this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -78,6 +68,13 @@ export class LocationListComponent implements AfterViewInit, OnDestroy, OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+
+        this.locations.map((location)=>{
+          if(location.Id == locationId){
+             location.IsActive = !location.IsActive;
+          }
+        });
+
 
       } else {
         console.log('cancelled');
