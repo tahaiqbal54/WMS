@@ -21,6 +21,7 @@
                 <th class="text-center">Country</th>
                 <th class="text-center">City</th>
                 <th class="text-center">Actions</th>
+                <th class="text-center">Actions</th>
               </tr>
               </thead>
               <tbody>
@@ -32,9 +33,12 @@
                 <td class="text-center">{{ site.Country}}</td>
                 <td class="text-center">{{ site.City}}</td>
                 <td class="text-center">
+                  <i [class.text-danger]="!site.IsActive" [class.text-success]="site.IsActive" class="ei-circle"></i>
+                </td>
+                <td class="text-center">
                   <div class="d-inline-block">
                     <a [routerLink]="['/sites/edit/' + site.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
-                    <a class="btn btn-default p-1" (click)="deleteSite(site.id)" ><i class="ei-delete"></i></a>
+                    <a class="btn btn-default p-1" (click)="inActiveSite(site.Id)" ><i class="ei-delete"></i></a>
                   </div>
                 </td>
               </tr>

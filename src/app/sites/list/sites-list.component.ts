@@ -38,7 +38,7 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.SitesService.getSites()
       .subscribe(
         (data: any) => {
-          console.log(data);
+
           this.sites = data;
 
           this.rerender();
@@ -67,10 +67,10 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  deleteSite(siteId:any) {
+  inActiveSite(siteId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: "You won't be able to disable this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -78,6 +78,12 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+
+        this.sites.map((site) =>{
+          if(site.Id == siteId){
+            site.IsActive = ! site.IsActive;
+          }
+        } )
 
       } else {
         console.log('cancelled');
