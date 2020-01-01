@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService, SitesService, WarehouseService} from '../../_services';
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -82,7 +82,7 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
 
 
               this.warehouseForm.patchValue({
-                warehouseId : this.warehouse.Id,
+                warehouseId : this.warehouse.WarehouseCode,
                 siteId:  this.warehouse.SiteId,
                 warehouseName: this.warehouse.WarehouseName,
                 warehouseAddress: this.warehouse.WarehouseAddress ? this.warehouse.WarehouseAddress : '-',
@@ -249,6 +249,36 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
 
 
   onItemSelectCity(item: any) {
+    this.warehouseService.getSites(item.Id)
+      .subscribe(
+        (data: any) => {
+          this.siteNames = data;
+
+          console.log('this.siteName',this.siteNames);
+
+          this.dropdownSettingsSite = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'SiteName',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.siteNames.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: false,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+
+
+        },
+        (error: any) => {
+          console.log(error);
+        });
   }
   onItemDeSelectCity(item: any) {
   }
@@ -276,34 +306,45 @@ export class WarehouseEditComponent implements AfterViewInit, OnDestroy, OnInit 
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0 && this.selectedSiteName.length > 0){
 
         let warehouseObj = {
-          Id: this.warehouseForm.get('warehouseId').value,
-          WarehouseCode: '',
+          Id: this.warehouseId,
+          WarehouseCode: this.warehouseForm.get('warehouseId').value,
           WarehouseName: this.warehouseForm.get('warehouseName').value,
           WarehouseAddress: this.warehouseForm.get('warehouseAddress').value,
           WarehouseContactNo: this.warehouseForm.get('warehouseContact').value,
           CountryId: this.warehouseForm.get('warehouseCountry').value[0].Id,
-          Country: this.warehouseForm.get('warehouseCountry').value[0].Name,
           CityId: this.warehouseForm.get('warehouseCity').value[0].Id,
-          City: this.warehouseForm.get('warehouseCity').value[0].Name,
           SiteId: this.warehouseForm.get('siteId').value ,
-          SiteCode: this.warehouse.SiteCode,
           IsActive: true,
           IsDefault: true,
         };
 
 
         console.log('this.warehouse',warehouseObj);
+        this.warehouseService.editWarehouse(warehouseObj,this.warehouseId)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Warehouse Updated Successfully',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
 
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Warehouse Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
 
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
+          }
+        );
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

@@ -4,7 +4,9 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from 'sweetalert2';
 import {WarehouseService} from '../../_services/warehouse.service';
-
+import {ToastOptions, ToastyService} from 'ng2-toasty';
+import {NotificationCommunicationService} from '../../_services';
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -20,8 +22,9 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
   warehouses: any[] = [];
+  position:any;
 
-  constructor(private router: Router,private WarehouseService:WarehouseService) {}
+  constructor(private router: Router,private WarehouseService:WarehouseService,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
 
   ngOnInit() {
     this.dtOptions = {
@@ -35,6 +38,9 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
         { visible: false, targets: 5 }
       ]
     };
+
+    this.position = "bottom-right";
+
     this.WarehouseService.getWarehouses()
       .subscribe(
         (data: any) => {
@@ -68,23 +74,113 @@ export class WarehouseListComponent implements AfterViewInit, OnDestroy, OnInit 
     this.dtTrigger.unsubscribe();
   }
 
-  inActiveWarehouse(warehouseId:any) {
+  inActiveWarehouse(locationId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
-      text: "You won't be able to disable this!",
+      text: "You won't be able to revert this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes!'
     }).then((result) => {
       if (result.value) {
 
-        this.warehouses.map((warehouse) =>{
-          if(warehouse.Id == warehouseId){
-            warehouse.IsActive = !warehouse.IsActive
+        this.WarehouseService.WareHouseStatus(locationId,true)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Activate',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.WarehouseService.getWarehouses()
+              .subscribe(
+              (data: any) => {
+                console.log(data);
+                this.warehouses = data;
+
+
+
+
+                this.rerender();
+              },(error: any) => {
+                console.log(error);
+              });
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
           }
-        })
+        );
+
+
+      } else {
+        console.log('cancelled');
+      }
+    });
+  }
+
+  inDeActiveWarehouse(locationId:any) {
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.WarehouseService.WareHouseStatus(locationId,false)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Disabled',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.WarehouseService.getWarehouses()
+              .subscribe(
+                (data: any) => {
+                  console.log(data);
+                  this.warehouses = data;
+
+
+
+
+                  this.rerender();
+                },(error: any) => {
+                  console.log(error);
+                });
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
+          }
+        );
+
 
       } else {
         console.log('cancelled');

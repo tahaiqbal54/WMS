@@ -2,8 +2,8 @@ import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/c
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService, SitesService} from '../../_services';
-
+import {NotificationCommunicationService, SitesService, WarehouseService} from '../../_services';
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -35,7 +35,7 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
   position:any;
 
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService, private siteService: SitesService) {}
+  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService, private siteService: SitesService, private WarehouseService: WarehouseService) {}
 
 
   ngOnInit() {
@@ -50,36 +50,7 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
       warehouseContact: new FormControl('')
     });
 
-    this.siteService.getSites()
-      .subscribe(
-        (data: any) => {
-          this.siteNames = data;
-
-          console.log('this.siteName',this.siteNames);
-
-          this.dropdownSettingsSite = {
-            singleSelection: true,
-            idField: 'Id',
-            textField: 'SiteName',
-            selectAllText: 'Select All',
-            itemsShowLimit: this.siteNames.length,
-            enableCheckAll: false,
-            unSelectAllText: 'UnSelect All',
-            allowSearchFilter: true,
-            limitSelection: -1,
-            clearSearchFilter: true,
-            searchPlaceholderText: 'Search',
-            noDataAvailablePlaceholderText: 'No data available',
-            closeDropDownOnSelection: false,
-            showSelectedItemsAtTop: false,
-            defaultOpen: false
-          };
-
-
-        },
-        (error: any) => {
-          console.log(error);
-        });
+    
 
 
 
@@ -193,6 +164,36 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   onItemSelectCity(item: any) {
+    this.WarehouseService.getSites(item.Id)
+      .subscribe(
+        (data: any) => {
+          this.siteNames = data;
+
+          console.log('this.siteName',this.siteNames);
+
+          this.dropdownSettingsSite = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'SiteName',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.siteNames.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: false,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+
+
+        },
+        (error: any) => {
+          console.log(error);
+        });
   }
   onItemDeSelectCity(item: any) {
   }
@@ -223,33 +224,47 @@ export class WarehouseAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
         let warehouseObj = {
-          Id: this.warehouseForm.get('warehouseId').value,
-          WarehouseCode: '',
+          Id: 0,
+          WarehouseCode: this.warehouseForm.get('warehouseId').value,
           WarehouseName: this.warehouseForm.get('warehouseName').value,
           WarehouseAddress: this.warehouseForm.get('warehouseAddress').value,
           WarehouseContactNo: this.warehouseForm.get('warehouseContact').value,
           CountryId: this.warehouseForm.get('warehouseCountry').value[0].Id,
-          Country: this.warehouseForm.get('warehouseCountry').value[0].Name,
           CityId: this.warehouseForm.get('warehouseCity').value[0].Id,
-          City: this.warehouseForm.get('warehouseCity').value[0].Name,
           SiteId: this.warehouseForm.get('siteId').value ,
-          SiteCode: selectedSite[0].SiteCode,
           IsActive: true,
           IsDefault: true,
         };
 
         console.log('warehouseObj',warehouseObj);
 
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Warehouse Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
+        this.WarehouseService.createWarehouse(warehouseObj)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Warehouse Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
 
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
+
+          }
+        );
+
+        
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

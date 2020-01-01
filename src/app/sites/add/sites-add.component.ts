@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService} from '../../_services';
 import {SitesService} from "../../_services/sites.service";
+import swal from 'sweetalert2';
 
 
 
@@ -144,20 +145,46 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
         let obj = {
-          SiteId: this.siteForm.get('siteId').value,
+          Id: 0,
+          SiteCode: this.siteForm.get('siteId').value,
           SiteName: this.siteForm.get('siteName').value,
-
+          SiteAddress: this.siteForm.get('siteAddress').value,
+          SiteContactNo: this.siteForm.get('siteContact').value,
+          SiteNote: this.siteForm.get('notes').value,
+          CountryId: this.siteForm.get('siteCountry').value[0].Id,
+          CityId: this.siteForm.get('siteCity').value[0].Id,
+          IsActive: true,
+          IsDefault: true,
         };
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Site Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
+        console.log(obj);
 
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
+        this.SitesService.createSite(obj)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Site Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
+          }
+        );
+
+        
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

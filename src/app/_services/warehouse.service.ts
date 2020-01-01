@@ -110,7 +110,7 @@ export class WarehouseService {
     };
 
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_SITE_BY_CITY, "id="+ City_id ), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_SITE_BY_CITY, "CityId="+ City_id ), httpOptions)
       .pipe(
         map((data: any) => {
           if (data.success) {
@@ -173,13 +173,23 @@ export class WarehouseService {
       .pipe(catchError(this.handleError));
   }
 
-  editWarehouse(site: any): Observable<any> {
+  editWarehouse(site: any, SiteId:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_WAREHOUSE), site, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_WAREHOUSE, "id=" + SiteId), site, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  WareHouseStatus(WarehouseId:any,Status:Boolean): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.put<any>(this.APIConfig.getUrl2(this.API.WAREHOUSE_STATUS,  "WarehouseId=" + WarehouseId, "Status=" + Status),{}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

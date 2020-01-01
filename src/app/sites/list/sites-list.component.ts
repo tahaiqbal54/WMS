@@ -4,7 +4,9 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from "sweetalert2";
 import {SitesService} from "../../_services/sites.service";
-
+import {ToastOptions, ToastyService} from 'ng2-toasty';
+import {NotificationCommunicationService} from '../../_services';
+import swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -19,8 +21,9 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
   sites: any[] = [];
+  position:any;
 
-  constructor(private router: Router,private SitesService: SitesService) {
+  constructor(private router: Router,private SitesService: SitesService,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
   }
 
   ngOnInit() {
@@ -35,6 +38,8 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
         { visible: false, targets: 5 }
       ]
     };
+    this.position = "bottom-right";
+
     this.SitesService.getSites()
       .subscribe(
         (data: any) => {
@@ -67,23 +72,110 @@ export class SitesListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  inActiveSite(siteId:any) {
+  inActiveSite(locationId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
-      text: "You won't be able to disable this!",
+      text: "You won't be able to revert this!",
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes!'
     }).then((result) => {
       if (result.value) {
 
-        this.sites.map((site) =>{
-          if(site.Id == siteId){
-            site.IsActive = ! site.IsActive;
+        this.SitesService.SiteStatus(locationId,true)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Activate',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.SitesService.getSites()
+              .subscribe(
+                (data: any) => {
+
+                  this.sites = data;
+
+                  this.rerender();
+                },
+                (error: any) => {
+                  console.log(error);
+                });
+              
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
           }
-        } )
+        );
+
+
+      } else {
+        console.log('cancelled');
+      }
+    });
+  }
+
+  inDeActiveSite(locationId:any) {
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.SitesService.SiteStatus(locationId,false)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Disabled',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.SitesService.getSites()
+              .subscribe(
+                (data: any) => {
+
+                  this.sites = data;
+
+                  this.rerender();
+                },
+                (error: any) => {
+                  console.log(error);
+                });
+                    }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
+          }
+        );
+
 
       } else {
         console.log('cancelled');

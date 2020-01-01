@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService} from '../../_services';
 import {LocationService} from '../../_services/location.service';
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -57,6 +57,7 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.position = "bottom-right";
 
     this.locationService.getWarehouses().subscribe((data :any) =>{
+      console.log(data);
          this.warehouses = data;
          this.dropdownSettingsWarehouse = {
         singleSelection: true,
@@ -148,7 +149,7 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
   onItemSelectWarehouse(item: any) {
-
+console.log(item);
     this.locationForm.patchValue({warehouseId: item.Id});
   }
   onItemDeSelectWarehouse(item: any) {
@@ -177,36 +178,51 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
       if(this.selectedLocationType.length > 0 && this.selectedWarehouse.length > 0){
         let selectedWarehouse: any = this.warehouses.filter((warehouse) => warehouse.Id ==  this.locationForm.get('warehouseId').value);
         let locationObj = {
-          Id: this.locationForm.get('locationId').value,
-          LocationCode: this.locationForm.get('locationName').value,
+          Id: 0,
+          LocationCode: this.locationForm.get('locationId').value,
           LocationName: this.locationForm.get('locationName').value,
           Description: this.locationForm.get('locationDescription').value,
           LocationNotes: this.locationForm.get('notes').value,
           WarehouseId: this.locationForm.get('warehouseId').value,
-          WarehouseCode: selectedWarehouse[0] && selectedWarehouse[0].WarehouseCode ? selectedWarehouse[0].WarehouseCode : "" ,
-          WarehouseName: this.locationForm.get('warehouseName').value[0] &&  this.locationForm.get('warehouseName').value[0].WarehouseName ? this.locationForm.get('warehouseName').value[0].WarehouseName : "" ,
           LocationTypeId: this.locationForm.get('locationType').value[0] && this.locationForm.get('locationType').value[0].Id ? this.locationForm.get('locationType').value[0].Id : "",
-          LocationType: this.locationForm.get('locationType').value[0] && this.locationForm.get('locationType').value[0].LocationTypeCode ? this.locationForm.get('locationType').value[0].LocationTypeCode : "" ,
           ClassificationId: this.locationForm.get('ABCClassification').value[0] && this.locationForm.get('ABCClassification').value[0].id ? this.locationForm.get('ABCClassification').value[0].id : "" ,
-          Classification: this.locationForm.get('ABCClassification').value[0] && this.locationForm.get('ABCClassification').value[0].classification ? this.locationForm.get('ABCClassification').value[0].classification : "",
           CubicCapacity: this.locationForm.get('cubicCapacity').value,
           WeightCapacity: this.locationForm.get('weightCapacity').value,
           Length: this.locationForm.get('length').value,
           Width: this.locationForm.get('width').value,
           Height: this.locationForm.get('height').value,
-          IsActive: true
+          IsActive: true,
+          IsDefault:true
         };
 
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Location Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
+        this.locationService.createLocation(locationObj)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
 
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
+
+          }
+        );
+
+        
+        
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

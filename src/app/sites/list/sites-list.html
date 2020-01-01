@@ -38,7 +38,8 @@
                 <td class="text-center">
                   <div class="d-inline-block">
                     <a [routerLink]="['/sites/edit/' + site.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
-                    <a class="btn btn-default p-1" (click)="inActiveSite(site.Id)" ><i class="ei-delete"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="site.IsActive" (click)="inDeActiveSite(site.Id)" ><i class="ei-delete"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="!site.IsActive" (click)="inActiveSite(site.Id)" ><i class="ei-open"></i></a>
                   </div>
                 </td>
               </tr>

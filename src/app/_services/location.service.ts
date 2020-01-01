@@ -91,17 +91,27 @@ export class LocationService {
         'Authorization': this.accessToken
       })
     };
-    return this.http.post<any>(this.APIConfig.getUrl(this.API.LIST_WAREHOUSE), location, httpOptions)
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.LIST_LOCATION), location, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  editLocation(locationId:any,location: any): Observable<any> {
+  editLocation(location: any, locationId:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_WAREHOUSE), location, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_LOCATION,  "id=" + locationId), location, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  LocationStatus(locationId:any,Status:Boolean): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.put<any>(this.APIConfig.getUrl2(this.API.LOCATION_STATUS,  "Locationid=" + locationId, "Status=" + Status),{}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

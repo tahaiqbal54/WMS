@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {NotificationCommunicationService, SitesService} from '../../_services';
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -66,7 +66,7 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
              if(this.site){
 
                this.siteForm.patchValue({
-                 siteId: this.site.Id,
+                 siteId: this.site.SiteCode,
                  siteName: this.site.SiteName,
                  siteAddress: this.site.SiteAddress,
                  siteContact: this.site.SiteContactNo,
@@ -189,16 +189,49 @@ export class SitesEditComponent implements AfterViewInit, OnDestroy, OnInit {
       return;
     }else{
       if(this.selectedCity.length > 0 && this.selectedCountry.length > 0){
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Site Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
-
+        let obj = {
+          Id: this.siteId,
+          SiteCode: this.siteForm.get('siteId').value,
+          SiteName: this.siteForm.get('siteName').value,
+          SiteAddress: this.siteForm.get('siteAddress').value,
+          SiteContactNo: this.siteForm.get('siteContact').value,
+          SiteNote: this.siteForm.get('notes').value,
+          CountryId: this.siteForm.get('siteCountry').value[0].Id,
+          CityId: this.siteForm.get('siteCity').value[0].Id,
+          IsActive: true,
+          IsDefault: true,
         };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
+
+        console.log(obj);
+
+        this.siteService.editSite(obj,this.siteId)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Site Updated Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
+          }
+        );
+
+        
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

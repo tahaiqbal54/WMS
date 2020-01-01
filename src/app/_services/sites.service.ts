@@ -151,13 +151,24 @@ export class SitesService {
       .pipe(catchError(this.handleError));
   }
 
-  editSite(site: any): Observable<any> {
+  editSite(site: any,SiteId: any): Observable<any> {
+    console.log(SiteId);
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_SITES), site, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.POST_SITE, "id=" + SiteId), site, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  SiteStatus(SiteId:any,Status:Boolean): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.put<any>(this.APIConfig.getUrl2(this.API.SITE_STATUS,  "SiteId=" + SiteId, "Status=" + Status),{}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

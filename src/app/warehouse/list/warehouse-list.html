@@ -40,7 +40,8 @@
                 <td class="text-center">
                   <div class="d-inline-block">
                     <a [routerLink]="['/warehouse/edit/' + warehouse.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
-                    <a class="btn btn-default p-1" (click)="inActiveWarehouse(warehouse.Id)"><i class="ei-close"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="warehouse.IsActive" (click)="inDeActiveWarehouse(warehouse.Id)"><i class="ei-close"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="!warehouse.IsActive" (click)="inActiveWarehouse(warehouse.Id)"><i class="ei-open"></i></a>
                   </div>
                 </td>
               </tr>
