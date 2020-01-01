@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from "sweetalert2";
+import {ProductService} from '../../_services';
 
 
 
@@ -20,7 +21,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
   dtTrigger: Subject<any> = new Subject();
   products: any[] = [];
 
-  constructor(private router: Router) {
+  constructor(private router: Router,private productService: ProductService) {
   }
 
   ngOnInit() {
@@ -31,12 +32,27 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     };
 
+    this.getProducts();
+
     this.products = [
       {id: 1, product_name: 'Product A'},
       {id: 2, product_name: 'Product B'},
       {id: 3, product_name: 'Product C'},
       ];
 
+  }
+
+
+  getProducts(){
+    this.productService.getProducts().subscribe((products) =>{
+      console.log('product',products);
+      //SKU
+      //Description
+      this.products = products;
+      this.rerender();
+    },(err) =>{
+       console.log('err',err);
+    })
   }
 
   rerender(): void {

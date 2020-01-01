@@ -74,7 +74,8 @@ export class APIConstants {
         LIST_PACKS:'/Packs/PackKey',
         QC_LIST_LOCATIONS: '/Locations/',
         STAGE_LIST_LOCATIONS: '/Locations/GetStageLocationByWarehouseId',
-        LIST_STRATEGIES: '/Customers/CustomerStrategies'
+        LIST_STRATEGIES: '/Customers/CustomerStrategies',
+        LIST_PRODUCTS: '/Products'
 
       }
     };

@@ -17,14 +17,14 @@ export class CustomerService {
     this.accessToken = `Bearer ${this.currentUser.AccessToken}`;
   }
 
-  disabled(user:any){
+  disabled(customer:any){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.USER_DISABLE), user, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.USER_DISABLE), customer, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -175,9 +175,6 @@ export class CustomerService {
     return this.http.get(this.APIConfig.getUrl(this.API.LIST_STRATEGIES), httpOptions)
       .pipe(catchError(this.handleError));
   }
-  //Customers/CustomerStrategies
-
-
 
 
 
