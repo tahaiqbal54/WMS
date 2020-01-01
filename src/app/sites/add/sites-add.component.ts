@@ -152,8 +152,11 @@ export class SitesAddComponent implements AfterViewInit, OnDestroy, OnInit {
         console.log('siteNameok',this.siteForm.get('siteName').value);
      
         let obj = {
+          Id:0,
           SiteId: this.siteForm.get('siteId').value,
           SiteName: this.siteForm.get('siteName').value,
+          SiteAddress: this.siteForm.get('siteAddress').value,
+          SiteContactNo: this.siteForm.get('siteContact').value,
           
         }
         let toastOptions: ToastOptions = {
