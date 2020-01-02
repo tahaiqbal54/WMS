@@ -2,7 +2,7 @@ import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/c
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService} from '../../_services';
+import {CustomerService, NotificationCommunicationService, ProductService} from '../../_services';
 import {SitesService} from "../../_services/sites.service";
 
 
@@ -55,7 +55,7 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
   isQcRequired:any = false;
 
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService,private customerService: CustomerService,private productService: ProductService) {}
 
 
   ngOnInit() {
@@ -85,7 +85,6 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
         cost: new FormControl(''),
         qcRequired: new FormControl(''),
       //Dropdown
-        qcLocation: new FormControl(''),
         productStatus: new FormControl(''),
       //Dropdown
         rotateBy: new FormControl(''),
@@ -106,125 +105,16 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   initiateDropDowns(){
 
-    this.customerNames = [{'Id':1,'customer_name':'Amna'}];
-    this.dropdownSettingsCustomerName = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: 'customer_name',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.customerNames.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
 
-    this.UOM = [{'Id':1,'uom_name':'Uom 1'}];
-    this.dropdownSettingsUOM = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "uom_name",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.UOM.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.packKeys = [{'Id':1,'pack':'Pack 1'}];
-    this.dropdownSettingsPackKey = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "pack",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.packKeys.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.abcClassifications = [{'Id':1,'abcclassification':'ABC Classification 1'}];
-    this.dropdownSettingsABCClassification = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "abcclassification",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.abcClassifications.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.rfDefaultUOM = [{'Id':1,'rf_default':'Rf Default 1'}];
-    this.dropdownSettingsRfDefaultUOM = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "rf_default",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.rfDefaultUOM.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.qcLocations = [{'Id':1,'qc_location':'QC Location 1'}];
-    this.dropdownSettingsRfDefaultUOM = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "qc_location",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.qcLocations.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.rotateBy = [{'Id':1,'rotate_by':'Rotate By 1'}];
+    this.rotateBy = [
+      {id:1, rotate: 'Lot'},
+      {id:2, rotate: 'Manafacture Date'},
+      {id:3, rotate: 'Expire Date'},
+    ];
     this.dropdownSettingsRotateBy = {
       singleSelection: true,
-      idField: 'Id',
-      textField: "rotate_by",
+      idField: 'id',
+      textField: 'rotate',
       selectAllText: 'Select All',
       itemsShowLimit: this.rotateBy.length,
       enableCheckAll: false,
@@ -234,29 +124,136 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
       clearSearchFilter: true,
       searchPlaceholderText: 'Search',
       noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
+      closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
       defaultOpen: false
     };
 
-    this.qcLocations = [{'Id':1,'location':'QC Location 1'}];
-    this.dropdownSettingsQcLocation = {
-      singleSelection: true,
-      idField: 'Id',
-      textField: "location",
-      selectAllText: 'Select All',
-      itemsShowLimit: this.qcLocations.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: true,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+    this.customerService.getCustomers().subscribe((customers) =>{
+      this.customerNames = customers;
+      this.dropdownSettingsCustomerName = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'CustomerName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.customerNames.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+    });
+    this.productService.getUOM().subscribe((UOMS) =>{
+
+      this.UOM = UOMS;
+      this.dropdownSettingsUOM = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: "UnitName",
+        selectAllText: 'Select All',
+        itemsShowLimit: this.UOM.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+
+
+    },(err) =>{
+         console.log('err',err);
+    });
+    this.productService.getPack().subscribe((packs)=>{
+
+      this.packKeys = packs;
+      this.dropdownSettingsPackKey = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: "PackKey",
+        selectAllText: 'Select All',
+        itemsShowLimit: this.packKeys.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+
+    },(err) =>{
+       console.log('err',err);
+    });
+    this.productService.getABCClassifications().subscribe((abcClassifications) =>{
+
+      this.abcClassifications = abcClassifications;
+      this.dropdownSettingsABCClassification = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: "Classification",
+        selectAllText: 'Select All',
+        itemsShowLimit: this.abcClassifications.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+    },(err)=>{
+       console.log('err',err);
+    });
+    this.productService.getRFDefault().subscribe((rfDefaults) =>{
+
+
+
+      //RFDefaultUOM
+      this.rfDefaultUOM = rfDefaults;
+      this.dropdownSettingsRfDefaultUOM = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: "RFDefaultUOM",
+        selectAllText: 'Select All',
+        itemsShowLimit: this.rfDefaultUOM.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+
+    },(err) =>{
+        console.log('err',err);
+    });
+
 
 
 
@@ -295,10 +292,6 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
 
-  onItemSelectQcLocation(item: any) {
-  }
-  onItemDeSelectQcLocation(item: any) {
-  }
 
   onItemSelectRotateBy(item: any) {
   }
@@ -321,7 +314,54 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
       return;
     }else{
       if(this.selectedCustomerNames.length > 0){
-        console.log('Product Form',this.productForm.value);
+
+     
+
+
+        let productObj = {
+          SKU: this.productForm.get('sku').value,
+          Description: this.productForm.get('description').value,
+          ShelfLife: this.productForm.get('shelfLife').value,
+          QCRequired: "",
+          UDF1: "",
+          UDF2: "",
+          UDF3: "",
+          UDF4: "",
+          UDF5: "",
+          ProductClassificationId: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Id : "" ,
+          ProductClassification: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Classification : "",
+          CustomerId: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].Id : "",
+          CustomerName: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].CustomerName : "",
+          STDGrossWeight: this.productForm.get('stdGrossWeight').value,
+          STDNetWeight: this.productForm.get('stdNetWeight').value,
+          STDArea: this.productForm.get('stdNetWeight').value,
+          Notes: this.productForm.get('notes').value,
+          Price: this.productForm.get('price').value,
+          Cost: this.productForm.get('cost').value,
+          OnReceipteCopyPackKey: "",
+          ProductRotateById: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].id : "",
+          ProductRotateBy: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].rotate : "",
+          QCLocationId: "",
+          CycleCountFrequency: this.productForm.get('cycleCount').value,
+          LastCycleCount: this.productForm.get('lastCycleCount').value,
+          UnitId: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].Id : "",
+          UnitName: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].UnitName : "",
+          PackId: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].Id : "",
+          PackKey: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].PackKey : "",
+          Weighable: this.productForm.get('weighable').value,
+          Volume: this.productForm.get('volume').value,
+          ProductStatusId: this.productForm.get('wmsProductId').value,
+          ProductStatus: this.productForm.get('productStatus').value
+        };
+
+
+
+
+
+
+
+
+
 
         let toastOptions: ToastOptions = {
           title: 'Success',
