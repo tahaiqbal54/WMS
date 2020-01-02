@@ -49,8 +49,7 @@
                 <div class="col-md-12 form-group">
                   <input
                     required
-                    [ngClass]="{ 'is-invalid': formSubmitted && f.sku.errors }"
-                    type="number" maxlength="255" class="form-control" placeholder="Enter SKU"
+                    type="text" maxlength="255" class="form-control" placeholder="Enter SKU"
                     formControlName="sku">
                   <div *ngIf="formSubmitted && productForm.controls['sku'].errors" class="error-msg">
                     <div class="text-danger" [hidden]="!productForm.controls['sku'].errors.required">SKU is required.</div>
@@ -231,7 +230,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group col-md-12"><label>RF Default EOM </label>
+                <div class="form-group col-md-12"><label>RF Default UOM </label>
                   <ng-multiselect-dropdown
                     formControlName='rfDefaultUOM'
                     [placeholder]="'Select RF Default UOM'"
@@ -275,24 +274,7 @@
                   <label>QC Required</label>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group col-md-12"><label> QC Location</label>
-                  <ng-multiselect-dropdown
-                    formControlName='qcLocation'
-                    [placeholder]="'Select QC Location'"
-                    [(data)]="qcLocations"
-                    [(ngModel)]="selectedQcLocations"
-                    [settings]="dropdownSettingsQcLocation"
-                    (onSelect)="onItemSelectQcLocation($event)"
-                    (onDeSelect)="onItemSelectQcLocation($event)"
-                  >
-                  </ng-multiselect-dropdown>
-                </div>
-              </div>
-            </div>
 
-
-            <div class="row">
               <div class="col-md-6">
                 <label class="col-md-12 control-label"> Product Status </label>
                 <div class="col-md-12 form-group">
@@ -301,6 +283,12 @@
                     formControlName="productStatus">
                 </div>
               </div>
+
+
+            </div>
+
+
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group col-md-12"><label> Rotate By</label>
                   <ng-multiselect-dropdown
@@ -309,16 +297,12 @@
                     [(data)]="rotateBy"
                     [(ngModel)]="selectedRotateBy"
                     [settings]="dropdownSettingsRotateBy"
-                    (onSelect)="onItemDeSelectRotateBy($event)"
+                    (onSelect)="onItemSelectRotateBy($event)"
                     (onDeSelect)="onItemDeSelectRotateBy($event)"
                   >
                   </ng-multiselect-dropdown>
                 </div>
               </div>
-            </div>
-
-
-            <div class="row">
               <div class="col-md-6">
                 <label class="col-md-12 control-label"> Cycle Count </label>
                 <div class="col-md-12 form-group">
@@ -327,6 +311,11 @@
                     formControlName="cycleCount">
                 </div>
               </div>
+
+            </div>
+
+
+            <div class="row">
               <div class="col-md-6">
                 <label class="col-md-12 control-label">Last Cycle Count</label>
                 <div class="col-md-12 form-group">

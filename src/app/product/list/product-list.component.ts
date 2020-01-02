@@ -46,8 +46,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
   getProducts(){
     this.productService.getProducts().subscribe((products) =>{
       console.log('product',products);
-      //SKU
-      //Description
+
       this.products = products;
       this.rerender();
     },(err) =>{

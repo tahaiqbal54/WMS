@@ -18,7 +18,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import {ToastyModule} from 'ng2-toasty'
 import {ProductRoutes} from './product-routing.module';
-import {NotificationCommunicationService, ProductService} from '../_services';
+import {CustomerService, NotificationCommunicationService, ProductService} from '../_services';
 import {ProductListComponent} from './list/product-list.component';
 import {ProductAddComponent} from './add/product-add.component';
 import {ProductEditComponent} from './edit/product-edit.component';
@@ -51,7 +51,8 @@ import {ProductEditComponent} from './edit/product-edit.component';
     ThemeConstants,
     APIConstants,
     NotificationCommunicationService,
-    ProductService
+    ProductService,
+    CustomerService
   ]
 })
 

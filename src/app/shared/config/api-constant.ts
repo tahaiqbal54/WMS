@@ -75,7 +75,11 @@ export class APIConstants {
         QC_LIST_LOCATIONS: '/Locations/',
         STAGE_LIST_LOCATIONS: '/Locations/GetStageLocationByWarehouseId',
         LIST_STRATEGIES: '/Customers/CustomerStrategies',
-        LIST_PRODUCTS: '/Products'
+        LIST_PRODUCTS: '/Products',
+        LIST_UOM: '/Units/UOM',
+        LIST_PACK: '/Packs/PackKey',
+        LIST_ABC_CLASSIFICATION: '/Products/ProductClassification',
+        LIST_RFDefaultUOM: '/Products/RFDefaultUOM'
 
       }
     };

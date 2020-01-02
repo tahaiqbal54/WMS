@@ -28,19 +28,101 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-
-
   getProducts() {
 
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       }),
-      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
     };
 
     return this.http
       .get(this.APIConfig.getUrl(this.API.LIST_PRODUCTS), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getUOM(){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LIST_UOM), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getPack(){
+    //api/Packs/PackKey
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LIST_PACKS), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+
+  }
+
+
+  getABCClassifications(){
+
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LIST_ABC_CLASSIFICATION), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+
+  }
+
+  getRFDefault(){
+    ///Products/RFDefaultUOM
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LIST_RFDefaultUOM), httpOptions)
       .pipe(
         map((data: any) => {
           if (data.success) {
