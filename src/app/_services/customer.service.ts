@@ -17,14 +17,14 @@ export class CustomerService {
     this.accessToken = `Bearer ${this.currentUser.AccessToken}`;
   }
 
-  disabled(customer:any){
+  disabled(customerId:any, Status:boolean){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.USER_DISABLE), customer, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl2(this.API.CUSTOMER_STATUS, "Customerid=" + customerId, "Status="+ Status), {}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -106,7 +106,7 @@ export class CustomerService {
     };
 
     return this.http
-      .get(this.APIConfig.getUrl(this.API.LIST_CUSTOMERS, +"id="+customerId), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.LIST_CUSTOMERS, +"Id="+customerId), httpOptions)
       .pipe((data: any) => {
         if (data.success) {
           return data.data;
@@ -125,13 +125,13 @@ export class CustomerService {
       .pipe(catchError(this.handleError));
   }
 
-  editCustomer(customer: any): Observable<any> {
+  editCustomer(customer: any, customer_id: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_CUSTOMERS), customer, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_CUSTOMERS, "Id=" + customer_id), customer, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

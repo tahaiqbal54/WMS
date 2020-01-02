@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {CustomerService, NotificationCommunicationService, WarehouseService} from '../../_services';
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -77,7 +77,7 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit() {
     this.customerForm = new FormGroup({
-      wmsKey: new FormControl('',Validators.required),
+      wmsKey: new FormControl(),
       whsId: new FormControl('',Validators.required),
       type: new FormControl(''),
       customerId: new FormControl('',Validators.required),
@@ -553,15 +553,15 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
           Description: this.customerForm.get('description').value,
           Notes: this.customerForm.get('notes').value,
           CustomerTypeId: this.customerForm.get('type').value[0].Id,
-          CustomerType: this.customerForm.get('type').value[0].CustomerType,
+          //CustomerType: this.customerForm.get('type').value[0].CustomerType,
           Address1: this.customerForm.get('address1').value,
           Address2: this.customerForm.get('address2').value,
           Address3: this.customerForm.get('address3').value,
           Address4: this.customerForm.get('address4').value,
           CountryId: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Id : "",
-          CountryName: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Name : "",
+          //CountryName: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Name : "",
           CityId: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
-          CityName: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
+          //CityName: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
           Contact1: this.customerForm.get('primaryContact').value,
           Contact2: this.customerForm.get('secondaryContact').value,
           Phone1: this.customerForm.get('primaryContactNumber').value,
@@ -570,9 +570,9 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
           Email2: this.customerForm.get('secondaryContactEmail').value,
           CreditLimit: this.customerForm.get('creditLimit').value,
           CustomerStrategyId: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].Id : "" ,
-          CustomerStrategy: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].CustomerStrategy : "" ,
+         // CustomerStrategy: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].CustomerStrategy : "" ,
           CustomerRotateById: this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].id : "" ,
-          CustomerRotateBy:  this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].rotate : "" ,
+          //CustomerRotateBy:  this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].rotate : "" ,
           AllowMixedProduct: this.customerForm.get('allowMixedProduct').value,
           AllowOverShipment: this.customerForm.get('allowOverShipment').value,
           AllowAutoCloseForASN: this.customerForm.get('allowAutoClose').value,
@@ -587,32 +587,43 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
           HoldLocationId: this.customerForm.get('defaultHoldLocation').value[0] ? this.customerForm.get('defaultHoldLocation').value[0].Id : "",
           AdminEmail: this.customerForm.get('adminEmail').value,
           WarehouseId:  this.customerForm.get('whsId').value[0].Id,
-          WarehouseName: this.customerForm.get('whsId').value[0].WarehouseName,
+          //WarehouseName: this.customerForm.get('whsId').value[0].WarehouseName,
           IsActive: true,
-          UDF1: null,
-          UDF2: null,
-          UDF3: null,
-          UDF4: null,
-          UDF5: null,
-          RelationId: null,
+          IsDefault: true
+          // UDF1: null,
+          // UDF2: null,
+          // UDF3: null,
+          // UDF4: null,
+          // UDF5: null,
+         // RelationId: null,
         };
 
 
         console.log('customer',customerObj);
 
+        this.customerService.createCustomer(customerObj)
+        .subscribe(
+          (data: any) => {
+            if (data) {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Customer Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          }, 
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+          }
+        );
 
-
-
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Customer Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
-
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

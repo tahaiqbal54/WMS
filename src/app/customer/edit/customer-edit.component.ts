@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {CustomerService, NotificationCommunicationService, WarehouseService} from '../../_services';
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -220,6 +220,10 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
     },(error: any) => {
       console.log(error);
     });
+
+    
+
+
     this.customerService.getPacks().subscribe((packs:any) =>{
       this.defaultPackLocation = packs;
       this.dropdownSettingsPackLocation = {
@@ -269,64 +273,15 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
     if(this.customerId){
 
 
-      // Id: 1
-      // CustomerId: "CUS-001"
-      // CustomerName: "Customer - 1"
-      // Description: "Customer - 1"
-      // Notes: null
-      // CustomerTypeId: 1
-      // CustomerType: "Customer"
-      // Address1: null
-      // Address2: null
-      // Address3: null
-      // Address4: null
-      // CountryId: null
-      // CountryName: ""
-      // CityId: null
-      // CityName: ""
-      // Contact1: null
-      // Contact2: null
-      // Phone1: null
-      // Phone2: null
-      // Email1: null
-      // Email2: null
-      // CreditLimit: null
-      // CustomerStrategyId: null
-      // CustomerStrategy: ""
-      // CustomerRotateById: null
-      // CustomerRotateBy: ""
-      // AllowMixedProduct: null
-      // AllowOverShipment: false
-      // AllowAutoCloseForASN: false
-      // AllowSystemGeneratedLPN: false
-      // LPNLength: null
-      // QCLocationId: null
-      // StageLocationId: null
-      // PickLocationId: null
-      // PackLocationId: null
-      // SortLocationId: null
-      // PutAwayLocationId: null
-      // HoldLocationId: null
-      // AdminEmail: null
-      // WarehouseId: 1
-      // WarehouseName: "Test WareHouse"
-      // IsActive: true
-      // CreatedBy: null
-      // CreatedWhen: null
-      // ModifiedBy: null
-      // ModifiedWhen: null
-      // UDF1: null
-      // UDF2: null
-      // UDF3: null
-      // UDF4: null
-      // UDF5: null
-      // RelationId: null
+
 
       this.customerService.getCustomers().subscribe((customers) =>{
+        console.log(customers);
          this.customer = customers.filter((customer) => customer.Id == this.customerId);
+         
          if(this.customer && this.customer[0]){
            this.customerForm.patchValue({
-             wmsKey: this.customer[0]['WarehouseName'],
+             wmsKey: this.customer[0]['CustomerId'],
              whsId: this.customer[0]['WarehouseId'],
              customerId: this.customer[0]['CustomerId'],
              name: this.customer[0]['CustomerName'],
@@ -354,21 +309,59 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
            this.selectedTypes = this.types.filter((type) => type.Id == this.customer[0].CustomerTypeId);
            this.selectedWarehouse = this.warehouses.filter((warehouse) => warehouse.Id == this.customer[0].WarehouseId);
-           this.selectedCity = this.cities.filter((city) => city.Id == this.customer[0].CityId);
            this.selectedCountry = this.countries.filter((country) => country.Id == this.customer[0].CountryId);
            this.selectedStrategies = this.strategies.filter((strategy) => strategy.Id == this.customer[0].CustomerStrategyId);
            this.selectedRotateBy = this.rotateBy.filter((rotate) => rotate.Id == this.customer[0].CustomerRotateById);
            this.getWareHouseLocationDropDown(this.selectedWarehouse[0] ? this.selectedWarehouse[0].Id : 0);
+           
+
+           console.log(this.customer);
+           this.customerService.getCity(this.customer[0].CountryId).subscribe(
+           (cities: any) => {
+           this.cities = cities;
+           this.dropdownSettingsCity = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'Name',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.cities.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: true,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+  
+
+          this.selectedCity = this.cities.filter((city) => city.Id == this.customer[0].CityId);
+
+          (error: any) => {
+            console.log(error);
+            // this.inserted = 'failure';
+            // this.message = error.error.message;
+          }
+      });
+
+
+      
+
 
          }
       },(err)=>{
         console.log('err',err);
       })
-
+      
+ 
     }
   }
   getWareHouseLocationDropDown(warehouseId:any){
     this.customerService.getLocation('GetQCLocationByWarehouseId',warehouseId).subscribe((qcLocations:any) =>{
+      console.log(qcLocations);
       this.defaultQCLocations = qcLocations;
       this.dropdownSettingsDefaultQCLocation = {
         singleSelection: true,
@@ -387,10 +380,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
+      this.selectedDefaultQCLocation = this.defaultQCLocations.filter((qc) => qc.Id == this.customer[0].QCLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetStageLocationByWarehouseId',warehouseId).subscribe((stageLocations:any) =>{
+      console.log(stageLocations);
       this.stages = stageLocations;
       this.dropdownSettingsDefaultStageLocation = {
         singleSelection: true,
@@ -409,11 +404,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
+      this.selectedDefaultStages = this.stages.filter((stage) => stage.Id == this.customer[0].StageLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetPickLocationByWarehouseId',warehouseId).subscribe((pickLocations:any) =>{
-
+      console.log(pickLocations);
       this.defaultPickLocation = pickLocations;
       this.dropdownSettingsPickLocation = {
         singleSelection: true,
@@ -432,11 +428,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
+      this.selectedDefaultPickLocation = this.defaultPickLocation.filter((pick) => pick.Id == this.customer[0].PickLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetPackLocationByWarehouseId',warehouseId).subscribe((packLocations:any) =>{
-
+      console.log(packLocations);
       this.defaultPackLocation = packLocations;
       this.dropdownSettingsPackLocation = {
         singleSelection: true,
@@ -455,11 +452,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
+      this.selectedDefaultPackLocation = this.defaultPackLocation.filter((pack) => pack.Id == this.customer[0].PackLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetSortLocationByWarehouseId',warehouseId).subscribe((sortLocations:any) =>{
-
+      console.log(sortLocations);
       this.defaultsortLocation = sortLocations;
       this.dropdownSettingsSortLocation = {
         singleSelection: true,
@@ -478,12 +476,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
-
+      this.selectedDefaultSortLocation = this.defaultsortLocation.filter((sort) => sort.Id == this.customer[0].SortLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetPutAwayLocationByWarehouseId',warehouseId).subscribe((putAwayLocations:any) =>{
-
+      console.log(putAwayLocations);
       this.defaultPutawayLocations = putAwayLocations;
       this.dropdownSettingsPutawayLocation = {
         singleSelection: true,
@@ -502,12 +500,12 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
-
+      this.selectedDefaultPutawayLocation = this.defaultPutawayLocations.filter((putaway) => putaway.Id == this.customer[0].PutAwayLocationId);
     },(err) =>{
       console.log('err',err)
     });
     this.customerService.getLocation('GetHoldLocationByWarehouseId',warehouseId).subscribe((holdLocations:any) =>{
-
+      console.log(holdLocations);
 
       this.defaultHoldLocation = holdLocations;
       this.dropdownSettingsHoldLocation = {
@@ -527,23 +525,10 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
         showSelectedItemsAtTop: false,
         defaultOpen: false
       };
-
+      this.selectedDefaultHoldLocation = this.defaultHoldLocation.filter((hold) => hold.Id == this.customer[0].HoldLocationId);
     },(err) =>{
       console.log('err',err)
     });
-
-
-    this.selectedDefaultQCLocation = this.defaultQCLocations.filter((qc) => qc.Id == this.customer[0].QCLocationId);
-    this.selectedDefaultStages = this.stages.filter((stage) => stage.Id == this.customer[0].QCLocationId);
-    this.selectedDefaultPickLocation = this.defaultPickLocation.filter((pick) => pick.Id == this.customer[0].PickLocationId);
-    this.selectedDefaultPackLocation = this.defaultPackLocation.filter((pack) => pack.Id == this.customer[0].PackLocationId);
-    this.selectedDefaultSortLocation = this.defaultsortLocation.filter((sort) => sort.Id == this.customer[0].SortLocationId);
-    this.selectedDefaultPutawayLocation = this.defaultPutawayLocations.filter((putaway) => putaway.Id == this.customer[0].PutAwayLocationId);
-    this.selectedDefaultHoldLocation = this.defaultHoldLocation.filter((hold) => hold.Id == this.customer[0].HoldLocationId);
-
-
-
-
   }
 
 
@@ -665,21 +650,21 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
         let customerObj = {
-          Id: this.customer[0].Id,
+          Id: this.customerId,
           CustomerId: this.customerForm.get('customerId').value,
           CustomerName: this.customerForm.get('name').value,
           Description: this.customerForm.get('description').value,
           Notes: this.customerForm.get('notes').value,
           CustomerTypeId: this.customerForm.get('type').value[0].Id,
-          CustomerType: this.customerForm.get('type').value[0].CustomerType,
+          //CustomerType: this.customerForm.get('type').value[0].CustomerType,
           Address1: this.customerForm.get('address1').value,
           Address2: this.customerForm.get('address2').value,
           Address3: this.customerForm.get('address3').value,
           Address4: this.customerForm.get('address4').value,
           CountryId: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Id : "",
-          CountryName: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Name : "",
+          //CountryName: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Name : "",
           CityId: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
-          CityName: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
+          //CityName: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
           Contact1: this.customerForm.get('primaryContact').value,
           Contact2: this.customerForm.get('secondaryContact').value,
           Phone1: this.customerForm.get('primaryContactNumber').value,
@@ -688,9 +673,9 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
           Email2: this.customerForm.get('secondaryContactEmail').value,
           CreditLimit: this.customerForm.get('creditLimit').value,
           CustomerStrategyId: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].Id : "" ,
-          CustomerStrategy: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].CustomerStrategy : "" ,
+         // CustomerStrategy: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].CustomerStrategy : "" ,
           CustomerRotateById: this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].id : "" ,
-          CustomerRotateBy:  this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].rotate : "" ,
+          //CustomerRotateBy:  this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].rotate : "" ,
           AllowMixedProduct: this.customerForm.get('allowMixedProduct').value,
           AllowOverShipment: this.customerForm.get('allowOverShipment').value,
           AllowAutoCloseForASN: this.customerForm.get('allowAutoClose').value,
@@ -705,32 +690,43 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
           HoldLocationId: this.customerForm.get('defaultHoldLocation').value[0] ? this.customerForm.get('defaultHoldLocation').value[0].Id : "",
           AdminEmail: this.customerForm.get('adminEmail').value,
           WarehouseId:  this.customerForm.get('whsId').value[0].Id,
-          WarehouseName: this.customerForm.get('whsId').value[0].WarehouseName,
+          //WarehouseName: this.customerForm.get('whsId').value[0].WarehouseName,
           IsActive: true,
-          UDF1: null,
-          UDF2: null,
-          UDF3: null,
-          UDF4: null,
-          UDF5: null,
-          RelationId: null,
+          IsDefault: true
+          // UDF1: null,
+          // UDF2: null,
+          // UDF3: null,
+          // UDF4: null,
+          // UDF5: null,
+         // RelationId: null,
         };
 
 
         console.log('customer',customerObj);
 
+        this.customerService.editCustomer(customerObj,this.customerId)
+        .subscribe(
+          (data: any) => {
+            if (data) {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Customer Updated Successfully',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          }, 
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+          }
+        );
 
-
-
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Customer Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
-
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',
