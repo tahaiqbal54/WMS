@@ -49,13 +49,8 @@
                 <label class="col-md-12 control-label">WMS KEY <a class="text-danger">*</a></label>
                 <div class="col-md-12 form-group">
                   <input
-                    required
-                    [ngClass]="{ 'is-invalid': formSubmitted && f.wmsKey.errors }"
-                    type="text" maxlength="255" class="form-control" placeholder="Enter WMS KEY"
+                    type="text" maxlength="255" disabled="true" class="form-control" placeholder="Enter WMS KEY"
                     formControlName="wmsKey">
-                  <div *ngIf="formSubmitted && customerForm.controls['wmsKey'].errors" class="error-msg">
-                    <div class="text-danger" [hidden]="!customerForm.controls['wmsKey'].errors.required">WMS KEY is required.</div>
-                  </div>
                 </div>
               </div>
             </div>

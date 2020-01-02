@@ -40,7 +40,7 @@ export class LocationAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.locationForm = new FormGroup({
       warehouseId: new FormControl('',Validators.required),
       warehouseName: new FormControl(''),
-      locationId: new FormControl('',Validators.required),
+      locationId: new FormControl(),
       locationName: new FormControl('',Validators.required),
       locationType: new FormControl(''),
       locationDescription: new FormControl(''),
