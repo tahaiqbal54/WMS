@@ -19,8 +19,13 @@
                 <div class="col-md-12 form-group">
                   <input
                     readonly="readonly"
+                    required
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.wmsProductId.errors }"
                     type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
                     formControlName="wmsProductId">
+                  <div *ngIf="formSubmitted && productForm.controls['wmsProductId'].errors" class="error-msg">
+                    <div class="text-danger" [hidden]="!productForm.controls['wmsProductId'].errors.required">WMS Product Id is required.</div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -29,7 +34,7 @@
                   <input
                     required
                     [ngClass]="{ 'is-invalid': formSubmitted && f.vendorProductId.errors }"
-                    type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
+                    type="number" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
                     formControlName="vendorProductId">
                   <div *ngIf="formSubmitted && productForm.controls['vendorProductId'].errors" class="error-msg">
                     <div class="text-danger" [hidden]="!productForm.controls['vendorProductId'].errors.required">Vendor Product Id is required.</div>
@@ -186,7 +191,8 @@
                   <label class="col-md-12 control-label">STD Gross Weight </label>
                   <div class="col-md-12 form-group">
                     <input
-                      type="text" maxlength="255" [disabled]="!isWeighable" class="form-control" placeholder="Enter STD Gross Weight"
+                      [readOnly]="!isWeighable"
+                      type="text" maxlength="255" class="form-control" placeholder="Enter STD Gross Weight"
                       formControlName="stdGrossWeight">
                   </div>
                 </div>
@@ -200,14 +206,16 @@
                   <label class="col-md-12 control-label">STD Net Weight</label>
                   <div class="col-md-12 form-group">
                     <input
-                      type="text" maxlength="255" [disabled]="!isWeighable" class="form-control" placeholder="Enter STD Net  Weight"
+                      [readOnly]="!isWeighable"
+                      type="text" maxlength="255" class="form-control" placeholder="Enter STD Net  Weight"
                       formControlName="stdNetWeight">
                   </div>
                 </div>
               </div>
               <div class="col-md-6 mt-4">
                 <div class="checkbox" (click)="toggleEditableIsVolume($event)" >
-                  <input type="checkbox" class="popup_checkbox "
+                  <input
+                      type="checkbox" class="popup_checkbox "
                          formControlName="volume" value="{{isVolume}}" [(ngModel)]="isVolume">
                   <label>Volume</label>
                 </div>
@@ -220,6 +228,7 @@
                 <label class="col-md-12 control-label"> STD Cube </label>
                 <div class="col-md-12 form-group">
                   <input
+                    [readOnly]="!isVolume"
                     type="text" maxlength="255" class="form-control" placeholder="Enter STD Cube"
                     formControlName="stdCube">
                 </div>
@@ -315,7 +324,7 @@
                 <label class="col-md-12 control-label">Last Cycle Count</label>
                 <div class="col-md-12 form-group">
                   <input
-                    type="date" maxlength="255" class="form-control" placeholder="Enter Last Cycle Count"
+                    type="number" maxlength="255" class="form-control" placeholder="Enter Last Cycle Count"
                     formControlName="lastCycleCount">
                 </div>
               </div>
