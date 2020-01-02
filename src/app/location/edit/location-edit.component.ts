@@ -130,7 +130,7 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
                 showSelectedItemsAtTop: false,
                 defaultOpen: false
               };
-              this.selectedLocationType = [{Id: this.location.LocationTypeId, LocationTypeCode: this.location.LocationTypeCode}];
+              this.selectedLocationType = [{Id: this.location.LocationTypeId, LocationTypeCode: this.location.LocationType}];
 
 
 
