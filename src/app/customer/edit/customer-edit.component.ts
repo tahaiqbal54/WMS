@@ -1,8 +1,8 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService} from '../../_services';
+import {CustomerService, NotificationCommunicationService, WarehouseService} from '../../_services';
 
 
 
@@ -16,7 +16,6 @@ declare var $: any;
 })
 
 export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
-
 
   customerForm = this.fb.group({});
 
@@ -71,11 +70,21 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
   isAllowSystemGeneratedLPNN: boolean = false;
   isAllowMixedProduct: boolean = false;
   position:any;
+  customerId;
+  customer:any [] = [];
 
-  constructor(private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {}
+  constructor(private route: ActivatedRoute,private router: Router,private fb: FormBuilder,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService, private warehouseService: WarehouseService,private customerService: CustomerService) {}
 
 
   ngOnInit() {
+
+
+    this.route.params.subscribe(params => {
+      this.customerId = +params['id'];
+    });
+
+
+
     this.customerForm = new FormGroup({
       wmsKey: new FormControl('',Validators.required),
       whsId: new FormControl('',Validators.required),
@@ -114,52 +123,15 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
       notes: new FormControl(''),
       strategies: new FormControl(''),
     });
-
-
-    this.customerForm.patchValue({siteId: 2});
     this.position = "bottom-right";
+    this.getDropDowns();
 
 
+  }
+  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {}
 
-    this.types = [{id:1, type: 'Type - 1'}];
-    this.dropdownSettingsTypes = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'type',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.types.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-
-    this.warehouses = [{id:1, warehouse: 'Warehouse - 1'}];
-    this.dropdownSettingsWarehouse = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'warehouse',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.warehouses.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
+  getDropDowns(){
     this.rotateBy = [
       {id:1, rotate: 'Lot'},
       {id:2, rotate: 'Manafacture Date'},
@@ -182,242 +154,435 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false
     };
+    this.customerService.getCustomerType().subscribe((customerTypes) =>{
+      this.types = customerTypes;
+      this.dropdownSettingsTypes = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'CustomerType',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.types.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    });
+    this.warehouseService.getWarehouses().subscribe((warehouses:any)=>{
+      if(warehouses){
+        this.warehouses = warehouses;
+        this.dropdownSettingsWarehouse = {
+          singleSelection: true,
+          idField: 'Id',
+          textField: 'WarehouseName',
+          selectAllText: 'Select All',
+          itemsShowLimit: this.warehouses.length,
+          enableCheckAll: false,
+          unSelectAllText: 'UnSelect All',
+          allowSearchFilter: true,
+          limitSelection: -1,
+          clearSearchFilter: true,
+          searchPlaceholderText: 'Search',
+          noDataAvailablePlaceholderText: 'No data available',
+          closeDropDownOnSelection: false,
+          showSelectedItemsAtTop: false,
+          defaultOpen: false
+        };
+      }
+    });
+    this.customerService.getCountry().subscribe((countries: any) => {
+
+      this.countries = countries;
+      this.dropdownSettingsCountry = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'Name',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.countries.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: true,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+    },(error: any) => {
+      console.log(error);
+    });
+    this.customerService.getPacks().subscribe((packs:any) =>{
+      this.defaultPackLocation = packs;
+      this.dropdownSettingsPackLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'PackKey',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultPackLocation.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err);
+    });
+    this.customerService.getCustomerStrategies().subscribe((strategies:any) =>{
+
+      this.strategies = strategies;
+      this.dropdownSettingsStrategies = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'CustomerStrategy',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.strategies.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err);
+    });
+
+    if(this.customerId){
 
 
-    this.cities = [
-      {id:1, city: 'Karachi'},
-      {id:2, city: 'Hyderabad'},
-      {id:3, city: 'Larkana'},
-      {id:4, city: 'Rahim Yar Khan'},
-    ];
-    this.dropdownSettingsCity = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'city',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.cities.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+      // Id: 1
+      // CustomerId: "CUS-001"
+      // CustomerName: "Customer - 1"
+      // Description: "Customer - 1"
+      // Notes: null
+      // CustomerTypeId: 1
+      // CustomerType: "Customer"
+      // Address1: null
+      // Address2: null
+      // Address3: null
+      // Address4: null
+      // CountryId: null
+      // CountryName: ""
+      // CityId: null
+      // CityName: ""
+      // Contact1: null
+      // Contact2: null
+      // Phone1: null
+      // Phone2: null
+      // Email1: null
+      // Email2: null
+      // CreditLimit: null
+      // CustomerStrategyId: null
+      // CustomerStrategy: ""
+      // CustomerRotateById: null
+      // CustomerRotateBy: ""
+      // AllowMixedProduct: null
+      // AllowOverShipment: false
+      // AllowAutoCloseForASN: false
+      // AllowSystemGeneratedLPN: false
+      // LPNLength: null
+      // QCLocationId: null
+      // StageLocationId: null
+      // PickLocationId: null
+      // PackLocationId: null
+      // SortLocationId: null
+      // PutAwayLocationId: null
+      // HoldLocationId: null
+      // AdminEmail: null
+      // WarehouseId: 1
+      // WarehouseName: "Test WareHouse"
+      // IsActive: true
+      // CreatedBy: null
+      // CreatedWhen: null
+      // ModifiedBy: null
+      // ModifiedWhen: null
+      // UDF1: null
+      // UDF2: null
+      // UDF3: null
+      // UDF4: null
+      // UDF5: null
+      // RelationId: null
 
-    this.countries = [
-      {id:1,country: 'Pakistan'},
-      {id:2,country: 'Dubai'}
-    ];
-    this.dropdownSettingsCountry = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'country',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.countries.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-    this.selectedCountry = [{id: 1,country:'Pakistan'}];
+      this.customerService.getCustomers().subscribe((customers) =>{
+         this.customer = customers.filter((customer) => customer.Id == this.customerId);
+         if(this.customer && this.customer[0]){
+           this.customerForm.patchValue({
+             wmsKey: this.customer[0]['WarehouseName'],
+             whsId: this.customer[0]['WarehouseId'],
+             customerId: this.customer[0]['CustomerId'],
+             name: this.customer[0]['CustomerName'],
+             address1: this.customer[0]['Address1'],
+             address2: this.customer[0]['Address2'],
+             address3: this.customer[0]['Address3'],
+             address4: this.customer[0]['Address4'],
+             primaryContact: this.customer[0]['Contact1'],
+             secondaryContact: this.customer[0]['Contact2'],
+             primaryContactEmail: this.customer[0]['Email1'],
+             secondaryContactEmail: this.customer[0]['Email2'],
+             primaryContactNumber: this.customer[0]['Phone1'],
+             secondaryContactNumber: this.customer[0]['Phone2'],
+             creditLimit: this.customer[0]['CreditLimit'],
+             allowOverShipment: this.customer[0]['AllowOverShipment'],
+             allowAutoClose: this.customer[0]['AllowAutoCloseForASN'],
+             allowSystemGeneratedLPN: this.customer[0]['AllowSystemGeneratedLPN'],
+             lpnLength: this.customer[0]['LPNLength'],
+             location: '',
+             adminEmail: this.customer[0]['AdminEmail'],
+             allowMixedProduct: this.customer[0]['AllowMixedProduct'],
+             description: this.customer[0]['Description'],
+             notes: this.customer[0]['Notes'],
+           });
+
+           this.selectedTypes = this.types.filter((type) => type.Id == this.customer[0].CustomerTypeId);
+           this.selectedWarehouse = this.warehouses.filter((warehouse) => warehouse.Id == this.customer[0].WarehouseId);
+           this.selectedCity = this.cities.filter((city) => city.Id == this.customer[0].CityId);
+           this.selectedCountry = this.countries.filter((country) => country.Id == this.customer[0].CountryId);
+           this.selectedStrategies = this.strategies.filter((strategy) => strategy.Id == this.customer[0].CustomerStrategyId);
+           this.selectedRotateBy = this.rotateBy.filter((rotate) => rotate.Id == this.customer[0].CustomerRotateById);
+           this.getWareHouseLocationDropDown(this.selectedWarehouse[0] ? this.selectedWarehouse[0].Id : 0);
+
+         }
+      },(err)=>{
+        console.log('err',err);
+      })
+
+    }
+  }
+  getWareHouseLocationDropDown(warehouseId:any){
+    this.customerService.getLocation('GetQCLocationByWarehouseId',warehouseId).subscribe((qcLocations:any) =>{
+      this.defaultQCLocations = qcLocations;
+      this.dropdownSettingsDefaultQCLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultQCLocations.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetStageLocationByWarehouseId',warehouseId).subscribe((stageLocations:any) =>{
+      this.stages = stageLocations;
+      this.dropdownSettingsDefaultStageLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.stages.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetPickLocationByWarehouseId',warehouseId).subscribe((pickLocations:any) =>{
+
+      this.defaultPickLocation = pickLocations;
+      this.dropdownSettingsPickLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultPickLocation.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetPackLocationByWarehouseId',warehouseId).subscribe((packLocations:any) =>{
+
+      this.defaultPackLocation = packLocations;
+      this.dropdownSettingsPackLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'PackKey',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultPackLocation.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetSortLocationByWarehouseId',warehouseId).subscribe((sortLocations:any) =>{
+
+      this.defaultsortLocation = sortLocations;
+      this.dropdownSettingsSortLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultsortLocation.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetPutAwayLocationByWarehouseId',warehouseId).subscribe((putAwayLocations:any) =>{
+
+      this.defaultPutawayLocations = putAwayLocations;
+      this.dropdownSettingsPutawayLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultPutawayLocations.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
+
+    },(err) =>{
+      console.log('err',err)
+    });
+    this.customerService.getLocation('GetHoldLocationByWarehouseId',warehouseId).subscribe((holdLocations:any) =>{
 
 
-    this.defaultQCLocations = [
-      {id:1,defaultlocation: 'Qc Location 1'}
-    ];
-    this.dropdownSettingsDefaultQCLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultlocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultQCLocations.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+      this.defaultHoldLocation = holdLocations;
+      this.dropdownSettingsHoldLocation = {
+        singleSelection: true,
+        idField: 'Id',
+        textField: 'LocationName',
+        selectAllText: 'Select All',
+        itemsShowLimit: this.defaultHoldLocation.length,
+        enableCheckAll: false,
+        unSelectAllText: 'UnSelect All',
+        allowSearchFilter: true,
+        limitSelection: -1,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search',
+        noDataAvailablePlaceholderText: 'No data available',
+        closeDropDownOnSelection: false,
+        showSelectedItemsAtTop: false,
+        defaultOpen: false
+      };
 
-    this.defaultPackLocation = [
-      {id:1,defaultpacklocation: 'Pack Location 1'}
-    ];
-    this.dropdownSettingsPackLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultpacklocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultPackLocation.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.defaultPickLocation = [
-      {id:1,defaultpicklocation: 'Pick Location 1'}
-    ];
-    this.dropdownSettingsPickLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultpicklocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultPickLocation.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.defaultPutawayLocations = [
-      {id:1,defaultputawaylocation: 'Putaway Location 1'}
-    ];
-    this.dropdownSettingsPutawayLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultputawaylocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultPutawayLocations.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.defaultsortLocation = [
-      {id:1,defaultsortlocation: 'Default Sort Location 1'}
-    ];
-    this.dropdownSettingsSortLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultsortlocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultsortLocation.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+    },(err) =>{
+      console.log('err',err)
+    });
 
 
-    this.defaultHoldLocation = [
-      {id:1,defaultholdlocation: 'Hold Location 1'}
-    ];
-    this.dropdownSettingsHoldLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'defaultholdlocation',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.defaultHoldLocation.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.strategies = [
-      {id: 1, strategies: 'Strategy 1'},
-      {id: 2, strategies: 'Strategy 2'},
-    ];
-    this.dropdownSettingsStrategies = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'strategies',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.strategies.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
-
-    this.stages = [
-      {id: 1, stage: 'Stage 1'},
-      {id: 2, stage: 'Stage 2'},
-    ];
-    this.dropdownSettingsDefaultStageLocation = {
-      singleSelection: true,
-      idField: 'id',
-      textField: 'stage',
-      selectAllText: 'Select All',
-      itemsShowLimit: this.stages.length,
-      enableCheckAll: false,
-      unSelectAllText: 'UnSelect All',
-      allowSearchFilter: true,
-      limitSelection: -1,
-      clearSearchFilter: true,
-      searchPlaceholderText: 'Search',
-      noDataAvailablePlaceholderText: 'No data available',
-      closeDropDownOnSelection: false,
-      showSelectedItemsAtTop: false,
-      defaultOpen: false
-    };
+    this.selectedDefaultQCLocation = this.defaultQCLocations.filter((qc) => qc.Id == this.customer[0].QCLocationId);
+    this.selectedDefaultStages = this.stages.filter((stage) => stage.Id == this.customer[0].QCLocationId);
+    this.selectedDefaultPickLocation = this.defaultPickLocation.filter((pick) => pick.Id == this.customer[0].PickLocationId);
+    this.selectedDefaultPackLocation = this.defaultPackLocation.filter((pack) => pack.Id == this.customer[0].PackLocationId);
+    this.selectedDefaultSortLocation = this.defaultsortLocation.filter((sort) => sort.Id == this.customer[0].SortLocationId);
+    this.selectedDefaultPutawayLocation = this.defaultPutawayLocations.filter((putaway) => putaway.Id == this.customer[0].PutAwayLocationId);
+    this.selectedDefaultHoldLocation = this.defaultHoldLocation.filter((hold) => hold.Id == this.customer[0].HoldLocationId);
 
 
 
 
   }
-  ngAfterViewInit(): void {}
-  ngOnDestroy(): void {}
 
 
   onItemSelectCountry(item: any) {
+    this.customerService.getCity(item.Id)
+      .subscribe(
+        (cities: any) => {
+          this.cities = cities;
+          this.dropdownSettingsCity = {
+            singleSelection: true,
+            idField: 'Id',
+            textField: 'Name',
+            selectAllText: 'Select All',
+            itemsShowLimit: this.cities.length,
+            enableCheckAll: false,
+            unSelectAllText: 'UnSelect All',
+            allowSearchFilter: true,
+            limitSelection: -1,
+            clearSearchFilter: true,
+            searchPlaceholderText: 'Search',
+            noDataAvailablePlaceholderText: 'No data available',
+            closeDropDownOnSelection: true,
+            showSelectedItemsAtTop: false,
+            defaultOpen: false
+          };
+
+          (error: any) => {
+            console.log(error);
+            // this.inserted = 'failure';
+            // this.message = error.error.message;
+          }
+        });
   }
   onItemDeSelectCountry(item: any) {
   }
 
 
   onItemSelectWarehouse(item: any) {
+    this.getWareHouseLocationDropDown(item.Id);
   }
   onItemDeSelectWarehouse(item: any) {
   }
@@ -496,6 +661,66 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
       return;
     }else{
       if(this.selectedWarehouse.length > 0 && this.selectedTypes.length > 0){
+
+
+
+        let customerObj = {
+          Id: this.customer[0].Id,
+          CustomerId: this.customerForm.get('customerId').value,
+          CustomerName: this.customerForm.get('name').value,
+          Description: this.customerForm.get('description').value,
+          Notes: this.customerForm.get('notes').value,
+          CustomerTypeId: this.customerForm.get('type').value[0].Id,
+          CustomerType: this.customerForm.get('type').value[0].CustomerType,
+          Address1: this.customerForm.get('address1').value,
+          Address2: this.customerForm.get('address2').value,
+          Address3: this.customerForm.get('address3').value,
+          Address4: this.customerForm.get('address4').value,
+          CountryId: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Id : "",
+          CountryName: this.customerForm.get('customerCountry').value[0] ? this.customerForm.get('customerCountry').value[0].Name : "",
+          CityId: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
+          CityName: this.customerForm.get('customerCity').value[0] ? this.customerForm.get('customerCity').value[0].Id : "",
+          Contact1: this.customerForm.get('primaryContact').value,
+          Contact2: this.customerForm.get('secondaryContact').value,
+          Phone1: this.customerForm.get('primaryContactNumber').value,
+          Phone2: this.customerForm.get('secondaryContactNumber').value,
+          Email1: this.customerForm.get('primaryContactEmail').value,
+          Email2: this.customerForm.get('secondaryContactEmail').value,
+          CreditLimit: this.customerForm.get('creditLimit').value,
+          CustomerStrategyId: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].Id : "" ,
+          CustomerStrategy: this.customerForm.get('strategies').value[0] ? this.customerForm.get('strategies').value[0].CustomerStrategy : "" ,
+          CustomerRotateById: this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].id : "" ,
+          CustomerRotateBy:  this.customerForm.get('rotateBy').value[0] ? this.customerForm.get('rotateBy').value[0].rotate : "" ,
+          AllowMixedProduct: this.customerForm.get('allowMixedProduct').value,
+          AllowOverShipment: this.customerForm.get('allowOverShipment').value,
+          AllowAutoCloseForASN: this.customerForm.get('allowAutoClose').value,
+          AllowSystemGeneratedLPN: this.customerForm.get('allowSystemGeneratedLPN').value,
+          LPNLength: this.customerForm.get('lpnLength').value,
+          QCLocationId: this.customerForm.get('defaultQCLocation').value[0] ? this.customerForm.get('defaultQCLocation').value[0].Id : "",
+          StageLocationId: this.customerForm.get('defaultStageLocation').value[0] ? this.customerForm.get('defaultStageLocation').value[0].Id : "",
+          PickLocationId: this.customerForm.get('defaultPickLocation').value[0] ? this.customerForm.get('defaultPickLocation').value[0].Id : "",
+          PackLocationId: this.customerForm.get('defaultPackLocation').value[0] ? this.customerForm.get('defaultPackLocation').value[0].Id : "" ,
+          SortLocationId: this.customerForm.get('defaultSortLocation').value[0] ? this.customerForm.get('defaultSortLocation').value[0].Id : "" ,
+          PutAwayLocationId: this.customerForm.get('defaultPutawayLocation').value[0] ? this.customerForm.get('defaultPutawayLocation').value[0].Id : "",
+          HoldLocationId: this.customerForm.get('defaultHoldLocation').value[0] ? this.customerForm.get('defaultHoldLocation').value[0].Id : "",
+          AdminEmail: this.customerForm.get('adminEmail').value,
+          WarehouseId:  this.customerForm.get('whsId').value[0].Id,
+          WarehouseName: this.customerForm.get('whsId').value[0].WarehouseName,
+          IsActive: true,
+          UDF1: null,
+          UDF2: null,
+          UDF3: null,
+          UDF4: null,
+          UDF5: null,
+          RelationId: null,
+        };
+
+
+        console.log('customer',customerObj);
+
+
+
+
         let toastOptions: ToastOptions = {
           title: 'Success',
           msg: 'Customer Saved Success',
@@ -553,13 +778,6 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
       this.isAllowMixedProduct = !this.isAllowMixedProduct;
     }
   }
-
-
-
-
-
-
-
 
 
 
