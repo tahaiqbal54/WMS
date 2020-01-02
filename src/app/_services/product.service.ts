@@ -47,6 +47,25 @@ export class ProductService {
         })
       );
   }
+  getProduct(ProductId:any) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LIST_PRODUCTS,'Id='+ProductId), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
 
   getUOM(){
 

@@ -315,14 +315,12 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
     }else{
       if(this.selectedCustomerNames.length > 0){
 
-     
-
 
         let productObj = {
           SKU: this.productForm.get('sku').value,
           Description: this.productForm.get('description').value,
           ShelfLife: this.productForm.get('shelfLife').value,
-          QCRequired: "",
+          QCRequired: this.productForm.get('qcRequired').value,
           UDF1: "",
           UDF2: "",
           UDF3: "",
@@ -354,10 +352,8 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
           ProductStatus: this.productForm.get('productStatus').value
         };
 
-
-
-
-
+        //STDCube
+        //RfDefaultUOM not defined
 
 
 

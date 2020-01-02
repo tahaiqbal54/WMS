@@ -191,6 +191,7 @@
                   <label class="col-md-12 control-label">STD Gross Weight </label>
                   <div class="col-md-12 form-group">
                     <input
+                      [readOnly]="!isWeighable"
                       type="text" maxlength="255" class="form-control" placeholder="Enter STD Gross Weight"
                       formControlName="stdGrossWeight">
                   </div>
@@ -205,6 +206,7 @@
                   <label class="col-md-12 control-label">STD Net Weight</label>
                   <div class="col-md-12 form-group">
                     <input
+                      [readOnly]="!isWeighable"
                       type="text" maxlength="255" class="form-control" placeholder="Enter STD Net  Weight"
                       formControlName="stdNetWeight">
                   </div>
@@ -212,7 +214,8 @@
               </div>
               <div class="col-md-6 mt-4">
                 <div class="checkbox" (click)="toggleEditableIsVolume($event)" >
-                  <input type="checkbox" class="popup_checkbox "
+                  <input
+                      type="checkbox" class="popup_checkbox "
                          formControlName="volume" value="{{isVolume}}" [(ngModel)]="isVolume">
                   <label>Volume</label>
                 </div>
@@ -225,6 +228,7 @@
                 <label class="col-md-12 control-label"> STD Cube </label>
                 <div class="col-md-12 form-group">
                   <input
+                    [readOnly]="!isVolume"
                     type="text" maxlength="255" class="form-control" placeholder="Enter STD Cube"
                     formControlName="stdCube">
                 </div>
