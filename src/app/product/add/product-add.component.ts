@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {CustomerService, NotificationCommunicationService, ProductService} from '../../_services';
 import {SitesService} from "../../_services/sites.service";
-
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -60,7 +60,7 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit() {
     this.productForm = new FormGroup({
-        wmsProductId: new FormControl('',Validators.required),
+        wmsProductId: new FormControl(),
         vendorProductId: new FormControl('',Validators.required),
         sku: new FormControl('',Validators.required),
       //Dropdown
@@ -95,9 +95,9 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.initiateDropDowns();
 
 
-    this.productForm.patchValue({
-      wmsProductId: 1
-    })
+    // this.productForm.patchValue({
+    //   wmsProductId: 1
+    // })
 
 
 
@@ -319,19 +319,20 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
         let productObj = {
+          Id:0,
           SKU: this.productForm.get('sku').value,
           Description: this.productForm.get('description').value,
           ShelfLife: this.productForm.get('shelfLife').value,
-          QCRequired: "",
+          QCRequired: this.productForm.get('qcRequired').value,
           UDF1: "",
           UDF2: "",
           UDF3: "",
           UDF4: "",
           UDF5: "",
           ProductClassificationId: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Id : "" ,
-          ProductClassification: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Classification : "",
+          //ProductClassification: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Classification : "",
           CustomerId: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].Id : "",
-          CustomerName: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].CustomerName : "",
+          //CustomerName: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].CustomerName : "",
           STDGrossWeight: this.productForm.get('stdGrossWeight').value,
           STDNetWeight: this.productForm.get('stdNetWeight').value,
           STDArea: this.productForm.get('stdNetWeight').value,
@@ -340,39 +341,46 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
           Cost: this.productForm.get('cost').value,
           OnReceipteCopyPackKey: "",
           ProductRotateById: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].id : "",
-          ProductRotateBy: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].rotate : "",
+          //ProductRotateBy: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].rotate : "",
           QCLocationId: "",
           CycleCountFrequency: this.productForm.get('cycleCount').value,
           LastCycleCount: this.productForm.get('lastCycleCount').value,
           UnitId: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].Id : "",
-          UnitName: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].UnitName : "",
+         // UnitName: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].UnitName : "",
           PackId: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].Id : "",
-          PackKey: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].PackKey : "",
+         // PackKey: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].PackKey : "",
           Weighable: this.productForm.get('weighable').value,
           Volume: this.productForm.get('volume').value,
-          ProductStatusId: this.productForm.get('wmsProductId').value,
-          ProductStatus: this.productForm.get('productStatus').value
+          ProductStatusId: this.productForm.get('productStatus').value,
+          ProductCode: this.productForm.get('vendorProductId').value,
+          IsActive:true
         };
 
 
 
+        this.productService.createProduct(productObj)
+        .subscribe(
+          (data: any) => {
+            if (data) {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Product Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          }, 
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+          }
+        );
 
-
-
-
-
-
-
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Site Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
-
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',
@@ -394,8 +402,12 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
   toggleEditableIsWeighable(event) {
     if(this.isWeighable){
       this.isWeighable = !this.isWeighable;
+      this.productForm.get('stdGrossWeight').disable;
+      this.productForm.get('stdNetWeight').disable;
     }else{
       this.isWeighable = !this.isWeighable;
+      this.productForm.get('stdGrossWeight').enable;
+      this.productForm.get('stdNetWeight').enable;
     }
   }
   toggleEditableIsVolume(event) {
@@ -408,8 +420,10 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
   toggleEditableQcRequired(event) {
     if(this.isQcRequired){
       this.isQcRequired = !this.isQcRequired;
+      
     }else{
       this.isQcRequired = !this.isQcRequired;
+      
     }
   }
 

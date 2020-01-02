@@ -133,6 +133,26 @@ export class ProductService {
       );
   }
 
+  createProduct(product: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.LIST_PRODUCTS), product, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  editCustomer(customer: any, customer_id: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.LIST_PRODUCTS, "Id=" + customer_id), customer, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
 
   private handleError(error: HttpErrorResponse) {
     let err;
