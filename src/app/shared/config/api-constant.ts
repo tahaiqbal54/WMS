@@ -67,7 +67,7 @@ export class APIConstants {
         LOCATION_STATUS: '/Locations/UpdateLocationStatus',
         WAREHOUSE_STATUS: '/Warehouses/UpdateWarehouseStatus',
         SITE_STATUS: '/Sites/UpdateSiteStatus',
-        PRODUCT_STATUS: '/Sites/UpdateSiteStatus',
+        PRODUCT_STATUS: '/Products/UpdateProductStatus',
         CUSTOMER_STATUS: '/Customers/UpdateCustomerStatus',
         SALES:'/sales_receipts',
         LIST_CUSTOMERS:'/Customers',

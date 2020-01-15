@@ -62,7 +62,7 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.productForm = new FormGroup({
         wmsProductId: new FormControl(),
         vendorProductId: new FormControl('',Validators.required),
-        sku: new FormControl('',Validators.required),
+        //sku: new FormControl('',Validators.required),
       //Dropdown
         customerName: new FormControl(''),
         description: new FormControl(''),
@@ -320,7 +320,7 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
         let productObj = {
           Id:0,
-          SKU: this.productForm.get('sku').value,
+          SKU: this.productForm.get('vendorProductId').value,
           Description: this.productForm.get('description').value,
           ShelfLife: this.productForm.get('shelfLife').value,
           QCRequired: this.productForm.get('qcRequired').value,
@@ -341,7 +341,7 @@ export class ProductAddComponent implements AfterViewInit, OnDestroy, OnInit {
           Cost: this.productForm.get('cost').value,
           OnReceipteCopyPackKey: "",
           ProductRotateById: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].id : "",
-          //ProductRotateBy: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].rotate : "",
+          ProductRFDefaultUOMId: this.productForm.get('rfDefaultUOM').value[0] ? this.productForm.get('rfDefaultUOM').value[0].id : "",
           QCLocationId: "",
           CycleCountFrequency: this.productForm.get('cycleCount').value,
           LastCycleCount: this.productForm.get('lastCycleCount').value,

@@ -55,8 +55,13 @@
                   <label class="col-md-12 control-label">Location Id <a class="text-danger">*</a></label>
                   <div class="col-md-12 form-group">
                     <input
-                      type="text" class="form-control" disabled="true" placeholder="Enter Location Name"
+                      required
+                      [ngClass]="{ 'is-invalid': formSubmitted && f.locationId.errors }"
+                      type="text" class="form-control" placeholder="Enter Location Name"
                       formControlName="locationId">
+                    <div *ngIf="formSubmitted && locationForm.controls['locationId'].errors" class="error-msg">
+                      <div class="text-danger" [hidden]="!locationForm.controls['locationId'].errors.required">Location Id is required.</div>
+                    </div>
                   </div>
                 </div>
               </div>

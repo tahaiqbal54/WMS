@@ -186,7 +186,7 @@ export class CustomerAddComponent implements AfterViewInit, OnDestroy, OnInit {
           defaultOpen: false
         };
 
-        this.selectedWarehouse = [warehouses[0]];
+        this.selectedWarehouse = [];
         this.getWareHouseLocationDropDown(warehouses[0].Id);
       }
     });

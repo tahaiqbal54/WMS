@@ -17,14 +17,14 @@ export class ProductService {
     this.accessToken = `Bearer ${this.currentUser.AccessToken}`;
   }
 
-  disabled(product:any){
+  disabled(productId:any,Status:boolean){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.USER_DISABLE), product, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl2(this.API.PRODUCT_STATUS , "Productid=" + productId, "Status=" + Status), {}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

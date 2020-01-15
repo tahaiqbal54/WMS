@@ -15,17 +15,14 @@
 
               <div class="row">
               <div class="col-md-6">
-                <label class="col-md-12 control-label">WMS Product Id <a class="text-danger">*</a></label>
+                <label class="col-md-12 control-label">WMS Product Id <a class="text-danger"></a></label>
                 <div class="col-md-12 form-group">
                   <input
                     readonly="readonly"
-                    required
                     [ngClass]="{ 'is-invalid': formSubmitted && f.wmsProductId.errors }"
                     type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
                     formControlName="wmsProductId">
-                  <div *ngIf="formSubmitted && productForm.controls['wmsProductId'].errors" class="error-msg">
-                    <div class="text-danger" [hidden]="!productForm.controls['wmsProductId'].errors.required">WMS Product Id is required.</div>
-                  </div>
+                  
                 </div>
               </div>
               <div class="col-md-6">
@@ -34,7 +31,7 @@
                   <input
                     required
                     [ngClass]="{ 'is-invalid': formSubmitted && f.vendorProductId.errors }"
-                    type="number" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
+                    type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
                     formControlName="vendorProductId">
                   <div *ngIf="formSubmitted && productForm.controls['vendorProductId'].errors" class="error-msg">
                     <div class="text-danger" [hidden]="!productForm.controls['vendorProductId'].errors.required">Vendor Product Id is required.</div>
@@ -44,18 +41,6 @@
               </div>
 
               <div class="row">
-              <div class="col-md-6">
-                <label class="col-md-12 control-label"> SKU <a class="text-danger">*</a></label>
-                <div class="col-md-12 form-group">
-                  <input
-                    required
-                    type="text" maxlength="255" class="form-control" placeholder="Enter SKU"
-                    formControlName="sku">
-                  <div *ngIf="formSubmitted && productForm.controls['sku'].errors" class="error-msg">
-                    <div class="text-danger" [hidden]="!productForm.controls['sku'].errors.required">SKU is required.</div>
-                  </div>
-                </div>
-              </div>
               <div class="col-md-6">
                 <div class="col-md-12  form-group">
                   <label>Customer Name <a class="text-danger">*</a></label>
@@ -324,7 +309,7 @@
                 <label class="col-md-12 control-label">Last Cycle Count</label>
                 <div class="col-md-12 form-group">
                   <input
-                    type="number" maxlength="255" class="form-control" placeholder="Enter Last Cycle Count"
+                    type="date" maxlength="255" class="form-control" placeholder="Enter Last Cycle Count"
                     formControlName="lastCycleCount">
                 </div>
               </div>

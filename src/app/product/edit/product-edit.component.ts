@@ -3,7 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
 import {CustomerService, NotificationCommunicationService, ProductService} from '../../_services';
-
+import swal from 'sweetalert2';
+import { formatDate } from 'fullcalendar';
 
 
 
@@ -62,9 +63,9 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit() {
     this.productForm = new FormGroup({
-      wmsProductId: new FormControl('',Validators.required),
+      wmsProductId: new FormControl(),
       vendorProductId: new FormControl('',Validators.required),
-      sku: new FormControl('',Validators.required),
+      //sku: new FormControl('',Validators.required),
       //Dropdown
       customerName: new FormControl(''),
       description: new FormControl(''),
@@ -91,7 +92,7 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
       //Dropdown
       rotateBy: new FormControl(''),
       cycleCount: new FormControl(''),
-      lastCycleCount: new FormControl('')
+      last_CycleCount: new FormControl('')
     });
     this.position = "bottom-right";
 
@@ -104,9 +105,9 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
 
 
-    this.productForm.patchValue({
-      wmsProductId: 1
-    })
+    // this.productForm.patchValue({
+    //   wmsProductId: 1
+    // })
 
 
 
@@ -210,7 +211,7 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
       console.log('err',err);
     });
     await this.productService.getABCClassifications().subscribe((abcClassifications) =>{
-
+      console.log(abcClassifications);
       this.abcClassifications = abcClassifications;
       this.dropdownSettingsABCClassification = {
         singleSelection: true,
@@ -269,12 +270,17 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
     await  this.productService.getProducts().subscribe((products) =>{
 
         this.product = products.filter((product) => product.Id == this.productId);
+        console.log(this.product);
+
         if(this.product && this.product[0]){
+         // this.product[0].LastCycleCount = this.product[0].LastCycleCount.split('T');
+          let formattedDate = new Date(this.product[0].LastCycleCount).toISOString().split('T')[0];
+          console.log('data', formattedDate  );
 
         this.productForm.patchValue({
-            wmsProductId: this.product[0].ProductStatusId,
-            vendorProductId: this.product[0].Id,
-            sku: this.product[0].SKU,
+            wmsProductId: this.product[0].Id,
+            //vendorProductId: this.product[0].Id,
+            vendorProductId: this.product[0].SKU,
             description: this.product[0].Description,
             notes: this.product[0].Notes,
             shelfLife: this.product[0].ShelfLife,
@@ -282,26 +288,28 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
             stdGrossWeight: this.product[0].STDGrossWeight,
             stdNetWeight: this.product[0].STDNetWeight,
             volume: this.product[0].Volume,
-            stdCube: "",
+            stdCube: this.product[0].STDArea,
             price: this.product[0].Price,
             cost: this.product[0].Cost,
             qcRequired: this.product[0].QCRequired,
             productStatus: this.product[0].ProductStatus,
             cycleCount: this.product[0].CycleCountFrequency,
-            lastCycleCount: this.product[0].LastCycleCount
+            last_CycleCount:formattedDate,
           });
+          console.log(this.productForm.value);
 
 
 
         this.isVolume = this.product[0].Volume;
         this.isWeighable = this.product[0].Weighable;
         this.isQcRequired = this.product[0].QCRequired;
-
+        console.log(this.customerNames);
         this.selectedCustomerNames = this.customerNames.filter((customer) => customer.Id == this.product[0].CustomerId);
         this.selectedUOM = this.UOM.filter((uom) => uom.Id == this.product[0].UnitId);
         this.selectedPackKeys = this.packKeys.filter((pack) => pack.Id == this.product[0].PackId);
         this.selectedABClassifications = this.abcClassifications.filter((abc) => abc.Id == this.product[0].ProductClassificationId);
         this.selectedRotateBy = this.rotateBy.filter((rotate) => rotate.id == this.product[0].ProductRotateById);
+        this.selectedRfDefaultUOM = this.rfDefaultUOM.filter((rotate) => rotate.Id == this.product[0].ProductRFDefaultUOMId);
 
 
 
@@ -380,13 +388,9 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
     }else{
       if(this.selectedCustomerNames.length > 0){
 
-
-
-
-
         let productObj = {
-          ID: this.product[0].Id,
-          SKU: this.productForm.get('sku').value,
+          Id: this.product[0].Id,
+          SKU: this.productForm.get('vendorProductId').value,
           Description: this.productForm.get('description').value,
           ShelfLife: this.productForm.get('shelfLife').value,
           QCRequired: this.productForm.get('qcRequired').value,
@@ -396,50 +400,57 @@ export class ProductEditComponent implements AfterViewInit, OnDestroy, OnInit {
           UDF4: "",
           UDF5: "",
           ProductClassificationId: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Id : "" ,
-          ProductClassification: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Classification : "",
+          //ProductClassification: this.productForm.get('abcClassification').value[0] ? this.productForm.get('abcClassification').value[0].Classification : "",
           CustomerId: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].Id : "",
-          CustomerName: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].CustomerName : "",
+          //CustomerName: this.productForm.get('customerName').value[0] ? this.productForm.get('customerName').value[0].CustomerName : "",
           STDGrossWeight: this.productForm.get('stdGrossWeight').value,
           STDNetWeight: this.productForm.get('stdNetWeight').value,
-          STDArea: this.productForm.get('stdNetWeight').value,
+          STDArea: this.productForm.get('stdCube').value,
           Notes: this.productForm.get('notes').value,
           Price: this.productForm.get('price').value,
           Cost: this.productForm.get('cost').value,
-          OnReceipteCopyPackKey: "",
+          OnReceipteCopyPackKey: true,
           ProductRotateById: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].id : "",
-          ProductRotateBy: this.productForm.get('rotateBy').value[0] ? this.productForm.get('rotateBy').value[0].rotate : "",
+          ProductRFDefaultUOMId: this.productForm.get('rfDefaultUOM').value[0] ? this.productForm.get('rfDefaultUOM').value[0].Id : "",
           QCLocationId: "",
           CycleCountFrequency: this.productForm.get('cycleCount').value,
-          LastCycleCount: this.productForm.get('lastCycleCount').value,
+          LastCycleCount: this.productForm.get('last_CycleCount').value,
           UnitId: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].Id : "",
-          UnitName: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].UnitName : "",
+         // UnitName: this.productForm.get('UOM').value[0] ? this.productForm.get('UOM').value[0].UnitName : "",
           PackId: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].Id : "",
-          PackKey: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].PackKey : "",
+         // PackKey: this.productForm.get('packKey').value[0] ? this.productForm.get('packKey').value[0].PackKey : "",
           Weighable: this.productForm.get('weighable').value,
           Volume: this.productForm.get('volume').value,
-          ProductStatusId: this.productForm.get('wmsProductId').value,
-          ProductStatus: this.productForm.get('productStatus').value
+          ProductStatusId: '',
+          ProductCode: '',
+          IsActive:true
         };
 
+        console.log(productObj);
 
+        this.productService.editCustomer(productObj,this.product[0].Id)
+        .subscribe(
+          (data: any) => {
+            if (data) {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Product Saved Success',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.routeBack();
+            }
+          }, 
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+          }
+        );
 
-        //STDCube
-        //RfDefaultUOM not defined
-
-
-
-
-
-        let toastOptions: ToastOptions = {
-          title: 'Success',
-          msg: 'Site Saved Success',
-          showClose: true,
-          timeout: 2000,
-          theme: 'default',
-
-        };
-        this.toastyService.success(toastOptions);
-        this.toastCommunicationService.setPosition(this.position);
       }else{
         let toastOptions: ToastOptions = {
           title: 'Warning',

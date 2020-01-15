@@ -4,7 +4,9 @@ import {Subject} from 'rxjs';
 import {DataTableDirective} from 'angular-datatables';
 import Swal from "sweetalert2";
 import {ProductService} from '../../_services';
-
+import {ToastOptions, ToastyService} from 'ng2-toasty';
+import {NotificationCommunicationService} from '../../_services';
+import swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -20,8 +22,9 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
   products: any[] = [];
+  position:any;
 
-  constructor(private router: Router,private productService: ProductService) {
+  constructor(private router: Router,private productService: ProductService,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService ) {
   }
 
   ngOnInit() {
@@ -31,7 +34,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
         emptyTable: "No Product found"
       }
     };
-
+    this.position = "bottom-right";
     this.getProducts();
 
     this.products = [
@@ -72,7 +75,8 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  deleteProduct(productId:any) {
+  
+  inActiveWarehouse(locationId:any) {
     (Swal as any).fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -80,9 +84,82 @@ export class ProductListComponent implements AfterViewInit, OnDestroy, OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes!'
     }).then((result) => {
       if (result.value) {
+
+        this.productService.disabled(locationId,true)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Activate',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.getProducts();
+                this.rerender();
+              
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+          }
+        );
+      } else {
+        console.log('cancelled');
+      }
+    });
+  }
+
+  inDeActiveWarehouse(locationId:any) {
+    (Swal as any).fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.productService.disabled(locationId,false)
+        .subscribe(
+          (data: any) => {
+            if (data)
+            {
+              let toastOptions: ToastOptions = {
+                title: 'Success',
+                msg: 'Location Status Disabled',
+                showClose: true,
+                timeout: 2000,
+                theme: 'default',
+      
+              };
+              this.toastyService.success(toastOptions);
+              this.toastCommunicationService.setPosition(this.position);
+              this.getProducts();
+                this.rerender();
+               
+            
+            }
+          },
+          (error: any) => {
+            console.log(error);
+            swal(error.error['Message']);
+
+
+          }
+        );
+
 
       } else {
         console.log('cancelled');

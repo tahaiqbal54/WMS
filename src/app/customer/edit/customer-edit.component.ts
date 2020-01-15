@@ -281,7 +281,7 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
          
          if(this.customer && this.customer[0]){
            this.customerForm.patchValue({
-             wmsKey: this.customer[0]['CustomerId'],
+             wmsKey: this.customer[0]['Id'],
              whsId: this.customer[0]['WarehouseId'],
              customerId: this.customer[0]['CustomerId'],
              name: this.customer[0]['CustomerName'],
@@ -311,7 +311,7 @@ export class CustomerEditComponent implements AfterViewInit, OnDestroy, OnInit {
            this.selectedWarehouse = this.warehouses.filter((warehouse) => warehouse.Id == this.customer[0].WarehouseId);
            this.selectedCountry = this.countries.filter((country) => country.Id == this.customer[0].CountryId);
            this.selectedStrategies = this.strategies.filter((strategy) => strategy.Id == this.customer[0].CustomerStrategyId);
-           this.selectedRotateBy = this.rotateBy.filter((rotate) => rotate.Id == this.customer[0].CustomerRotateById);
+           this.selectedRotateBy = this.rotateBy.filter((rotate) => rotate.id == this.customer[0].CustomerRotateById);
            this.getWareHouseLocationDropDown(this.selectedWarehouse[0] ? this.selectedWarehouse[0].Id : 0);
            
 

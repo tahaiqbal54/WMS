@@ -68,7 +68,7 @@ export class LocationEditComponent implements AfterViewInit, OnDestroy, OnInit {
                 console.log('location',location);
                 this.location = location;
                 this.locationForm.patchValue({
-                  locationId : location.Id,
+                  locationId : location.LocationCode,
                   warehouseId: location.WarehouseId,
                   locationType: location.LocationTypeId,
                   locationName: location.LocationName,

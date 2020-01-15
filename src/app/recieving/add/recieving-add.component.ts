@@ -247,8 +247,18 @@ export class RecievingAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.productId = data.ProductId;
         this.Quantity = data.QtyRemained;
         this.BatchNo = data.BatchNo;
-        this.ManufactureDate = new Date(data.ManDate);
-        this.ExpiryDate = new Date(data.ExpDate);
+        if(data.ManDate === null){
+          console.log(data.ManDate);
+          this.ManufactureDate = null;
+        } else {
+          this.ManufactureDate = new Date(data.ManDate);
+        }
+        if(data.ExpDate === null){
+          console.log(data.ExpDate);
+          this.ExpiryDate = null;
+        } else {
+          this.ExpiryDate = new Date(data.ExpDate);
+        }
         this.UOM = data.UnitName;
         this.Description = data.Description;
         this.Pack = data.PackKey;
