@@ -75,6 +75,11 @@ export const AppRoutes: Routes = [
         loadChildren: './product/product.module#ProductModule',
         //canActivate: [AuthGuard]
       },
+      {
+        path: 'inventory',
+        loadChildren: './inventory/inventory.module#InventoryModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'retail-outlets',
       //   loadChildren: './retail-outlets/outlets.modules#OutletsModule',

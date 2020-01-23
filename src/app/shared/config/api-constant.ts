@@ -81,8 +81,13 @@ export class APIConstants {
         LIST_UOM: '/Units/UOM',
         LIST_PACK: '/Packs/PackKey',
         LIST_ABC_CLASSIFICATION: '/Products/ProductClassification',
-        LIST_RFDefaultUOM: '/Products/RFDefaultUOM'
-
+        LIST_RFDefaultUOM: '/Products/RFDefaultUOM',
+        GET_CUSTOMERS: '/Customers/GetCustomerByUserId',
+        GET_WAREHOUSE: '/Warehouses/GetWarehouseByUserID',
+        GET_PRODUCTS: '/Products/GetProductByUserID', 
+        GET_LOCATIONS: '/Locations/GetLocationByUserID',
+        GET_LOT: '/InventTransactions/GetLotNoByUserID',
+        FETCH_INVENTORY: '/InventTransactions/Fetch'
       }
     };
   }
@@ -97,6 +102,10 @@ export class APIConstants {
 
   getUrl2(endpoint: string, params1: string = '', params2: string = '') {
     return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2;
+  }
+
+  getUrl3(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5;
   }
 
 }
