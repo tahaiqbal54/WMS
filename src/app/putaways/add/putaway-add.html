@@ -133,7 +133,7 @@
                             <div class="card">
                               <div class="card-block">   
                                           <div class="table-overflow">
-                                              <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                                              <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
                                                       <tr>
                                                           <th>Sr. No</th>
@@ -145,32 +145,32 @@
                                                   </thead>
                                                   <tbody>
                                                       <tr *ngFor="let detail of OrderDetail; let i = index">
-                                                          <td>
-                                                            <div class="mrg-top-10">
+                                                          <td class="text-left">
+                                                            <div>
                                                                 <div class="info">
                                                                     <span class="title">{{i + 1}}</span>
                                                                 </div>
                                                             </div>
                                                           </td>
-                                                          <td>
-                                                              <div class="list-info mrg-top-10">
+                                                          <td class="text-left">
+                                                              <div>
                                                                   <div class="info">
                                                                       <span class="title">{{detail.SKU}}</span>
                                                                   </div>
                                                               </div>
                                                           </td>
                                                           <td>
-                                                              <div class="list-info mrg-top-10 text-center">
+                                                              <div class="text-center">
                                                                   <span class="text-center">{{detail.QtyOrdered}}</span>
                                                               </div>
                                                           </td>
-                                                          <td>
-                                                              <div class="mrg-top-15">
+                                                          <td class="text-left"> 
+                                                              <div>
                                                                   <span class="text-info"><b>{{detail.Unit}}</b></span>
                                                               </div>
                                                           </td>
-                                                          <td>
-                                                              <div class="mrg-top-15">
+                                                          <td class="text-center">
+                                                              <div>
                                                                 <a (click)="OpenModal(i)" class="btn btn-default p-1">PutAway Location</a>
                                                                 <!-- <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1">Delete</a> -->
                                                               </div>
