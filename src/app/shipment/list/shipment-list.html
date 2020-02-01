@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Shipment Order Deatils</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/shipment/add']">Create Order
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <!--<th class="text-center">ID</th>-->
+                <th maxWidth="150" class="text-center">SO Date</th>
+                <th class="text-center">Customer Ref No</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Ship To</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Order</th>
+               <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let data of users; let i = index">
+                <!--<td class="text-center">{{ user.id }}</td>-->
+                <td class="text-center">{{ data.SODate_formatted }}</td>
+                <td class="text-center">{{ data.CustomerRefNo}}</td>
+                <td class="text-center">{{ data.CustomerName }}</td>
+                <td class="text-center">{{ data.VendorName }}</td>
+                <td class="text-center">{{ data.StatusName }}</td>
+                <td>
+                  <div class="text-center">
+                    <span class=""><b>{{data.sortOrder }}</b></span>
+                  </div>
+                </td>
+                 <td class="text-center">
+                   <div class="d-inline-block">
+                       <a [routerLink]="['/users/edit/' + data.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                       <a class="btn btn-default p-1" (click)="DeleteOrder(data.Id,i)"><i class="ei-delete"></i></a>
+                   </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

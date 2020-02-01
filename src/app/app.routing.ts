@@ -89,6 +89,11 @@ export const AppRoutes: Routes = [
         path: 'extras',
         loadChildren: './extras/extras.modules#ExtrasModule'
       },
+      {
+        path: 'shipment',
+        loadChildren: './shipment/shipment.module#ShipmentModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'regional-structure',
       //   loadChildren: './regional-structure/regional.modules#RegionalModule',
