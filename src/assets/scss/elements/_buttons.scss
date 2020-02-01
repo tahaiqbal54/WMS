@@ -70,6 +70,7 @@ button {
     background-color: $default-white;
     border-color: darken($border-color,5%);
 	font-weight: 500;
+	margin-bottom: 15px;
 	
 	&:hover,
 	&:focus,

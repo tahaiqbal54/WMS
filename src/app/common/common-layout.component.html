@@ -5,88 +5,203 @@
 
         <div>
             <!-- Side Nav START -->
-            <div class="side-nav d-none" sideBar>
-                <div class=" side-nav-inner">
-                    <!-- <div class="side-nav-logo">
-                        <a href="" [routerLink]="['/dashboard']">
-                            <div class="logo logo-dark" style="background-image: url('assets/images/logo/logo.png')"></div>
-                            <div class="logo logo-white" style="background-image: url('assets/images/logo/logo-white.png')"></div>
+            <div class="side-nav">
+                <div class="side-nav-inner">
+                    <div class="side-nav-logo">
+                        <a>
+                            <img class="logo logo-dark" src="assets/images/logo/WMS_Logosmall.png"/>
                         </a>
                         <div class="mobile-toggle side-nav-toggle">
-                            <a href="javascript:void(0);" (click)="app.layout.isMenuCollapsed = !app.layout.isMenuCollapsed">
+                            <a href="">
                                 <i class="ti-arrow-circle-left"></i>
                             </a>
                         </div>
-                    </div> -->
-                    <!-- <ul class="side-nav-menu scrollable">
-                        <li clas="nav-item" routerLinkActive="active">
-                            <a class="mrg-top-30" href="" [routerLink]="['/dashboard']">
+                    </div>
+                    <ul class="side-nav-menu scrollable ps-container ps-theme-default" data-ps-id="65a8e99c-6dc4-f6f2-ef5e-69b6faa35954">
+                        <li class="nav-item">
+                            <a class="mrg-top-10" [routerLink]="['/dashboard']">
                                 <span class="icon-holder">
-                                    <i class="ti-home"></i>
-                                </span>
+                                    <img src="/assets/images/icons/home32.png" style="padding-bottom: 5px;">
+									</span>
                                 <span class="title">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-item dropdown" >
-                            <a class="dropdown-toggle" href="javascript:void(0);" >
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="ti-layout-media-overlay"></i>
-                                </span>
-                                <span class="title">Dropdown</span>
+                                    <img src="/assets/images/icons/asn32.png" style="padding-bottom: 5px;">
+									</span>
+                                <span class="title">Inbound</span>
                                 <span class="arrow">
                                     <i class="ti-angle-right"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="">item 1</a>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/users/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/asn32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;ASN Details</span>
+                                    </a>
                                 </li>
-                                <li>
-                                    <a href="">item 2</a>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/receiving/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/receive32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Order Receiving</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  [routerLink]="['/putaway/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/putaways32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Put Aways</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="ti-view-list-alt"></i>
-                                </span>
-                                <span class="title">Multi Level</span>
+                                    <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
+									</span>
+                                <span class="title">Inventory</span>
                                 <span class="arrow">
                                     <i class="ti-angle-right"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>Level 1.2</span>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/inventory/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Inventory View</span>
                                     </a>
                                 </li>
-                                <li class="nav-item dropdown">
-                                    <a href="javascript:void(0);">
-                                        <span>Level 1.1</span>
-                                        <span class="arrow">
-                                            <i class="ti-angle-right"></i>
-                                        </span>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/outbound32_1.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Out Bound</span>
                                     </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="javascript:void(0);">Level 2</a>
-                                        </li>
-                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/outbound32_2.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Out Bound</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
-                    </ul> -->
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
+									</span>
+                                <span class="title">Shipment</span>
+                                <span class="arrow">
+                                    <i class="ti-angle-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Shipment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/shipment32_2.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Shipment</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/shipment32_3.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Shipment</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <img src="/assets/images/icons/setup32.png" style="padding-bottom: 5px;">
+									</span>
+                                <span class="title">Setup</span>
+                                <span class="arrow">
+                                    <i class="ti-angle-right"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a [routerLink]="['/sites/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/site32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Site</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/warehouse/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/warehouse32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Warehouse</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/location/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/location32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Location</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/customer/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/customer32.png" style="padding-bottom: 5px;">
+                                            </span>
+                                        <span class="title">&nbsp;Customer</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-bottom:50px;">
+                                    <a [routerLink]="['/product/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/products32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Products</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></ul>
                 </div>
             </div>
             <!-- Side Nav END -->
 
-
+          <!-- Content Wrapper START -->
+          <div class="page-container">
           <div class="header navbar">
             <div class="header-container" style="width: 100%;">
               <ul class="nav-left">
-                <li><a class="side-nav-toggle"   [routerLink]="['/dashboard']" href="javascript:void(0);"><i class="headerIcon ti-home"></i>&nbsp;
+                <li><a class="side-nav-toggle"><i class="ti-view-grid"></i></a></li>
+                <li style="margin-left: 10px;"><a class="heading-text" [routerLink]="['/dashboard']" href="javascript:void(0);"><i class="headerIcon ti-home"></i>&nbsp;
                 <b class="headerTitle">WMS</b>
                 </a></li>
               </ul>
@@ -114,14 +229,9 @@
                   </ul>
             </div>
           </div>
-          <!-- Content Wrapper START -->
-          <div class="page-container">
           <div class="main-content">
             <router-outlet></router-outlet>
           </div>
-          </div>
-          <!-- Content Wrapper END -->
-
           <!-- Footer START -->
           <footer class="content-footer">
             <div class="footer">
@@ -131,6 +241,8 @@
             </div>
           </footer>
           <!-- Footer END -->
+          </div>
+          <!-- Content Wrapper END -->
 
             <!-- Page Container START -->
             <!--<div class="page-container">-->

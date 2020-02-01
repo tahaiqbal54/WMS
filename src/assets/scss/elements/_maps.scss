@@ -20,7 +20,7 @@
             max-height: 300px;
 
             @include screen-mobile {
-                min-height: 250px;
+                min-height: 200px;
             } 
         }
     } 
@@ -31,7 +31,7 @@
             max-height: 500px;
 
             @include screen-mobile {
-                min-height: 250px;
+                min-height: 200px;
             } 
         }
     }  

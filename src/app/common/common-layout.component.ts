@@ -46,5 +46,6 @@ export class CommonLayoutComponent implements OnInit {
 
 
     ngOnInit(){
+        $.getScript('./assets/js/site.js');
     }
 }
