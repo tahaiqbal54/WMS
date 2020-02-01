@@ -44,6 +44,8 @@ import {cardPortletRefresh, cardPortletDelete} from "./shared/directives/cards.d
 //import { LOgService } from './_services/logs.service';
 import {CalendarComponent} from "ap-angular-fullcalendar/src/calendar/calendar";
 
+
+
 // Outlet
 // import { OutletViewService } from './retail-outlets/outlet-view.service';
 
@@ -63,8 +65,6 @@ import {CalendarComponent} from "ap-angular-fullcalendar/src/calendar/calendar";
     CommonLayoutComponent,
     AuthenticationLayoutComponent,
     Sidebar_Directives,
-    //Page404Component,
-    // SigninComponent,
     cardPortletRefresh,
     cardPortletDelete,
     SignOutComponent,

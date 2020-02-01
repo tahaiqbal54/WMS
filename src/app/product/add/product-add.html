@@ -1,0 +1,339 @@
+<div class="container-fluid">
+  <div class="row bg-white pt-3">
+     <div class="col-md-12">
+        <div class="card" href="javascript:;">
+          <ul class="list-unstyled list-info">
+            <li>
+              <div class="w-100 info bg-info d-flex justify-content-center align-items-center" style="height: 40px;">
+                <span class="title text-center text-white">Basic Info</span>
+              </div>
+          </li>
+          </ul>
+          <div class="card-block">
+            <form [formGroup]="productForm" class="form-horizontal mrg-top-40 pdd-right-30">
+
+
+              <div class="row">
+              <div class="col-md-6">
+                <label class="col-md-12 control-label">WMS Product Id <a class="text-danger"></a></label>
+                <div class="col-md-12 form-group">
+                  <input
+                    readonly="readonly"
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.wmsProductId.errors }"
+                    type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
+                    formControlName="wmsProductId">
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="col-md-12 control-label">Vendor Product Id <a class="text-danger">*</a></label>
+                <div class="col-md-12 form-group">
+                  <input
+                    required
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.vendorProductId.errors }"
+                    type="text" maxlength="255" class="form-control" placeholder="Enter WMS Product Id"
+                    formControlName="vendorProductId">
+                  <div *ngIf="formSubmitted && productForm.controls['vendorProductId'].errors" class="error-msg">
+                    <div class="text-danger" [hidden]="!productForm.controls['vendorProductId'].errors.required">Vendor Product Id is required.</div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <div class="row">
+              <div class="col-md-6">
+                <div class="col-md-12  form-group">
+                  <label>Customer Name <a class="text-danger">*</a></label>
+                  <ng-multiselect-dropdown
+                    formControlName='customerName'
+                    [placeholder]="'Select Customer Name'"
+                    [(data)]="customerNames"
+                    [(ngModel)]="selectedCustomerNames"
+                    [settings]="dropdownSettingsCustomerName"
+                    (onSelect)="onItemSelectCustomerName($event)"
+                    (onDeSelect)="onItemDeSelectCustomerName($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                  <div *ngIf="formSubmitted && selectedCustomerNames.length == 0" class="error-msg">
+                    <div class="text-danger">Customer Name is required.</div>
+                  </div>
+                </div>
+              </div>
+              </div>
+
+
+
+            </form>
+          </div></div>
+      </div>
+     <div class="col-md-12">
+      <div class="card" href="javascript:;">
+        <ul class="list-unstyled list-info">
+          <li>
+            <div class="w-100 info bg-info d-flex justify-content-center align-items-center" style="height: 40px;">
+              <span class="title text-center text-white">Extended Info</span>
+            </div>
+          </li>
+        </ul>
+        <div class="card-block">
+          <form [formGroup]="productForm" class="form-horizontal mrg-top-40 pdd-right-30">
+
+            <div class="row">
+             <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-12 control-label">Description</label>
+              <div class="col-md-12 form-group">
+                <textarea
+                  type="text"
+                  maxlength="1000" class="form-control" placeholder="Enter Location Description"
+                  formControlName="description">
+                </textarea>
+              </div>
+            </div>
+          </div>
+             <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-md-12 control-label">Notes</label>
+              <div class="col-md-12 form-group">
+                <textarea
+                  type="text"
+                  maxlength="1000" class="form-control" placeholder="Enter Notes"
+                  formControlName="notes">
+                </textarea>
+              </div>
+            </div>
+          </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group col-md-12"><label> UOM</label>
+                  <ng-multiselect-dropdown
+                    formControlName='UOM'
+                    [placeholder]="'Select UOM'"
+                    [(data)]="UOM"
+                    [(ngModel)]="selectedUOM"
+                    [settings]="dropdownSettingsUOM"
+                    (onSelect)="onItemSelectUOM($event)"
+                    (onDeSelect)="onItemDeSelectUOM($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="col-md-12 control-label"> Shelf Life</label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="text" maxlength="255" class="form-control" placeholder="Enter Shelf Life"
+                    formControlName="shelfLife">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="col-md-12 form-group"><label> Pack Keys</label>
+                  <ng-multiselect-dropdown
+                    formControlName='packKey'
+                    [placeholder]="'Select Pack Key'"
+                    [(data)]="packKeys"
+                    [(ngModel)]="selectedPackKeys"
+                    [settings]="dropdownSettingsPackKey"
+                    (onSelect)="onItemSelectPackkey($event)"
+                    (onDeSelect)="onItemDeSelectPackKey($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-12 form-group"><label> ABC Classification</label>
+                  <ng-multiselect-dropdown
+                    formControlName='abcClassification'
+                    [placeholder]="'Select ABC Classification'"
+                    [(data)]="abcClassifications"
+                    [(ngModel)]="selectedABClassifications"
+                    [settings]="dropdownSettingsABCClassification"
+                    (onSelect)="onItemSelectABCClassification($event)"
+                    (onDeSelect)="onItemDeSelectABCClassification($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <div class="checkbox form-group" (click)="toggleEditableIsWeighable($event)" >
+                  <input type="checkbox" class="popup_checkbox "
+                         formControlName="weighable" value="{{isWeighable}}" [(ngModel)]="isWeighable">
+                  <label>Weighable</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-12 control-label">STD Gross Weight </label>
+                  <div class="col-md-12 form-group">
+                    <input
+                      [readOnly]="!isWeighable"
+                      type="text" maxlength="255" class="form-control" placeholder="Enter STD Gross Weight"
+                      formControlName="stdGrossWeight">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row ">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="col-md-12 control-label">STD Net Weight</label>
+                  <div class="col-md-12 form-group">
+                    <input
+                      [readOnly]="!isWeighable"
+                      type="text" maxlength="255" class="form-control" placeholder="Enter STD Net  Weight"
+                      formControlName="stdNetWeight">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4">
+                <div class="checkbox" (click)="toggleEditableIsVolume($event)" >
+                  <input
+                      type="checkbox" class="popup_checkbox "
+                         formControlName="volume" value="{{isVolume}}" [(ngModel)]="isVolume">
+                  <label>Volume</label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="col-md-12 control-label"> STD Cube </label>
+                <div class="col-md-12 form-group">
+                  <input
+                    [readOnly]="!isVolume"
+                    type="text" maxlength="255" class="form-control" placeholder="Enter STD Cube"
+                    formControlName="stdCube">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group col-md-12"><label>RF Default UOM </label>
+                  <ng-multiselect-dropdown
+                    formControlName='rfDefaultUOM'
+                    [placeholder]="'Select RF Default UOM'"
+                    [(data)]="rfDefaultUOM"
+                    [(ngModel)]="selectedRfDefaultUOM"
+                    [settings]="dropdownSettingsRfDefaultUOM"
+                    (onSelect)="onItemSelectRfDefaultUOM($event)"
+                    (onDeSelect)="onItemDeSelectRfDefaulUOM($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="col-md-12 control-label">Price</label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="number" maxlength="255" class="form-control" placeholder="Enter Price"
+                    formControlName="price">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="col-md-12 control-label">Cost</label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="number" maxlength="255" class="form-control" placeholder="Enter Cost"
+                    formControlName="cost">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mt-2">
+              <div class="col-md-6">
+                <div class="checkbox form-group" (click)="toggleEditableQcRequired($event)" >
+                  <input type="checkbox" class="popup_checkbox "
+                         formControlName="qcRequired" value="{{isQcRequired}}" [(ngModel)]="isQcRequired">
+                  <label>QC Required</label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="col-md-12 control-label"> Product Status </label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="text" maxlength="255" class="form-control" placeholder="Enter Product Status"
+                    formControlName="productStatus">
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group col-md-12"><label> Rotate By</label>
+                  <ng-multiselect-dropdown
+                    formControlName='rotateBy'
+                    [placeholder]="'Select Rotate By'"
+                    [(data)]="rotateBy"
+                    [(ngModel)]="selectedRotateBy"
+                    [settings]="dropdownSettingsRotateBy"
+                    (onSelect)="onItemSelectRotateBy($event)"
+                    (onDeSelect)="onItemDeSelectRotateBy($event)"
+                  >
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="col-md-12 control-label"> Cycle Count </label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="number" maxlength="255" class="form-control" placeholder="Enter Cycle Count"
+                    formControlName="cycleCount">
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <label class="col-md-12 control-label">Last Cycle Count</label>
+                <div class="col-md-12 form-group">
+                  <input
+                    type="date" maxlength="255" class="form-control" placeholder="Enter Last Cycle Count"
+                    formControlName="lastCycleCount">
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+        </div></div>
+    </div>
+
+    <div class="form-group col-md-12">
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label"></label>
+        <div class="col-sm-6">
+          <button type="button" class="btn btn-inverse btn-info" (click)="saveProduct()">
+            <span>Save</span>
+          </button>
+          <button type="button" class="btn btn-inverse bg-danger text-white" href="javascript:;" (click)="routeBack()">Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>
+

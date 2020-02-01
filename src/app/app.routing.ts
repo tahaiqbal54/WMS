@@ -33,91 +33,126 @@ export const AppRoutes: Routes = [
       {
         path: 'dashboard',
         loadChildren: './dashboard/dashboard.module#DashboardModule',
-        //canActivate: [AuthGuard] 
+        //canActivate: [AuthGuard]
       },
       {
         path: 'users',
         loadChildren: './users/users.module#UsersModule',
-        //canActivate: [AuthGuard] 
+        //canActivate: [AuthGuard]
       },
       {
         path: 'receiving',
         loadChildren: './recieving/recieving.module#RecievingModule',
-        //canActivate: [AuthGuard] 
+        //canActivate: [AuthGuard]
       },
       {
         path: 'putaway',
         loadChildren: './putaways/putaways.module#PutawaysModule',
-        //canActivate: [AuthGuard] 
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'sites',
+        loadChildren: './sites/sites.module#SitesModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'warehouse',
+        loadChildren: './warehouse/warehouse.module#WarehouseModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'location',
+        loadChildren: './location/location.module#LocationModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'customer',
+        loadChildren: './customer/customer.module#CustomerModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'product',
+        loadChildren: './product/product.module#ProductModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'inventory',
+        loadChildren: './inventory/inventory.module#InventoryModule',
+        //canActivate: [AuthGuard]
       },
       // {
       //   path: 'retail-outlets',
       //   loadChildren: './retail-outlets/outlets.modules#OutletsModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       {
         path: 'extras',
         loadChildren: './extras/extras.modules#ExtrasModule'
       },
+      {
+        path: 'shipment',
+        loadChildren: './shipment/shipment.module#ShipmentModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'regional-structure',
       //   loadChildren: './regional-structure/regional.modules#RegionalModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'inspection-sheet',
       //   loadChildren: './inspection-sheet/inspection-sheet.modules#InspectionSheet_Module',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'stock',
       //   loadChildren: './stock_reconcilation/stock.module#Stock_Module',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'log',
       //   loadChildren: './logs/logs.modules#Log_Module',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: '',
       //   loadChildren: './gallery/gallery.module#GalleryModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: '',
       //   loadChildren: './facilitygallery/facilitygallery.module#FacilityGalleryModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'stock_sheet',
       //   loadChildren: './stock_reconcilation/stock.module#Stock_Module',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'sale',
       //   loadChildren: './sales/sale.module#SalesModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'calender',
       //   loadChildren: './calender/calender.modules#CalendersModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'approval',
       //   loadChildren: './approval/approval.modules#ApprovalModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'schedule',
       //   loadChildren: './calender_schedule/calender_schedule.modules#Calenders_scheduleModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // },
       // {
       //   path: 'tradearea',
       //   loadChildren: './maps/maps.modules#MapsModule',
-      //   canActivate: [AuthGuard] 
+      //   canActivate: [AuthGuard]
       // }
     ]
   }

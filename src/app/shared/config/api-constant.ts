@@ -55,41 +55,41 @@ export class APIConstants {
         RECEIVING_LIST:'/PutAways/ReceivingData',
         PUTAWAY_DETAIL:'/PutAways/ReceivingDataFromPurchaseId',
         POST_PUTAWAY:'/PutAways',
-        LIST_ALLIED_FACILITIES:'/list_allied_facilities',
-        FORGET_PASSWORD:'/users/forgot_password',
-        NFR_IMAGE:'/upload_nfr_images',
-        RESET_PASSWORD:'/users/change_password',
-        DELETE_NFR:'/delete_nfr_image',
-        SALES:'/sales_receipts', 
-        RECONCILIATION:'/stock_reconciliation',
-        GET_APPROVALS: '/list_pending_revisions',
-        GET_APPROVAL: '/retail_outlet_revisions',
-        APPROVAL: '/provision_outlet_revision',
-        GET_PLAN: '/cpc/get_plan',
-        ADD_EVENT: '/cpc/add_event',
-        DELETE_EVENT: '/cpc/delete_event',
-        APPROVE_CPC: '/cpc/send_for_approval',
-        GET_CPC_APPROVAL: '/cpc/list_approvals',
-        CPC_APPROVAL:'/cpc/get_approval',
-        REVIEW_PLAN:'/cpc/review_plan',
-        TRADE_AREA: '/trade_area',
-        REGIONAL_SALES: '/get_regional_sales',
-        PRODUCT_SALES: '/get_product_sales',
-        INSPECTION_NO: '/get_inspections_count',
-        CPC:'/get_cpc_actual_vs_planned',
-        GET_TM:'/get_top_tms',
-        TOP_STATIONS:'/get_top_stations',
-        DORMANT_SITES:'/get_dormant_sites',
-        ZERO_SALE:'/get_zero_sale_sites',
-        VARIANCE:'/get_positive_variance_sites',
-        BEHIND_CP:'/get_behind_cp_volume_sites',
-        INSPECTION_RESOLVER:'/get_outlets_for_inspection_approval',
-        INSPECTION_RESOLVER_VIEW:'/pending_inspection_items',
-        RESOLVED: '/update_inspection_item_status',
-        CPC_SUMMARY:'/cpc/get_cpc_summary',
-        INSPECTION_STATION:'/getInspectionsStation',
-        RECON_STATION:'/get_reconciliation_stations',
-        STATION_PERCENT:'/list_regions_percent'
+        GET_COUNTRY:'/Cities/GetCountry',
+        GET_CITY:'/Cities/GetCityByCountryId',
+        LIST_SITES:'/Sites',
+        POST_SITE:'/Sites',
+        GET_SITE:'/Sites',
+        GET_SITE_BY_CITY:'/Sites/GetSitesByCityId',
+        LIST_WAREHOUSE:'/Warehouses',
+        LIST_LOCATION: '/Locations',
+        LIST_LOCATION_TYPE: '/Locations/GetLocationType',
+        LOCATION_STATUS: '/Locations/UpdateLocationStatus',
+        WAREHOUSE_STATUS: '/Warehouses/UpdateWarehouseStatus',
+        SITE_STATUS: '/Sites/UpdateSiteStatus',
+        PRODUCT_STATUS: '/Products/UpdateProductStatus',
+        CUSTOMER_STATUS: '/Customers/UpdateCustomerStatus',
+        SALES:'/sales_receipts',
+        LIST_CUSTOMERS:'/Customers',
+        CUSTOMER_TYPE:'/Customers/CustomerType',
+        POST_CUSTOMER:'/Customers',
+        LIST_PACKS:'/Packs/PackKey',
+        QC_LIST_LOCATIONS: '/Locations/',
+        STAGE_LIST_LOCATIONS: '/Locations/GetStageLocationByWarehouseId',
+        LIST_STRATEGIES: '/Customers/CustomerStrategies',
+        LIST_PRODUCTS: '/Products',
+        LIST_UOM: '/Units/UOM',
+        LIST_PACK: '/Packs/PackKey',
+        LIST_ABC_CLASSIFICATION: '/Products/ProductClassification',
+        LIST_RFDefaultUOM: '/Products/RFDefaultUOM',
+        GET_CUSTOMERS: '/Customers/GetCustomerByUserId',
+        GET_WAREHOUSE: '/Warehouses/GetWarehouseByUserID',
+        GET_PRODUCTS: '/Products/GetProductByUserID', 
+        GET_LOCATIONS: '/Locations/GetLocationByUserID',
+        GET_LOT: '/InventTransactions/GetLotNoByUserID',
+        FETCH_INVENTORY: '/InventTransactions/Fetch',
+        GET_SHIPMENT_ORDERS: '/Shipments/GetShipments',
+        DELETE_SHIPMENT: '/Shipments'
       }
     };
   }
@@ -104,6 +104,10 @@ export class APIConstants {
 
   getUrl2(endpoint: string, params1: string = '', params2: string = '') {
     return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2;
+  }
+
+  getUrl3(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5;
   }
 
 }

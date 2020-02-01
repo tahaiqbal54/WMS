@@ -2883,15 +2883,18 @@
 
 /* Text Align */
 .text-center {
-	text-align: center !important;
+    text-align: center !important;
+    vertical-align:middle !important;
 }
 
 .text-left {
-	text-align: left !important;
+    text-align: left !important;
+    vertical-align:middle !important;
 }
 
 .text-right {
-	text-align: right !important;
+    text-align: right !important;
+    vertical-align:middle !important;
 }
 
 /* Image */
@@ -2951,15 +2954,18 @@
 
 @include screen-mobile {
 	.text-center-sm {
-		text-align: center !important;
+        text-align: center !important;
+        vertical-align:middle !important;
 	}
 	
 	.text-left-sm {
-		text-align: left !important;
+        text-align: left !important;
+        vertical-align:middle !important;
 	}
 	
 	.text-right-sm {
-		text-align: right !important;
+        text-align: right !important;
+        vertical-align:middle !important;
 	}
 }
 

@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Site Details</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/sites/add']">Create Site
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <th class="text-center">Site Id</th>
+                <th class="text-center">Site Name</th>
+                <th class="text-center">Site Address</th>
+                <th class="text-center">Site Contact</th>
+                <th class="text-center">Country</th>
+                <th class="text-center">City</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let site of sites; let i = index">
+                <td class="text-center">{{ site.Id }}</td>
+                <td class="text-center">{{ site.SiteName}}</td>
+                <td class="text-center">{{ site.SiteAddress}}</td>
+                <td class="text-center">{{ site.SiteContactNo}}</td>
+                <td class="text-center">{{ site.Country}}</td>
+                <td class="text-center">{{ site.City}}</td>
+                <td class="text-center">
+                  <i [class.text-danger]="!site.IsActive" [class.text-success]="site.IsActive" class="ei-circle"></i>
+                </td>
+                <td class="text-center">
+                  <div class="d-inline-block">
+                    <a [routerLink]="['/sites/edit/' + site.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="site.IsActive" (click)="inDeActiveSite(site.Id)" ><i class="ei-delete"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="!site.IsActive" (click)="inActiveSite(site.Id)" ><i class="ei-open"></i></a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

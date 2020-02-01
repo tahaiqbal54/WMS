@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Customer Details</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/customer/add']">Create Customer
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Customer Id</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let customer of customers; let i = index">
+                <td class="text-center">{{ customer.id }}</td>
+                <td class="text-center">{{ customer.customerId}}</td>
+                <td class="text-center">{{ customer.customerName}}</td>
+                <td class="text-center"><i  [class.text-danger]="!customer.isActive" [class.text-success]="customer.isActive" class="ei-circle"></i></td>
+                <td class="text-center">
+                  <div class="d-inline-block">
+                    <a [routerLink]="['/customer/edit/' + customer.id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="customer.isActive" (click)="inDeActiveWarehouse(customer.id)"><i class="ei-delete"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="!customer.isActive" (click)="inActiveWarehouse(customer.id)"><i class="ei-open"></i></a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

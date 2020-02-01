@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Warehouse Details</h4>
+  </div>
+  <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/warehouse/add']">Create Warehouse
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <th class="text-center">Warehouse Id</th>
+                <th class="text-center">Warehouse Name</th>
+                <th class="text-center">Warehouse Address</th>
+                <th class="text-center">Warehouse Contact</th>
+                <th class="text-center">Warehouse Country</th>
+                <th class="text-center">Warehouse City</th>
+                <th class="text-center">Warehouse Site</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  *ngFor="let warehouse of warehouses; let i = index">
+                <td class="text-center">{{ warehouse.Id }}</td>
+                <td class="text-center">{{ warehouse.WarehouseName}}</td>
+                <td class="text-center">{{ warehouse.WarehouseAddress ? warehouse.WarehouseAddress : '-'  }}</td>
+                <td class="text-center">{{ warehouse.WarehouseContactNo ?  warehouse.WarehouseContactNo : '-' }}</td>
+                <td class="text-center">{{ warehouse.Country ? warehouse.Country : '-' }}</td>
+                <td class="text-center">{{ warehouse.City ? warehouse.City : '-' }}</td>
+                <td class="text-center">{{ warehouse.SiteCode ? warehouse.SiteCode : '-' }}</td>
+                <td class="text-center">
+                  <i [class.text-danger]="!warehouse.IsActive" [class.text-success]="warehouse.IsActive" class="ei-circle"></i>
+                </td>
+                <td class="text-center">
+                  <div class="d-inline-block">
+                    <a [routerLink]="['/warehouse/edit/' + warehouse.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="warehouse.IsActive" (click)="inDeActiveWarehouse(warehouse.Id)"><i class="ei-close"></i></a>
+                    <a class="btn btn-default p-1" *ngIf="!warehouse.IsActive" (click)="inActiveWarehouse(warehouse.Id)"><i class="ei-open"></i></a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

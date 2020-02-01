@@ -11,7 +11,7 @@
       <div class="card">
         <div class="card-block">
           <div class="table-overflow">
-            <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
               <thead>
               <tr>
                 <!--<th class="text-center">ID</th>-->
@@ -26,7 +26,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let data of users; let i = index">
+              <tr  *ngFor="let data of users; let i = index">
                 <!--<td class="text-center">{{ user.id }}</td>-->
                 <td class="text-center">{{ data.ASNNo }}</td>
                 <td class="text-center">{{ data.ASNDate_formatted}}</td>
@@ -40,11 +40,10 @@
                   </div>
                 </td>
                  <td class="text-center">
-                  <a [routerLink]="['/users/edit/' + data.Id]" class="btn btn-default p-1">Edit</a>
-                  <a class="btn btn-default p-1" (click)="DeleteASN(data.Id,i)">Delete</a>
-                  <!--<a [routerLink]="['/users/edit/']" class="btn btn-default p-1">Edit</a>
-                   <a  (click)="disablebutton(user.id, user.first_name)" class="btn btn-default p-1"  *ngIf="user.status == 'active'" ng-show="true" href="javascript:void(0)">Disable</a> 
-                   <a  (click)="enablebutton(user.id)" class="btn btn-default p-1" *ngIf="user.status == 'disabled'" ng-show="true" href="javascript:void(0)">Active</a> -->
+                   <div class="d-inline-block">
+                       <a [routerLink]="['/users/edit/' + data.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                       <a class="btn btn-default p-1" (click)="DeleteASN(data.Id,i)"><i class="ei-delete"></i></a>
+                   </div>
                 </td>
               </tr>
               </tbody>

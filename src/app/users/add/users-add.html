@@ -125,15 +125,13 @@
                             <div class="card">
                               <div class="card-block">
                                           <div class="table-overflow">
-                                              <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                                              <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
                                                       <tr>
                                                           <th>Sr. No</th>
                                                           <th class="text-center">Product</th>
                                                           <th class="text-center">Product Description</th>
                                                           <th class="text-center">Expected Quantity</th>
-                                                          <th class="text-center">Batch No</th>
-                                                          <th class="text-center">Manufacture Date</th>
                                                           <th class="text-center">Pack Key</th>
                                                           <th>UOM</th>
                                                           <th>Action</th>
@@ -150,13 +148,13 @@
                                                           </td>
                                                           <td>
                                                               <div class="list-info mrg-top-10">
-                                                                  <div class="info text-left">
+                                                                  <div class="info">
                                                                       <span class="title">{{detail.SKU}}</span>
                                                                   </div>
                                                               </div>
                                                           </td>
                                                           <td>
-                                                            <div class="list-info mrg-top-10 text-left">
+                                                            <div class="list-info mrg-top-10">
                                                                 <div class="info">
                                                                     <span class="title">{{detail.Description}}</span>
                                                                 </div>
@@ -168,31 +166,23 @@
                                                               </div>
                                                           </td>
                                                           <td>
-                                                            <div class="list-info mrg-top-10 text-left">
-                                                                <span class="text-center">{{detail.BatchNo}}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                          <div class="list-info mrg-top-10 text-left">
-                                                              <span class="text-center">{{detail.ManDate}}</span>
-                                                          </div>
-                                                      </td>
-                                                          <td>
                                                             <div class="list-info mrg-top-10">
-                                                                <div class="info text-left">
+                                                                <div class="info">
                                                                     <span class="title">{{detail.PackKey}}</span>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                           <td>
-                                                              <div class="mrg-top-15 text-left">
+                                                              <div class="mrg-top-15">
                                                                   <span class="text-info"><b>{{detail.UnitName}}</b></span>
                                                               </div>
                                                           </td>
                                                           <td>
                                                               <div class="mrg-top-15">
-                                                                <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1">Edit</a>
-                                                                <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1">Delete</a>
+                                                                <div class="d-inline-block">
+                                                                  <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                                                                  <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1"><i class="ei-delete"></i></a>
+                                                                </div>
                                                               </div>
                                                           </td>
                                                       </tr>

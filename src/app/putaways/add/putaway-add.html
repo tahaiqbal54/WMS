@@ -133,70 +133,45 @@
                             <div class="card">
                               <div class="card-block">   
                                           <div class="table-overflow">
-                                              <table class="table table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                                              <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                                                   <thead>
                                                       <tr>
                                                           <th>Sr. No</th>
                                                           <th class="text-center">Product</th>
-                                                          <th class="text-center">Received Quantity</th>
-                                                          <th class="text-center">LPN No</th>
-                                                          <th class="text-center">LOT No</th>
-                                                          <th class="text-center">Batch No</th>
-                                                          <th class="text-center">Manufacture Date</th>
+                                                          <th class="text-center">Expected Quantity</th>
                                                           <th>UOM</th>
                                                           <th>Action</th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
                                                       <tr *ngFor="let detail of OrderDetail; let i = index">
-                                                          <td>
-                                                            <div class="mrg-top-10">
+                                                          <td class="text-left">
+                                                            <div>
                                                                 <div class="info">
                                                                     <span class="title">{{i + 1}}</span>
                                                                 </div>
                                                             </div>
                                                           </td>
-                                                          <td>
-                                                              <div class="list-info mrg-top-10">
+                                                          <td class="text-left">
+                                                              <div>
                                                                   <div class="info">
                                                                       <span class="title">{{detail.SKU}}</span>
                                                                   </div>
                                                               </div>
                                                           </td>
                                                           <td>
-                                                              <div class="list-info mrg-top-10 text-right">
+                                                              <div class="text-center">
                                                                   <span class="text-center">{{detail.QtyOrdered}}</span>
                                                               </div>
                                                           </td>
-                                                          <td>
-                                                            <div class="list-info mrg-top-10 text-left">
-                                                                <span class="text-center">{{detail.LPNNo}}</span>
-                                                            </div>
-                                                        </td>
-                                                          <td>
-                                                            <div class="list-info mrg-top-10 text-left">
-                                                                <span class="text-center">{{detail.LotNo}}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                          <div class="list-info mrg-top-10 text-left">
-                                                              <span class="text-center">{{detail.BatchNo}}</span>
-                                                          </div>
-                                                      </td>
-                                                      <td>
-                                                        <div class="list-info mrg-top-10 text-left">
-                                                            <span class="text-center">{{detail.ManDate}}</span>
-                                                        </div>
-                                                    </td>
-                                                    
-                                                          <td>
-                                                              <div class="mrg-top-15">
+                                                          <td class="text-left"> 
+                                                              <div>
                                                                   <span class="text-info"><b>{{detail.Unit}}</b></span>
                                                               </div>
                                                           </td>
-                                                          <td>
-                                                              <div class="mrg-top-15">
-                                                                <a (click)="OpenModal(i)" class="btn btn-default p-1">PutAway</a>
+                                                          <td class="text-center">
+                                                              <div>
+                                                                <a (click)="OpenModal(i)" class="btn btn-default p-1">PutAway Location</a>
                                                                 <!-- <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1">Delete</a> -->
                                                               </div>
                                                           </td>
