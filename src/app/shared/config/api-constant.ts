@@ -87,9 +87,7 @@ export class APIConstants {
         GET_PRODUCTS: '/Products/GetProductByUserID', 
         GET_LOCATIONS: '/Locations/GetLocationByUserID',
         GET_LOT: '/InventTransactions/GetLotNoByUserID',
-        FETCH_INVENTORY: '/InventTransactions/Fetch',
-        GET_SHIPMENT_ORDERS: '/Shipments/GetShipments',
-        DELETE_SHIPMENT: '/Shipments'
+        FETCH_INVENTORY: '/InventTransactions/Fetch'
       }
     };
   }
