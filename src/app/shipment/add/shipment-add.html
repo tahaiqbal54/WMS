@@ -25,7 +25,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Custom Ref No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
+                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.CustomerRefNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
 
                                             </div>
                                         </div>
@@ -52,14 +52,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Reference No 1  <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength2" #minlength="ngModel" minlength="8"/>
 
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Reference No 2 <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo2" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo2" placeholder="Enter Reference" type="text" ngModel name="minlength3" #minlength="ngModel" minlength="8"/>
                                             </div>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Expected Ship Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input class="form-control" [(ngModel)]="OrderHeader.ExpectedRecvDate" placeholder="Enter Date" type="date" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ExpectedShipDate" placeholder="Enter Date" type="date" ngModel name="minlength4" #minlength="ngModel" minlength="8"/>
 
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Expected Quantity </label>
+                  <label>Expected Delivery QTY </label>
                   <input
                     class="form-control"
                     [(ngModel)]="Quantity"
@@ -282,11 +282,22 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>UDF </label>
-                  <input [disabled]="true" *ngFor="let udf of UDF"
+                  <label>UDF 1</label>
+                  <input
                          class="form-control"
-                         value="{{udf}}"
-                         placeholder="UDF"
+                         [(ngModel)]="udf1"
+                         placeholder="UDF 2"
+                         type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UDF 2</label>
+                  <input 
+                         class="form-control"
+                         [(ngModel)]="udf2"
+                         placeholder="UDF 2"
                          type="text"
                   />
                 </div>

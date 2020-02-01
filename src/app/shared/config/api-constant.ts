@@ -89,7 +89,13 @@ export class APIConstants {
         GET_LOT: '/InventTransactions/GetLotNoByUserID',
         FETCH_INVENTORY: '/InventTransactions/Fetch',
         GET_SHIPMENT_ORDERS: '/Shipments/GetShipments',
-        DELETE_SHIPMENT: '/Shipments'
+        DELETE_SHIPMENT: '/Shipments',
+        SHIPMENT_DETAIL: '/Shipments/PostShipmentDetail',
+        SHIPMENT_DETAIL_EDIT:'/Shipments/PutShipmentDetail',
+        DELETE_SHIPMENT_DETAIL:'/Shipments/DeleteShipmentDetail',
+        GET_SHIPMENT_DETAIL_BY_ID:'/Shipments/GetShipmentDetailByShipmentIdandDetailId',
+        GET_SHIPMENT_DETAIL: '/Shipments/GetShipmentDetailByShipmentId',
+        GET_SHIMENT_HEADER: '/Shipments'
       }
     };
   }

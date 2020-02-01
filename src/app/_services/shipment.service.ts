@@ -175,44 +175,44 @@ export class ShipmentService {
       .pipe(catchError(this.handleError));
   }
 
-  createPurchaseDetail(PurchaseDetail: any): Observable<any> {
+  createDetail(Detail: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.post<any>(this.APIConfig.getUrl(this.API.CREATE_DETAILS), PurchaseDetail, httpOptions)
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.SHIPMENT_DETAIL), Detail, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  DeletePurchaseDetail(PurchaseDetailID: any,PurchaseId:any): Observable<any> {
+  DeleteDetail(PurchaseDetailID: any,PurchaseId:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
     console.log(httpOptions);
-    return this.http.delete<any>(this.APIConfig.getUrl2(this.API.DELETE_ORDERDETAIL,"PurchaseDetailId="+ PurchaseDetailID, "PurchaseId=" + PurchaseId), httpOptions)
+    return this.http.delete<any>(this.APIConfig.getUrl2(this.API.DELETE_SHIPMENT_DETAIL,"ShipmentDetailId="+ PurchaseDetailID, "ShipmentId=" + PurchaseId), httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  GetPurchaseDetail(PurchaseID: any,PurchaseDetailId:any): Observable<any> {
+  GetDetail(PurchaseID: any,PurchaseDetailId:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.get<any>(this.APIConfig.getUrl2(this.API.EDIT_DETAIL_ORDERDETAIL,"PurchaseId="+ PurchaseID, "PurchaseDetailId=" + PurchaseDetailId), httpOptions)
+    return this.http.get<any>(this.APIConfig.getUrl2(this.API.GET_SHIPMENT_DETAIL_BY_ID,"ShipmentId="+ PurchaseID, "ShipmentDetailId=" + PurchaseDetailId), httpOptions)
       .pipe(catchError(this.handleError));
   }
 
-  EditPurchaseDetail(PurchaseDetail: any): Observable<any> {
+  EditDetail(Detail: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.put<any>(this.APIConfig.getUrl(this.API.EDIT_DETAILS_ORDERDETAIL), PurchaseDetail, httpOptions)
+    return this.http.put<any>(this.APIConfig.getUrl(this.API.SHIPMENT_DETAIL_EDIT), Detail, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -237,7 +237,7 @@ export class ShipmentService {
       .pipe(catchError(this.handleError));
   }
 
-  getASNHeader(Purchase_Id: string) {
+  getHeader(Id: string) {
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
       headers: new HttpHeaders({
@@ -247,7 +247,7 @@ export class ShipmentService {
     };
 
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_ASN_HEADER, "PurchaseId="+ Purchase_Id), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_SHIMENT_HEADER, "ShipmentId="+ Id), httpOptions)
       .pipe((data: any) => {
         if (data) {
           return data;
@@ -266,7 +266,7 @@ export class ShipmentService {
       .pipe(catchError(this.handleError));
   }
 
-  getASNDetail(Purchase_Id: string) {
+  getDetails(Purchase_Id: string) {
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
       headers: new HttpHeaders({
@@ -276,7 +276,7 @@ export class ShipmentService {
     };
 
     return this.http
-      .get(this.APIConfig.getUrl(this.API.PURCASE_DETAIL_BYPURCHASEID, "PurchaseId="+ Purchase_Id), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_SHIPMENT_DETAIL, "ShipementId="+ Purchase_Id), httpOptions)
       .pipe((data: any) => {
         if (data) {
           return data;

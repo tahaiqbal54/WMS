@@ -1,6 +1,6 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 //import {UsersService} from '../../_services/users.service';
-import {OrderHeader} from '../../_models/OrderHeader';
+import {ShipmentHeader} from '../../_models';
 import {Router} from '@angular/router';
 import swal from 'sweetalert2';
 import {OrderService} from '../../_services/order.service';
@@ -24,7 +24,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
   dtElement: DataTableDirective;
   dtTrigger: Subject<any> = new Subject();
 
-  OrderHeader: OrderHeader;
+  OrderHeader: ShipmentHeader;
   OrderDetail: any[] = [];
   confirm_password: string;
 
@@ -54,6 +54,8 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   position:any;
   AsnNo: any;
+  udf1: string;
+  udf2: string;
 
 
   constructor(private router: Router,private ShipmentService:ShipmentService, private orderservice: OrderService,private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
@@ -102,7 +104,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
     };
     this.OrderDetail = [];
     this.dtTrigger.next();
-    this.OrderHeader = new OrderHeader();
+    this.OrderHeader = new ShipmentHeader();
     
 
     this.ShipmentService
@@ -139,6 +141,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
       .getWarehouses(event)
       .subscribe(
         (data: any) => {
+          console.log(data);
           this.warehouseOptions = data['CustomerWrehouseList'];
           console.log(this.warehouseOptions);
         },
@@ -146,37 +149,37 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
       );
   }
 
-  onQCChange(event: any, value: boolean): void {
-    if (event.target.checked) {
-      this.OrderHeader.RequiredQC = value;
-      console.log(this.OrderHeader.RequiredQC);
-    } else {
-      this.OrderHeader.RequiredQC = false;
-    }
+  // onQCChange(event: any, value: boolean): void {
+  //   if (event.target.checked) {
+  //     this.OrderHeader.RequiredQC = value;
+  //     console.log(this.OrderHeader.RequiredQC);
+  //   } else {
+  //     this.OrderHeader.RequiredQC = false;
+  //   }
 
 
-    //this.OrderHeader.RequiredQC = value;
-  }
+  //   //this.OrderHeader.RequiredQC = value;
+  // }
 
   SaveOrder() {
-    if(this.OrderHeader.ExternReceiptNo &&
-      this.OrderHeader.CustomerId &&
-      this.OrderHeader.ExpectedRecvDate &&
+    if(this.OrderHeader.CustomerId &&
+      this.OrderHeader.CustomerRefNo !== '' &&
       this.OrderHeader.ReferenceNo1 !== '' &&
       this.OrderHeader.ReferenceNo2 !== '' &&
       this.OrderHeader.VendorId &&
       this.OrderHeader.WarehouseId
     ){
 
-
+      console.log(this,this.OrderHeader);
       this.ShipmentService.createPurchase(this.OrderHeader)
         .subscribe(
           (data: any) => {
             if (data)
             {
+              console.log(data);
               let toastOptions: ToastOptions = {
                 title: 'Success',
-                msg: 'ASN Order Add Success',
+                msg: 'Shipment Order Created',
                 showClose: true,
                 timeout: 2000,
                 theme: 'default',
@@ -187,7 +190,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
             }
 
             this.ASNNO = data.Id;
-            this.AsnNo = data.ASNNo;
+            this.AsnNo = data.SONo;
           },
           (error: any) => {
             console.log(error);
@@ -224,9 +227,8 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.Pack = '';
     this.Description = '';
     this.BatchNo = '';
-    this.ManufactureDate = null;
-    this.ExpiryDate = null;
-    this.UDF = [];
+    this.udf1 = '';
+    this.udf2 = '';
     this.UOM = '';
     this.orderservice
       .getProducts(this.customer_id)
@@ -258,18 +260,9 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.Description = product.Description;
         this.UOM = product.UnitName;
         this.Pack = product.PackKey;
-        this.UDF.push(product.UDF1);
-        this.UDF.push(product.UDF2);
-        this.UDF.push(product.UDF3);
-        this.UDF.push(product.UDF4);
-        this.UDF.push(product.UDF5);
         this.UnitId = product.UnitId;
         this.PackId = product.PackId;
       }
-      console.log(this.Description);
-      console.log(this.UOM);
-      console.log(this.Pack);
-      console.log(this.UDF);
     });
   }
 
@@ -282,31 +275,21 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
       let detail = {
         Id: 0,
-        PurchaseId: this.ASNNO,
-        LineId: 0,
+        ShipmentId: this.ASNNO,
         ProductId: this.products,
-        UnitId: this.UnitId,
-        QtyOrdered: this.Quantity,
-        WarehouseId: this.OrderHeader.WarehouseId,
-        PackId: this.PackId,
-        BatchNo: this.BatchNo,
-        ManDate: this.ManufactureDate,
-        ExpDate: this.ExpiryDate,
-        UDF1: this.UDF[0],
-        UDF2: this.UDF[1],
-        UDF3: this.UDF[2],
-        UDF4: this.UDF[3],
-        UDF5: this.UDF[4],
+        QtyShiped: this.Quantity,
+        BatchNo: this.BatchNo
+        
       };
-      this.orderservice.createPurchaseDetail(detail)
+      this.ShipmentService.createDetail(detail)
         .subscribe(
           (data: any) => {
             if (data) {
 
-
+              console.log(data);
               let toastOptions: ToastOptions = {
                 title: 'Success',
-                msg: 'ASN Detail Add Success',
+                msg: 'Product Detail Added',
                 showClose: true,
                 timeout: 2000,
                 theme: 'default',
@@ -374,7 +357,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
     }).then((result) => {
       if (result.value) {
 
-        this.orderservice.DeletePurchaseDetail(Id, this.ASNNO)
+        this.ShipmentService.DeleteDetail(Id, this.ASNNO)
           .subscribe(
             (data: any) => {
 
@@ -409,7 +392,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   editDetail(Id: any, index: any) {
     this.index = index;
-    this.orderservice.GetPurchaseDetail(this.ASNNO, Id)
+    this.ShipmentService.GetDetail(this.ASNNO, Id)
       .subscribe(
         (data: any) => {
           console.log(data);
@@ -454,22 +437,12 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
         PurchaseId: this.ASNNO,
         LineId: this.LineId,
         ProductId: this.products,
-        UnitId: this.UnitId,
         QtyOrdered: this.Quantity,
-        WarehouseId: this.OrderHeader.WarehouseId,
-        PackId: this.PackId,
-        BatchNo: this.BatchNo,
-        ManDate: this.ManufactureDate,
-        ExpDate: this.ExpiryDate,
-        UDF1: this.UDF[0],
-        UDF2: this.UDF[1],
-        UDF3: this.UDF[2],
-        UDF4: this.UDF[3],
-        UDF5: this.UDF[4],
+        BatchNo: this.BatchNo
       };
 
 
-      this.orderservice.EditPurchaseDetail(detail)
+      this.ShipmentService.EditDetail(detail)
         .subscribe(
           (data: any) => {
             if (data) {

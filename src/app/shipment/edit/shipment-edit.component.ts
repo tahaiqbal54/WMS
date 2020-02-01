@@ -7,14 +7,14 @@ import {OrderService} from '../../_services/order.service';
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {ToastOptions, ToastyService} from 'ng2-toasty';
-import {NotificationCommunicationService} from '../../_services';
+import {NotificationCommunicationService,ShipmentService} from '../../_services';
 
 declare var $: any;
 
 
 @Component({
   templateUrl: 'shipment-edit.html',
-  providers: [OrderService]
+  providers: [OrderService,ShipmentService]
 })
 
 export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -52,7 +52,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   position: any;
   status: any;
 
-  constructor(private router: Router, private orderservice: OrderService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
+  constructor(private router: Router,private ShipmentService:ShipmentService, private orderservice: OrderService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.user_id = this.currentUser.UserRoleRightsList[0].UserRoleId;
     this.Id = parseInt(this.route.snapshot.paramMap.get('id').trim(), 10);
@@ -91,8 +91,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   ngOnInit() {
     this.position = 'bottom-right';
     this.OrderHeader = new OrderHeader();
-    this.orderservice
-      .getASNDetail(this.Id)
+    this.ShipmentService
+      .getDetails(this.Id)
       .subscribe(
         (data: any) => {
           console.log(data);
@@ -113,8 +113,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
     // this.dtTrigger.next();
 
 
-    this.orderservice
-      .getASNHeader(this.Id)
+    this.ShipmentService
+      .getHeader(this.Id)
       .subscribe(
         (data: any) => {
           console.log(data);
