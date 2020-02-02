@@ -10,3 +10,4 @@ export * from './customer.service';
 export * from './product.service';
 export * from './inventory_view.service';
 export * from './excel.service';
+export * from './shipment.service';
