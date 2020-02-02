@@ -41,7 +41,8 @@
               "./node_modules/bootstrap/dist/js/bootstrap.js",
               "./node_modules/datatables.net/js/jquery.dataTables.js",
               "./node_modules/ng-selectize/selectize/selectize.standalone.js",
-              "./node_modules/imagesloaded/imagesloaded.pkgd.min.js"
+              "./node_modules/imagesloaded/imagesloaded.pkgd.min.js",
+              "src/assets/js/site.js"
             ]
           },
           "configurations": {
@@ -91,7 +92,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

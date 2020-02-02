@@ -1,11 +1,13 @@
 .side-nav {
 	width: $offscreen-size;
-    background-color: $default-white;
     z-index: 1000;
     top: 0px;
     bottom: 0px;
     position: fixed;
-    overflow: hidden;
+	overflow: hidden;
+	background-color: #e7eff9 !important;
+    background-image: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
+
     @include transition(all 0.2s ease); 
 	@include print {
 		display: none;
@@ -17,7 +19,6 @@
 		
 		.side-nav-logo {
 			padding: 0px 20px;
-			border-bottom: 1px solid $border-color;
 			border-right: 1px solid $border-color;
 			line-height: 0;
 			@include transition(all 0.2s ease); 
@@ -260,7 +261,6 @@
 			
 				.side-nav-logo {
 					padding: 0px 20px;
-					border-bottom: 1px solid $border-color;
 					
 					a {
 						
@@ -381,9 +381,7 @@
 				.side-nav-inner {
 				
 					.side-nav-logo {
-						padding: 0px 20px;
-						border-bottom: 1px solid $border-color;
-						
+						padding: 0px 20px;border
 						a {
 							
 							.logo {
@@ -439,7 +437,6 @@
 			
 				.side-nav-logo {
 					padding: 0px 20px;
-					border-bottom: 1px solid $border-color;
 					
 					>a {
 						
@@ -581,3 +578,15 @@
 		}
 	}	
 }
+
+.side-nav-toggle{
+	cursor: pointer;
+}
+
+.heading-text{
+	margin:5px 15px;
+	padding: 0px !important;
+	line-height: 56px !important;
+	min-height: 56px !important;
+}
+

@@ -5,9 +5,10 @@
 	position: fixed;
     padding: 0px;
     z-index: 800;
-    background-color: $default-white;
 	border-bottom: 1px solid $border-color;
 	margin-bottom: 0px;
+	background-color: #e7eff9 !important;
+    background-image: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
 	@include transition(all 0.2s ease);
 	@include print {
 		display: none;
@@ -30,7 +31,7 @@
 			position: relative;
 			list-style: none;
 			padding-left: 0;
-			margin-bottom: 0px;
+			margin-right: 69px;
 
 			>li {
 				float: left;
@@ -238,6 +239,9 @@
 					}
 				}
 			}
+			@include screen-tablet {
+				margin-right: 5px;
+			}
 		}
 	}
 	.search-box {
@@ -345,3 +349,7 @@
 		}
 	}
 }
+
+table.dataTable.no-footer {
+	border: 1px solid #e6ecf5;
+  }

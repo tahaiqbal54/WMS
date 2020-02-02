@@ -231,7 +231,7 @@ hr {
 	position: relative;
 	overflow: hidden;
 	color: darken($default-white, 20%);
-
+	border-radius: 5px;
 
 	h1,
 	h2,
@@ -261,7 +261,14 @@ hr {
 	>div {
 		position: relative;
 		z-index: 3;
+		box-shadow: inset 0 3px 4px rgba(134, 134, 134, 0.16), 0 4px 4px rgba(117, 117, 117, 0.45);
+    	background-color: #e7eff9 !important;
+    	background-image: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
 	}
+}
+
+.overlay-dark:hover{
+	opacity: 0.8;
 }
 
 blockquote {
