@@ -40,20 +40,20 @@
           </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6  col-lg-6 ">
-      <div class="card mb-3" style="min-height: 200px;">
-        <div class="card-header">Inventory</div>
+    <div class="col-sm-12 col-md-6  col-lg-6">
+      <div class="card border-dark mb-3">
+        <div class="card-header">Outbound</div>
         <div class="card-body text-dark">
           <div class="row">
             <div class="col-sm-8 col-md-4 col-lg-4">
-              <a [routerLink]="['/inventory/list']">
+              <a [routerLink]="['/shipment/list']">
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
-                    <img src="/assets/images/icons/inventory64.png">
+                    <img src="//assets/images/icons/shipment64_1.png">
                   </div></div></div>
                 </a>
-              <p class="text-center">Inventory View</p>
+              <p class="text-center">Shipment</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
               <div class="overlay-dark">
@@ -61,7 +61,7 @@
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <img src="/assets/images/icons/outbound64_1.png">
                   </div></div></div>
-              <p class="text-center">OUT BOUND</p>
+              <p class="text-center">Allocation</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
               <div class="overlay-dark">
@@ -69,7 +69,23 @@
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <img src="/assets/images/icons/outbound64_2.png">
                   </div></div></div>
-              <p class="text-center">OUT BOUND</p>
+              <p class="text-center">Picking</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-wallet font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">Ship</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-wallet font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">Wave</p>
             </div>
           </div>
 
@@ -88,17 +104,9 @@
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
-                    <img src="/assets/images/icons/shipment64_1.png">
+                    <img src="/assets/images/icons/inventory64.png">
                   </div></div></div>
-              <p class="text-center">Shipment</p>
-            </div>
-            <div class="col-sm-8 col-md-4 col-lg-4">
-              <div class="overlay-dark">
-                <div class="card-block app-dashboard">
-                  <div class="mrg-top-5 d-flex justify-content-center">
-                    <img src="/assets/images/icons/shipment64_2.png">
-                  </div></div></div>
-              <p class="text-center">Shipment</p>
+              <p class="text-center">Inventory Transfer</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
               <div class="overlay-dark">
@@ -106,7 +114,39 @@
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <img src="/assets/images/icons/shipment64_3.png">
                   </div></div></div>
-              <p class="text-center">Shipment</p>
+              <p class="text-center">HOLD/UNHOLD</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-info-alt font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">QC/Release</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-info-alt font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">Inventory Transaction</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-info-alt font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">Physical Count</p>
+            </div>
+            <div class="col-sm-8 col-md-4 col-lg-4">
+              <div class="overlay-dark">
+                <div class="card-block app-dashboard">
+                  <div class="mrg-top-5 d-flex justify-content-center">
+                    <i class="ti-info-alt font-size-30 text-info"></i>
+                  </div></div></div>
+              <p class="text-center">Inventory Adjustment</p>
             </div>
           </div>
 
@@ -172,6 +212,39 @@
                       <img src="/assets/images/icons/products64.png">
                     </div></div></div>
                 <p class="text-center">Products</p>
+              </a>
+            </div>
+
+            <div class="col-sm-8 col-md-3 col-lg-3">
+              <a href="" [routerLink]="['/product/list']">
+                <div class="overlay-dark">
+                  <div class="card-block app-dashboard">
+                    <div class="mrg-top-5 d-flex justify-content-center">
+                      <i class="ti-gift font-size-30 text-info"></i>
+                    </div></div></div>
+                <p class="text-center">Pack Key</p>
+              </a>
+            </div>
+
+            <div class="col-sm-8 col-md-3 col-lg-3">
+              <a href="" [routerLink]="['/product/list']">
+                <div class="overlay-dark">
+                  <div class="card-block app-dashboard">
+                    <div class="mrg-top-5 d-flex justify-content-center">
+                      <i class="ti-gift font-size-30 text-info"></i>
+                    </div></div></div>
+                <p class="text-center">UOM</p>
+              </a>
+            </div>
+
+            <div class="col-sm-8 col-md-3 col-lg-3">
+              <a href="" [routerLink]="['/product/list']">
+                <div class="overlay-dark">
+                  <div class="card-block app-dashboard">
+                    <div class="mrg-top-5 d-flex justify-content-center">
+                      <i class="ti-gift font-size-30 text-info"></i>
+                    </div></div></div>
+                <p class="text-center">User Management</p>
               </a>
             </div>
 

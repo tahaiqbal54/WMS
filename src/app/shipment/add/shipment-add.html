@@ -1,0 +1,342 @@
+<div class="container-fluid" >
+
+  <div class="page-title row">
+    <div class="col-md-4"> <h4>Shipment ORDER</h4></div>
+  </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-heading border bottom">
+                    <h4 class="card-title">HEADER</h4>
+                </div>
+                <div class="card-block">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8 ml-auto mr-auto">
+                                <form role="form" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>SO NO</label>
+                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="AsnNo" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Custom Ref No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.CustomerRefNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Customer <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <ng-selectize [config]="customerSelectConfig" [options]="customerOptions" (ngModelChange)="onCustomerChange($event)"
+                                                [(ngModel)]="OrderHeader.CustomerId" #customer="ngModel" name="customer"  placeholder="Select Customer"
+                                                 ngDefaultControl required></ng-selectize>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Vendor <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="vendor"
+                                      name="vendor" placeholder="Select Vendor" [(ngModel)]="OrderHeader.VendorId"
+                                       ngDefaultControl required></ng-selectize>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reference No 1  <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength2" #minlength="ngModel" minlength="8"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reference No 2 <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo2" placeholder="Enter Reference" type="text" ngModel name="minlength3" #minlength="ngModel" minlength="8"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Expected Ship Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ExpectedShipDate" placeholder="Enter Date" type="date" ngModel name="minlength4" #minlength="ngModel" minlength="8"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label>Warehouse <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                              <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
+                                    name="warehouse" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
+                                     ngDefaultControl required></ng-selectize>
+                                          </div>
+                                      </div>
+                                   </div>
+                                    
+                                    <button [disabled]="AsnNo" class="btn btn-primary" type="submit" (click)="SaveOrder()">Save</button>
+                                  <button class="btn btn-primary" type="submit" [routerLink]="['/shipment/list']"  >Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-heading border bottom">
+                    <h4 class="card-title">Detail</h4>
+                </div>
+                <div class="card-block">
+                    <div class="container-fluid">
+                        <div class="mrg-top-10 text-right">
+                            <button [disabled]="!ASNNO" class="btn btn-primary text-right" float="right" (click)="adddismodal()">ADD Detail
+                            </button>
+                          </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="card">
+                              <div class="card-block">
+                                          <div class="table-overflow">
+                                              <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                                                  <thead>
+                                                      <tr>
+                                                          <th>Sr. No</th>
+                                                          <th class="text-center">Product</th>
+                                                          <th class="text-center">Product Description</th>
+                                                          <th class="text-center">Expected Delivery QTY</th>
+                                                          <th class="text-center">Pack Key</th>
+                                                          <th>UOM</th>
+                                                          <th>Batch</th>
+                                                          <th>Action</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr *ngFor="let detail of OrderDetail; let i = index">
+                                                          <td>
+                                                            <div class="mrg-top-10">
+                                                                <div class="info">
+                                                                    <span class="title">{{i + 1}}</span>
+                                                                </div>
+                                                            </div>
+                                                          </td>
+                                                          <td>
+                                                              <div class="list-info mrg-top-10">
+                                                                  <div class="info">
+                                                                      <span class="title">{{detail.SKU}}</span>
+                                                                  </div>
+                                                              </div>
+                                                          </td>
+                                                          <td>
+                                                            <div class="list-info mrg-top-10">
+                                                                <div class="info">
+                                                                    <span class="title">{{detail.Description}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                          <td>
+                                                              <div class="list-info mrg-top-10 text-center">
+                                                                  <span class="text-center">{{detail.QtyShiped}}</span>
+                                                              </div>
+                                                          </td>
+                                                          <td>
+                                                            <div class="list-info mrg-top-10">
+                                                                <div class="info">
+                                                                    <span class="title">{{detail.PackKey}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                          <td>
+                                                              <div class="mrg-top-15">
+                                                                  <span class="text-info"><b>{{detail.UnitName}}</b></span>
+                                                              </div>
+                                                          </td>
+                                                          <td>
+                                                            <div class="mrg-top-15">
+                                                                <span class="text-info"><b>{{detail.BatchNo}}</b></span>
+                                                            </div>
+                                                        </td>
+                                                          <td>
+                                                              <div class="mrg-top-15">
+                                                                <div class="d-inline-block">
+                                                                  <a (click)="editDetail(detail.Id,i)" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
+                                                                  <a (click)="DeleteDetailItem(i,detail.Id)" class="btn btn-default p-1"><i class="ei-delete"></i></a>
+                                                                </div>
+                                                              </div>
+                                                          </td>
+                                                      </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                          <button class="btn btn-primary" (click)="SubmitASN()">Submit
+                                          </button>
+                                          <button class="btn btn-primary" type="submit" [routerLink]="['/shipment/list']"  >Cancel</button>
+                                      </div>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+  <div class="modal fade" id="modaladddis"><div class="modal-dialog modal-lg" role="document"><div class="modal-content">
+    <div class="modal-body">
+      <div class="padding-15">
+        <h3 class="mrg-btm-20">Product Details</h3>
+        <div class="col-md-8">
+          <!--<div class="alert alert-danger" *ngIf="status == 'success'">-->
+            <!--{{ error }}-->
+          <!--</div>-->
+        </div>
+        <div class="row">
+          <div class="ml-auto col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Product <a class="text-danger" style="font-size: 10px;">&nbsp;*</a> </label>
+                  <ng-selectize
+                    [config]="ProductConfig"
+                    [options]="ProductOptions"
+                    [(ngModel)]="products"
+                    (ngModelChange)="onProductChange($event)"
+                    name="Product"
+                    placeholder="Select Product"
+                    ngDefaultControl
+                  >
+                  </ng-selectize>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Description <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="Description"
+                         placeholder="Description"
+                         type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Expected Delivery QTY </label>
+                  <input
+                    class="form-control"
+                    [(ngModel)]="Quantity"
+                    placeholder="Expected Quantity"
+                    type="number"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UOM </label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="UOM"
+                         placeholder="UOM"
+                         type="text"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Pack Key </label>
+                  <input [disabled]="true"
+                         class="form-control"
+                         [(ngModel)]="Pack"
+                         placeholder="Pack Key"
+                         type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Batch No </label>
+                  <input
+                    class="form-control"
+                    [(ngModel)]="BatchNo"
+                    placeholder="Batch No"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UDF 1</label>
+                  <input
+                         class="form-control"
+                         [(ngModel)]="udf1"
+                         placeholder="UDF 2"
+                         type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>UDF 2</label>
+                  <input 
+                         class="form-control"
+                         [(ngModel)]="udf2"
+                         placeholder="UDF 2"
+                         type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mrg-top-20">
+                <a *ngIf="detailId == 0"
+                   href="#"
+                   onclick="return false;"
+                   class="btn btn-info"
+                   (click)="ADDDetail()"
+                >ADD</a
+                >
+                <a *ngIf="detailId != 0"
+                   href="#"
+                   onclick="return false;"
+                   class="btn btn-info"
+                   (click)="UpdateDetail()"
+                >Update</a
+                >
+                <a 
+                    href="#"
+                    onclick="return false;"
+                    class="btn btn-info"
+                    (click)="CloseDetail()"
+                    >Close</a
+                  >
+              </div>
+              <!-- <div class="mrg-top-20" *ngIf="status == 'success'">
+                                    <a href="#" onclick="return false;" data-dismiss="modal" class="btn btn-info" (click)="add()" >ADD</a>
+                                </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>
