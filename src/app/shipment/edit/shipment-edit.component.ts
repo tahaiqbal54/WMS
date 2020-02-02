@@ -476,7 +476,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
             this.detailId = data.Id;
             this.LineId = data.LineId;
             this.products = data.ProductId;
-            this.Quantity = data.QtyOrdered;
+            this.Quantity = data.QtyShiped;
             this.BatchNo = data.BatchNo;
             this.udf1 = data.UDF1;
             this.udf2 = data.UDF2;

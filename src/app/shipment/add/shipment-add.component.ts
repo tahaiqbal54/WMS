@@ -416,23 +416,14 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
         (data: any) => {
           console.log(data);
           data.forEach(data => {
+            console.log(data.QtyShiped);
             this.detailId = data.Id;
             this.LineId = data.LineId;
             this.products = data.ProductId;
-            this.Quantity = data.QtyOrdered;
+            this.Quantity = data.QtyShiped;
             this.BatchNo = data.BatchNo;
             this.udf1 = data.UDF1;
             this.udf2 = data.UDF2;
-            if(data.ManDate){
-              this.ManufactureDate = new Date(data.ManDate);
-            }else{
-              this.ManufactureDate = null;
-            }
-            if(data.ExpDate){
-              this.ExpiryDate = new Date(data.ExpDate);
-            }else{
-              this.ExpiryDate = null;
-            }
           });
           setTimeout(() => {
             $('#modaladddis').modal('show');
