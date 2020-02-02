@@ -1,6 +1,6 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 //import {UsersService} from '../../_services/users.service';
-import {OrderHeader} from '../../_models/OrderHeader';
+import {ShipmentHeader} from '../../_models';
 import {Router, ActivatedRouteSnapshot, ActivatedRoute} from '@angular/router';
 import swal from 'sweetalert2';
 import {OrderService} from '../../_services/order.service';
@@ -24,7 +24,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   dtTrigger: Subject<any> = new Subject();
 
   Id: any;
-  OrderHeader: OrderHeader;
+  OrderHeader: ShipmentHeader;
   OrderDetail: any[] = [];
   confirm_password: string;
   inserted: string;
@@ -51,6 +51,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   index: any;
   position: any;
   status: any;
+  udf1: string;
+  udf2: string;
 
   constructor(private router: Router,private ShipmentService:ShipmentService, private orderservice: OrderService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -90,7 +92,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngOnInit() {
     this.position = 'bottom-right';
-    this.OrderHeader = new OrderHeader();
+    this.OrderHeader = new ShipmentHeader();
     this.ShipmentService
       .getDetails(this.Id)
       .subscribe(
@@ -119,18 +121,18 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
         (data: any) => {
           console.log(data);
           data.forEach(data => {
-            this.OrderHeader.Id = data.Id;
-            this.OrderHeader.ASNNO = data.ASNNo;
-            this.OrderHeader.ASNDate = data.ASNDate;
-            this.OrderHeader.ExternReceiptNo = data.ExternReceiptNo;
-            this.OrderHeader.CustomerId = data.CustomerId;
-            this.OrderHeader.WarehouseId = data.WarehouseId;
-            this.OrderHeader.VendorId = data.VendorId;
-            this.OrderHeader.ReferenceNo1 = data.ReferenceNo1;
-            this.OrderHeader.ReferenceNo2 = data.ReferenceNo2;
-            this.OrderHeader.ExpectedRecvDate = data.ExpectedRecvDate;
-            this.OrderHeader.RequiredQC = data.RequiredQC;
-            this.status = data.StatusName;
+            if(data.Id == this.Id){
+              this.OrderHeader.Id = data.Id;
+              this.OrderHeader.SONo = data.SONo;
+              this.OrderHeader.CustomerRefNo = data.CustomerRefNo
+              this.OrderHeader.ExpectedShipDate = data.ExpectedShipDate;
+              this.OrderHeader.CustomerId = data.CustomerId;
+              this.OrderHeader.WarehouseId = data.WarehouseId;
+              this.OrderHeader.VendorId = data.VendorId;
+              this.OrderHeader.ReferenceNo1 = data.ReferenceNo1;
+              this.OrderHeader.ReferenceNo2 = data.ReferenceNo2;
+            }
+            
             // let vendor = {
             //   Id: data.VendorId,
             //   CustomerName: data.VendorName
@@ -189,36 +191,42 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
         },
         (error: any) => console.log(error)
       );
-      this.orderservice
+      this.ShipmentService
       .getWarehouses(event)
       .subscribe(
         (data: any) => {
-          this.warehouseOptions = data['CustomerWrehouseList'];
+          this.warehouseOptions = data;
           console.log(this.warehouseOptions);
+        },
+        (error: any) => console.log(error)
+      );
+      this.orderservice
+      .getProducts(event)
+      .subscribe(
+        (data: any) => {
+          this.product = data;
+          data.forEach(customer => {
+            let obj = {
+              id: customer.Id,
+              ProductName: customer.SKU
+            };
+            this.ProductOptions.push(obj);
+          });
+          //this.customerOptions = data['Customer'];
+          console.log(this.ProductOptions);
         },
         (error: any) => console.log(error)
       );
   }
 
-  onQCChange(event: any, value: boolean): void {
-    if (event.target.checked) {
-      this.OrderHeader.RequiredQC = value;
-      console.log(this.OrderHeader.RequiredQC);
-    } else {
-      this.OrderHeader.RequiredQC = false;
-    }
-
-
-    //this.OrderHeader.RequiredQC = value;
-  }
+ 
 
   UpdateOrder() {
     console.log(this.OrderHeader);
 
-    if(this.OrderHeader.ASNDate &&
+    if(this.OrderHeader.ExpectedShipDate &&
       this.OrderHeader.CustomerId  &&
-      this.OrderHeader.ExpectedRecvDate &&
-      this.OrderHeader.ExternReceiptNo &&
+      this.OrderHeader.CustomerRefNo &&
       this.OrderHeader.ReferenceNo1 &&
       this.OrderHeader.ReferenceNo2 &&
       this.OrderHeader.VendorId &&
@@ -284,6 +292,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
     this.ExpiryDate = null;
     this.UDF = [];
     this.UOM = '';
+    this.udf1 = '';
+    this.udf2 = '';
     console.log(this.OrderHeader.CustomerId);
     this.orderservice
       .getProducts(this.OrderHeader.CustomerId)
@@ -332,36 +342,26 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ADDDetail() {
-
-    if(this.products.length > 0 && this.Quantity){
+    if(this.products != 0 && this.Quantity){
 
       let detail = {
         Id: 0,
-        PurchaseId: this.OrderHeader.Id,
-        LineId: 0,
+        ShipmentId: this.Id,
         ProductId: this.products,
-        UnitId: this.UnitId,
-        QtyOrdered: this.Quantity,
-        WarehouseId: this.OrderHeader.WarehouseId,
-        PackId: this.PackId,
-        BatchNo: this.BatchNo,
-        ManDate: this.ManufactureDate,
-        ExpDate: this.ExpiryDate,
-        UDF1: this.UDF[0],
-        UDF2: this.UDF[1],
-        UDF3: this.UDF[2],
-        UDF4: this.UDF[3],
-        UDF5: this.UDF[4],
+        QtyShiped: this.Quantity,
+        BatchNo: this.BatchNo
+        
       };
       console.log(detail);
-      this.orderservice.createPurchaseDetail(detail)
+      this.ShipmentService.createDetail(detail)
         .subscribe(
           (data: any) => {
             if (data) {
 
+              console.log(data);
               let toastOptions: ToastOptions = {
                 title: 'Success',
-                msg: 'ASN Detail Add Success',
+                msg: 'Product Detail Added',
                 showClose: true,
                 timeout: 2000,
                 theme: 'default',
@@ -369,20 +369,17 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
               };
               this.toastyService.success(toastOptions);
               this.toastCommunicationService.setPosition(this.position);
-
             }
-            console.log(data);
             this.OrderDetail = data;
             this.rerender();
+            $('#modaladddis').modal('hide');
           },
           (error: any) => {
             console.log(error);
             swal(error.error['Message']);
           }
         );
-      //this.ASNNO = '';
-
-      $('#modaladddis').modal('hide');
+      
 
     }
     else{
@@ -397,15 +394,6 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
       this.toastyService.error(toastOptions);
       this.toastCommunicationService.setPosition(this.position);
     }
-
-
-
-
-
-
-
-
-
   }
 
 
@@ -441,15 +429,16 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
     }).then((result) => {
       if (result.value) {
 
-        this.orderservice.DeletePurchaseDetail(Id, this.OrderHeader.Id)
+        this.ShipmentService.DeleteDetail(Id, this.Id)
           .subscribe(
             (data: any) => {
 
-              console.log(data);
               this.OrderDetail.splice(index, 1);
+
+
               let toastOptions: ToastOptions = {
-                title: 'Success',
-                msg: 'ASN Detail Delete Success',
+                title: 'Delete',
+                msg: 'ASN Order Detail Deleted',
                 showClose: true,
                 timeout: 2000,
                 theme: 'default',
@@ -457,6 +446,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
               };
               this.toastyService.success(toastOptions);
               this.toastCommunicationService.setPosition(this.position);
+
+
             },
             (error: any) => {
               console.log(error);
@@ -469,7 +460,6 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     });
 
-
   }
 
   CloseDetail(){
@@ -477,37 +467,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   editDetail(Id: any, index: any) {
-    this.products = '';
-    this.UnitId = '';
-    this.Quantity = '';
-    this.PackId = '';
-    this.BatchNo = '';
-    this.ManufactureDate = null;
-    this.ExpiryDate = null;
-    this.UDF = [];
-    this.Pack = '';
-    this.Description = '';
-    this.UOM = '';
-    this.orderservice
-      .getProducts(this.OrderHeader.CustomerId)
-      .subscribe(
-        (data: any) => {
-          this.product = data;
-          console.log(data);
-          data.forEach(customer => {
-            let obj = {
-              id: customer.Id,
-              ProductName: customer.SKU
-            };
-            this.ProductOptions.push(obj);
-          });
-          //this.customerOptions = data['Customer'];
-          console.log(this.ProductOptions);
-        },
-        (error: any) => console.log(error)
-      );
     this.index = index;
-    this.orderservice.GetPurchaseDetail(this.OrderHeader.Id, Id)
+    this.ShipmentService.GetDetail(this.Id, Id)
       .subscribe(
         (data: any) => {
           console.log(data);
@@ -517,29 +478,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
             this.products = data.ProductId;
             this.Quantity = data.QtyOrdered;
             this.BatchNo = data.BatchNo;
-            if(data.ManDate){
-              this.ManufactureDate = new Date(data.ManDate);
-            }else{
-              this.ManufactureDate = null;
-            }
-            if(data.ExpDate){
-              this.ExpiryDate = new Date(data.ExpDate);
-            }else{
-              this.ExpiryDate = null;
-            }
-            //this.onProductChange(this.products);
-            // console.log(this.LineId);
-            // console.log(this.products);
-            // console.log(this.UnitId);
-            // console.log(this.Quantity);
-            // console.log(this.PackId);
-            // console.log(this.Pack);
-            // console.log(this.BatchNo);
-            console.log(this.ManufactureDate);
-            console.log(this.ExpiryDate);
-            // console.log(this.UDF);
-            // console.log(detailId);
-            // console.log(this.ASNNO);
+            this.udf1 = data.UDF1;
+            this.udf2 = data.UDF2;
           });
           setTimeout(() => {
             $('#modaladddis').modal('show');
@@ -553,40 +493,34 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
       );
   }
 
+
   UpdateDetail() {
 
-
-    if(this.product.length > 0  &&
-      this.Quantity 
+    if(
+      this.product.length > 0  &&
+      this.Quantity
     ) {
-
 
       let detail = {
         Id: this.detailId,
-        PurchaseId: this.OrderHeader.Id,
+        ShipmentId: this.Id,
         LineId: this.LineId,
         ProductId: this.products,
-        UnitId: this.UnitId,
-        QtyOrdered: this.Quantity,
-        WarehouseId: this.OrderHeader.WarehouseId,
-        PackId: this.PackId,
+        QtyShiped: this.Quantity,
         BatchNo: this.BatchNo,
-        ManDate: this.ManufactureDate,
-        ExpDate: this.ExpiryDate,
-        UDF1: this.UDF[0],
-        UDF2: this.UDF[1],
-        UDF3: this.UDF[2],
-        UDF4: this.UDF[3],
-        UDF5: this.UDF[4],
+        UDF1: this.udf1,
+        UDF2: this.udf2
       };
-      this.orderservice.EditPurchaseDetail(detail)
+
+      console.log(detail);
+      this.ShipmentService.EditDetail(detail)
         .subscribe(
           (data: any) => {
             if (data) {
 
               let toastOptions: ToastOptions = {
                 title: 'Success',
-                msg: 'ASN Detail Edit Success',
+                msg: 'ASN Order Edit Success',
                 showClose: true,
                 timeout: 2000,
                 theme: 'default',
@@ -597,8 +531,19 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
             }
             console.log(data);
-            //this.OrderDetail[this.index].SKU =
             this.OrderDetail = data;
+            this.products = '';
+            this.UnitId = '';
+            this.Quantity = '';
+            this.PackId = '';
+            this.BatchNo = '';
+            this.ManufactureDate = null;
+            this.ExpiryDate = null;
+            this.UDF = [];
+            this.Pack = '';
+            this.Description = '';
+            this.UOM = '';
+            $('#modaladddis').modal('hide');
           },
           (error: any) => {
             console.log(error);
@@ -606,9 +551,6 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
           }
         );
       //this.ASNNO = '';
-      $('#modaladddis').modal('hide');
-
-
     }else{
       let toastOptions: ToastOptions = {
         title: 'Missing Field',
@@ -621,12 +563,10 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
       this.toastyService.error(toastOptions);
       this.toastCommunicationService.setPosition(this.position);
     }
-
-
   }
 
   SubmitASN() {
-    this.orderservice.UpdatePurchaseStatus(2, this.OrderHeader.Id)
+    this.ShipmentService.UpdateShipStatus(8, this.OrderHeader.Id)
       .subscribe(
         (data: any) => {
           if (data) {
@@ -645,7 +585,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
             this.toastCommunicationService.setPosition(this.position);
           }
           console.log(data);
-          this.router.navigate(['/users/list']);
+          this.router.navigate(['/shipment/list']);
         },
         (error: any) => {
           console.log(error);

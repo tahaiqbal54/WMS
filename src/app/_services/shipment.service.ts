@@ -45,7 +45,7 @@ export class ShipmentService {
     };
     console.log(httpOptions);
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_WAREHOUSES,"Customerid="+ Customer_Id), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_WAREHOUSES_NEW,"Customerid="+ Customer_Id), httpOptions)
       .pipe(
         map((data: any) => {
           if (data) {
@@ -216,14 +216,14 @@ export class ShipmentService {
       .pipe(catchError(this.handleError));
   }
 
-  UpdatePurchaseStatus(StatusID: any,PurchaseId:any): Observable<any> {
+  UpdateShipStatus(StatusID: any,PurchaseId:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
     console.log(httpOptions);
-    return this.http.post<any>(this.APIConfig.getUrl2(this.API.SUBMIT_PURCHASE,"StatusId="+ StatusID, "PurchaseId=" + PurchaseId),{}, httpOptions)
+    return this.http.post<any>(this.APIConfig.getUrl2(this.API.UPDATE_SHIP_STATUS,"StatusId="+ StatusID, "ShipmentId=" + PurchaseId),{}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -276,7 +276,7 @@ export class ShipmentService {
     };
 
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_SHIPMENT_DETAIL, "ShipementId="+ Purchase_Id), httpOptions)
+      .get(this.APIConfig.getUrl(this.API.GET_SHIPMENT_DETAIL, "ShipmentId="+ Purchase_Id), httpOptions)
       .pipe((data: any) => {
         if (data) {
           return data;

@@ -1,6 +1,6 @@
 <div class="container-fluid" >
     <div class="page-title">
-        <h4>ASN ORDER</h4>
+        <h4>Shipment ORDER</h4>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -16,14 +16,14 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ASN NO</label>
-                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="OrderHeader.ASNNO" type="text"  disabled="true" name="ASN"/>
+                                                <label>SO NO</label>
+                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="OrderHeader.SONo" type="text"  disabled="true" name="ASN"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Custom Ref No <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
+                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.CustomerRefNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
 
                                             </div>
                                         </div>
@@ -64,41 +64,24 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Expected Receipt Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                <label>Expected Ship Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                 <input class="form-control" [value]="
-                                                OrderHeader.ExpectedRecvDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ExpectedRecvDate = parseDate($event.target.value)" placeholder="Enter Date" type="date"/>
+                                                OrderHeader.ExpectedShipDate | date: 'yyyy-MM-dd'" (input)="OrderHeader.ExpectedShipDate = parseDate($event.target.value)" placeholder="Enter Date" type="date"/>
 
                                             </div>
                                         </div>
 
                                           <div class="col-md-6">
                                               <div class="form-group">
-                                                  <label>Default WH <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                                                  <label>Warehouse <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
                                                   <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role2"
                                         name="role2" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
                                          ngDefaultControl required></ng-selectize>
                                               </div>
                                           </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Status <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
-                                                <input type="text" class="form-control" [(ngModel)]="status" placeholder="Enter Status" disabled="true" name="status">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input id="form-2-1" name="form-2-1" type="checkbox" [checked]="OrderHeader.RequiredQC === true" (change)="onQCChange($event, true)">
-							                                  <label for="form-2-1">Require QC?</label>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <button class="btn btn-primary" type="submit" (click)="UpdateOrder()">Update</button>
-                                    <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
+                                    <button class="btn btn-primary" type="submit" [routerLink]="['/shipment/list']"  >Cancel</button>
                                 </form>
                             </div>
                         </div>
@@ -157,7 +140,7 @@
                                                       </td>
                                                       <td>
                                                           <div class="list-info mrg-top-5 text-center">
-                                                              <span class="text-center">{{detail.QtyOrdered}}</span>
+                                                              <span class="text-center">{{detail.QtyShiped}}</span>
                                                           </div>
                                                       </td>
                                                       <td>
@@ -195,7 +178,7 @@
                                               </table>
                                           </div>
                                           <button class="btn btn-primary" (click)="SubmitASN()">Submit</button>
-                                          <button class="btn btn-primary" type="submit" [routerLink]="['/users/list']"  >Cancel</button>
+                                          <button class="btn btn-primary" type="submit" [routerLink]="['/shipment/list']"  >Cancel</button>
                                       </div>
 
                                   </div>
@@ -249,7 +232,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                        <label>Expected Quantity</label>
+                        <label>Expected Shipping Qty</label>
                         <input
                           class="form-control"
                           [(ngModel)]="Quantity"
@@ -292,52 +275,25 @@
                         />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Manufacture Date</label>
-                        <input
-                          class="form-control"
-                          [value]="
-                                  ManufactureDate
-                                    | date: 'yyyy-MM-dd'
-                                "
-                                (input)="
-                                ManufactureDate = parseDate(
-                                    $event.target.value
-                                  )
-                                "
-                          placeholder="Manufacture Date"
-                          type="date"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Expiry Date</label>
-                        <input
-                          class="form-control"
-                          [value]="
-                                  ExpiryDate
-                                    | date: 'yyyy-MM-dd'
-                                "
-                                (input)="
-                                ExpiryDate = parseDate(
-                                    $event.target.value
-                                  )
-                                "
-                          placeholder="Expiry Date"
-                          type="date"
-                        />
-                    </div>
-                  </div>
                 </div>
                 <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>UDF</label>
-                        <input [disabled]="true" *ngFor="let udf of UDF"
+                        <label>UDF 1</label>
+                        <input
                           class="form-control"
-                          value="{{udf}}"
+                          [(ngModel)]="udf1"
+                          placeholder="UDF"
+                          type="text"
+                        />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label>UDF 2</label>
+                        <input
+                          class="form-control"
+                          [(ngModel)]="udf2"
                           placeholder="UDF"
                           type="text"
                         />

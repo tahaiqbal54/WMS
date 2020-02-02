@@ -1,6 +1,7 @@
 export class ShipmentHeader {
 
   public Id: number;
+  public SONo: number;
   public CustomerRefNo: string;
   public CustomerId: number;
   public VendorId: number;
@@ -14,6 +15,7 @@ export class ShipmentHeader {
     if (data) {
       
       this.Id = parseInt(data.id, 0);
+      this.SONo = parseInt(data.SONo) || 0;
       this.CustomerId = parseInt(data.CustomerId) || 0;
       this.CustomerRefNo = data.CustomerRefNo || '';
       // this.password = data.password;
@@ -26,6 +28,7 @@ export class ShipmentHeader {
       
     } else {
       this.Id = 0;
+      this.SONo = 0;
       this.CustomerRefNo = '';
       this.CustomerId = 0;
       this.VendorId = 0;
