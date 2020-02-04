@@ -187,7 +187,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
       this.OrderHeader.WarehouseId
     ){
 
-      console.log(this,this.OrderHeader);
+      console.log(this.OrderHeader);
       this.ShipmentService.createPurchase(this.OrderHeader)
         .subscribe(
           (data: any) => {

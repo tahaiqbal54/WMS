@@ -28,7 +28,6 @@ export class ShipmentHeader {
       
     } else {
       this.Id = 0;
-      this.SONo = 0;
       this.CustomerRefNo = '';
       this.CustomerId = 0;
       this.VendorId = 0;
