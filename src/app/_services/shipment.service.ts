@@ -123,6 +123,28 @@ export class ShipmentService {
       );
   }
 
+  getBatch(Product_Id: any) {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+    console.log(httpOptions);
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_BATCH_NO,"ProductId="+ Product_Id), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data) {
+            return data;
+          }
+          return data;
+        })
+      );
+  }
+
   getUsers(offset: string = null) {
     // user_id = user_id.trim();
     // Add safe, URL encoded search parameter if there is a search term

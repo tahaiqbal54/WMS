@@ -85,6 +85,14 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
   };
   vendorEnabled: boolean;
 
+  batchOptions: any = [];
+  batchSelectConfig: any = {
+    labelField: 'BATCHNO',
+    valueField: 'BATCHNO',
+    searchField: ['BATCHNO']
+  };
+  
+
   ProductOptions: any = [];
   ProductConfig: any = {
     labelField: 'ProductName',
@@ -274,6 +282,8 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onProductChange(event) {
     console.log(this.product);
+    this.UDF = [];
+    this.batchOptions = [];
     this.product.forEach(product => {
       if (event == product.Id) {
         this.Description = product.Description;
@@ -281,8 +291,23 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
         this.Pack = product.PackKey;
         this.UnitId = product.UnitId;
         this.PackId = product.PackId;
+        this.UDF.push(product.UDF1);
+        this.UDF.push(product.UDF2);
+        this.UDF.push(product.UDF3);
+        this.UDF.push(product.UDF4);
+        this.UDF.push(product.UDF5);
       }
     });
+    this.ShipmentService
+    .getBatch(event)
+    .subscribe(
+      (data: any) => {
+        console.log(data);
+        this.batchOptions = data;
+        console.log(this.batchOptions);
+      },
+      (error: any) => console.log(error)
+    );
   }
 
   CloseDetail(){
@@ -320,6 +345,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
             this.OrderDetail = data;
             this.rerender();
             $('#modaladddis').modal('hide');
+            this.UDF = [];
           },
           (error: any) => {
             console.log(error);
@@ -340,6 +366,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
       };
       this.toastyService.error(toastOptions);
       this.toastCommunicationService.setPosition(this.position);
+      
     }
   }
 

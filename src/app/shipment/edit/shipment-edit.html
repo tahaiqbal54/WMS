@@ -267,12 +267,9 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label>Batch No</label>
-                        <input
-                          class="form-control"
-                          [(ngModel)]="BatchNo"
-                          placeholder="Batch No"
-                          type="text"
-                        />
+                        <ng-selectize [config]="batchSelectConfig" [options]="batchOptions"
+                                                [(ngModel)]="BatchNo" #batchno="ngModel" name="batchno"  placeholder="Select Batch No"
+                                                 ngDefaultControl required></ng-selectize>
                     </div>
                   </div>
                 </div>
@@ -280,23 +277,12 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>UDF 1</label>
-                        <input
-                          class="form-control"
-                          [(ngModel)]="udf1"
-                          placeholder="UDF"
-                          type="text"
-                        />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                        <label>UDF 2</label>
-                        <input
-                          class="form-control"
-                          [(ngModel)]="udf2"
-                          placeholder="UDF"
-                          type="text"
-                        />
+                        <input [disabled]="true" *ngFor="let udf of UDF"
+                         class="form-control"
+                         value="{{udf}}"
+                         placeholder="UDF"
+                         type="text"
+                  />
                     </div>
                   </div>
                 </div>

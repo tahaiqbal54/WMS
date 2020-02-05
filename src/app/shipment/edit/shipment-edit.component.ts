@@ -82,6 +82,13 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
   };
   vendorEnabled: boolean;
 
+  batchOptions: any = [];
+  batchSelectConfig: any = {
+    labelField: 'BATCHNO',
+    valueField: 'BATCHNO',
+    searchField: ['BATCHNO']
+  };
+
   ProductOptions: any = [];
   ProductConfig: any = {
     labelField: 'ProductName',
@@ -321,6 +328,8 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onProductChange(event) {  
     console.log(this.product);
+    this.UDF = [];
+    this.batchOptions = [];
     this.product.forEach(product => {
       if (event == product.Id) {
         this.Description = product.Description;
@@ -334,11 +343,17 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
         this.UnitId = product.UnitId;
         this.PackId = product.PackId;
       }
-      console.log(this.Description);
-      console.log(this.UOM);
-      console.log(this.Pack);
-      console.log(this.UDF);
     });
+    this.ShipmentService
+    .getBatch(event)
+    .subscribe(
+      (data: any) => {
+        console.log(data);
+        this.batchOptions = data;
+        console.log(this.batchOptions);
+      },
+      (error: any) => console.log(error)
+    );
   }
 
   ADDDetail() {
@@ -373,6 +388,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
             this.OrderDetail = data;
             this.rerender();
             $('#modaladddis').modal('hide');
+            this.UDF = [];
           },
           (error: any) => {
             console.log(error);
@@ -468,6 +484,7 @@ export class ShipmentEditComponent implements AfterViewInit, OnDestroy, OnInit {
 
   editDetail(Id: any, index: any) {
     this.index = index;
+    this.UDF = [];
     this.ShipmentService.GetDetail(this.Id, Id)
       .subscribe(
         (data: any) => {

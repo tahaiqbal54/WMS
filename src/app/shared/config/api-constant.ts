@@ -97,7 +97,8 @@ export class APIConstants {
         GET_SHIPMENT_DETAIL: '/Shipments/GetShipmentDetailByShipmentId',
         GET_SHIMENT_HEADER: '/Shipments/GetShipmentsFromShipmentId',
         GET_WAREHOUSES_NEW: '/Warehouses/GetWarehouseByCustomerIdNew',
-        UPDATE_SHIP_STATUS: '/Shipments/UpdateShipmentStatus'
+        UPDATE_SHIP_STATUS: '/Shipments/UpdateShipmentStatus',
+        GET_BATCH_NO: '/Shipments/GetBatchNoByProductId'
       }
     };
   }
