@@ -1,0 +1,316 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Allocation</h4>
+  </div>
+  <div class="alert alert-danger" *ngIf="inserted == 'success'">
+    {{ message }}
+  </div>
+  <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-heading border bottom">
+                    <h4 class="card-title">HEADER</h4>
+                </div>
+                <div class="card-block">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8 ml-auto mr-auto">
+                                <form role="form" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ASN NO</label>
+                                                <input class="form-control" placeholder="ASN NO" [(ngModel)]="OrderHeader.ASNNO" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true" minlength="8"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Custom Ref No</label>
+                                                <input type="text" class="form-control" [(ngModel)]="OrderHeader.ExternReceiptNo" placeholder="Custom Ref No" ngModel name="email" #email="ngModel" email="false">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Customer</label>
+                                                <ng-selectize [config]="customerSelectConfig" [options]="customerOptions" (ngModelChange)="onCustomerChange($event)"
+                                                [(ngModel)]="OrderHeader.CustomerId" #customer="ngModel" name="customer"  placeholder="Select Customer"
+                                                 ngDefaultControl required></ng-selectize>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Vendor</label>
+                                                <ng-selectize [config]="vendorSelectConfig" [options]="vendorOptions" id="role"
+                                      name="role" placeholder="Select Vendor" [(ngModel)]="OrderHeader.VendorId"
+                                       ngDefaultControl required></ng-selectize>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reference No 1 </label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo1" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Reference No 2</label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ReferenceNo2" placeholder="Enter Reference" type="text" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Expected Receipt Date</label>
+                                                <input class="form-control" [(ngModel)]="OrderHeader.ExpectedRecvDate" placeholder="Enter Date" type="date" ngModel name="minlength" #minlength="ngModel" minlength="8"/>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>ASN Date</label>
+                                                <input type="date" [(ngModel)]="OrderHeader.ASNDate" class="form-control" placeholder="Enter ASN Date" ngModel name="email" #email="ngModel">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Default WH</label>
+                                                <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions" id="role"
+                                      name="role" [ngClass]="{'error' : role?.errors?.required}" placeholder="Select WH" [(ngModel)]="OrderHeader.WarehouseId"
+                                       ngDefaultControl required></ng-selectize>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <input type="text" class="form-control" value="New" placeholder="Enter Status" disabled="true" name="email">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input id="form-2-1" name="form-2-1" type="checkbox" (change)="onQCChange($event, true)">
+							                                  <label for="form-2-1">Require QC?</label>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <button class="btn btn-primary" type="submit" (click)="SaveOrder()">Save</button>
+                                    <button class="btn btn-primary" type="submit">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	 -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-heading border bottom">
+          <h4 class="card-title">Allocation Detail</h4>
+        </div>
+        <div class="card-block">
+          <div class="container-fluid">
+            <!-- <div class="mrg-top-10 text-right">
+                            <button class="btn btn-primary text-right" float="right" (click)="adddismodal()">ADD Detail
+                            </button>
+                          </div> -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="table-overflow">
+                      <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions"
+                        [dtTrigger]="dtTrigger">
+                        <thead>
+                          <tr>
+                            <th>Sr. No</th>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Expected Delivery Quantity</th>
+                            <th class="text-center">Allocated Quantity</th>
+                            <th class="text-center">Balance</th>
+                            <th>UOM</th>
+                            <th>Batch</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let detail of OrderDetail; let i = index">
+                            <td>
+                              <div>
+                                <div class="info">
+                                  <span class="title">{{i + 1}}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <div class="info">
+                                  <span class="title">{{detail.SKU}}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <span class="text-center">{{detail.QtyShiped}}</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-center">
+                                <span class="text-center">{{detail.QtyIssued}}</span>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <span class="text-info"><b>{{detail.QtyRemained}}</b></span>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <span class="text-info"><b>{{detail.UnitName}}</b></span>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <span class="text-info"><b>{{detail.BatchNo}}</b></span>
+                              </div>
+                            </td>
+                            <td>
+                              <div>
+                                <a (click)="valid()" class="btn btn-default p-1">Auto</a>
+                                <a (click)="editDetail(detail.Id,detail.ShipmentId,detail.ProductId,detail.WarehouseId,detail.BatchNo)"
+                                  class="btn btn-default p-1">Manual</a>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- <button class="btn btn-primary" (click)="SubmitASN()">Submit
+                                          </button> -->
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit" [routerLink]="['/allocation/list']">Cancel</button>
+</div>
+
+
+<div class="modal fade modal-fs" id="modaladddis">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="vertical-align text-center">
+          <div class="table-cell">
+            <div class="container">
+
+
+              <div class="table-overflow">
+                <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions1"
+                  [dtTrigger]="dtTrigger1">
+                  <thead>
+                    <tr>
+                      <th>Sr. No</th>
+                      <th class="text-center">Product</th>
+                      <th class="text-center">Product Description</th>
+                      <th class="text-center">UOM</th>
+                      <th class="text-center">Location</th>
+                      <th>LPN No</th>
+                      <th>LOT No</th>
+                      <th>Batch</th>
+                      <th>Quantity</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detail of Detail; let i = index">
+                      <td>
+                        <div>
+                          <div class="info">
+                            <span class="title">{{i + 1}}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <div class="info">
+                            <span class="title">{{detail.SKU}}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-center">
+                          <span class="text-center">{{detail.Description}}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-center">
+                          <span class="text-center">{{detail.UnitName}}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span class="text-info"><b>{{detail.LocationName}}</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span class="text-info"><b>{{detail.LPNNo}}</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span class="text-info"><b>{{detail.LotNo}}</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span class="text-info"><b>{{detail.BatchNo}}</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <span class="text-info"><b>{{detail.Qty}}</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <a (click)="Allocate(detail.Id,detail.ProductId,detail.UnitId,detail.PackId,detail.LocationId,detail.BatchNo,detail.LPNNo,detail.Qty)" class="btn btn-default p-1">Allocate</a>
+                          
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <a class="modal-close" href="" data-dismiss="modal">
+          <i class="ti-close"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>

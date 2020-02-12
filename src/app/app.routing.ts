@@ -94,6 +94,11 @@ export const AppRoutes: Routes = [
         loadChildren: './shipment/shipment.module#ShipmentModule',
         //canActivate: [AuthGuard]
       },
+      {
+        path: 'allocation',
+        loadChildren: './allocation/allocation.module#AllocationModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'regional-structure',
       //   loadChildren: './regional-structure/regional.modules#RegionalModule',

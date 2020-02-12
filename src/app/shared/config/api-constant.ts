@@ -98,7 +98,11 @@ export class APIConstants {
         GET_SHIMENT_HEADER: '/Shipments/GetShipmentsFromShipmentId',
         GET_WAREHOUSES_NEW: '/Warehouses/GetWarehouseByCustomerIdNew',
         UPDATE_SHIP_STATUS: '/Shipments/UpdateShipmentStatus',
-        GET_BATCH_NO: '/Shipments/GetBatchNoByProductId'
+        GET_BATCH_NO: '/Shipments/GetBatchNoByProductId',
+        GET_ALLOCATIONS: '/Allocations/GetOrders',
+        GET_ALLOCATION_SONO: '/Allocations/GetOrderDetail',
+        GET_ALLOCATION_DETAIL:'/Allocations/GetLineItemDetail',
+        POST_ALLOCATION: '/Allocations'
       }
     };
   }
@@ -117,6 +121,10 @@ export class APIConstants {
 
   getUrl3(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '') {
     return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5;
+  }
+
+  getUrl4(endpoint: string, params1: string = '', params2: string = '',params3: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3;
   }
 
 }
