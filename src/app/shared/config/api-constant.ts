@@ -102,7 +102,11 @@ export class APIConstants {
         GET_ALLOCATIONS: '/Allocations/GetOrders',
         GET_ALLOCATION_SONO: '/Allocations/GetOrderDetail',
         GET_ALLOCATION_DETAIL:'/Allocations/GetLineItemDetail',
-        POST_ALLOCATION: '/Allocations'
+        POST_ALLOCATION: '/Allocations',
+        GET_PICKS:'/Allocations/GetShipmentAllocatedOrders',
+        GET_PICK_SONO: '/Allocations/GetShipmentAllocatedLineItemDetail',
+        GET_SHIPS:'/Allocations/GetShipmentPickOrders',
+        GET_SHIP_SONO:'/Allocations/GetShipmentPickedLineItemDetail'
       }
     };
   }

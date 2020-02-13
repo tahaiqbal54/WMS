@@ -124,10 +124,12 @@
         </div>
         <div class="card-block">
           <div class="container-fluid">
-            <!-- <div class="mrg-top-10 text-right">
-                            <button class="btn btn-primary text-right" float="right" (click)="adddismodal()">ADD Detail
-                            </button>
-                          </div> -->
+            <div class="mrg-top-10 text-right">
+              <button class="btn btn-primary text-right" float="right" (click)="ExportToExcel()">Excel
+              </button>
+              <button class="btn btn-primary text-right" float="right" (click)="PickAll()">Pick All Selected
+              </button>
+            </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -137,6 +139,7 @@
                         [dtTrigger]="dtTrigger">
                         <thead>
                           <tr>
+                            <th></th>
                             <th>Sr. No</th>
                             <th class="text-center">Product</th>
                             <th class="text-center">Expected Delivery Quantity</th>
@@ -149,6 +152,14 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let detail of OrderDetail; let i = index">
+                            <td>
+                              <div>
+                                <div class="info">
+                                  <input id="form-2-1" name="form-2-1" type="checkbox"
+                                    (change)="onQCChange($event, detail.Id)">
+                                </div>
+                              </div>
+                            </td>
                             <td>
                               <div>
                                 <div class="info">
@@ -190,9 +201,9 @@
                             </td>
                             <td>
                               <div>
-                                <a (click)="valid()" class="btn btn-default p-1">Auto</a>
+                                <a (click)="valid()" class="btn btn-default p-1">Pick</a>
                                 <a (click)="editDetail(detail.Id,detail.ShipmentId,detail.ProductId,detail.WarehouseId,detail.BatchNo)"
-                                  class="btn btn-default p-1">Manual</a>
+                                  class="btn btn-default p-1">DeAllocate</a>
                               </div>
                             </td>
                           </tr>
@@ -211,106 +222,7 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" type="submit" [routerLink]="['/allocation/list']">Cancel</button>
+  <button class="btn btn-primary" type="submit" [routerLink]="['/pick/list']">Cancel</button>
 </div>
 
-
-<div class="modal fade modal-fs" id="modaladddis">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="vertical-align text-center">
-          <div class="table-cell">
-            <div class="container">
-
-
-              <div class="table-overflow">
-                <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions1"
-                  [dtTrigger]="dtTrigger1">
-                  <thead>
-                    <tr>
-                      <th>Sr. No</th>
-                      <th class="text-center">Product</th>
-                      <th class="text-center">Product Description</th>
-                      <th class="text-center">UOM</th>
-                      <th class="text-center">Location</th>
-                      <th>LPN No</th>
-                      <th>LOT No</th>
-                      <th>Batch</th>
-                      <th>Quantity</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let detail of Detail; let i = index">
-                      <td>
-                        <div>
-                          <div class="info">
-                            <span class="title">{{i + 1}}</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <div class="info">
-                            <span class="title">{{detail.SKU}}</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="text-center">
-                          <span class="text-center">{{detail.Description}}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="text-center">
-                          <span class="text-center">{{detail.UnitName}}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LocationName}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LPNNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LotNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.BatchNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.Qty}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <a (click)="Allocate(detail.Id,detail.ProductId,detail.UnitId,detail.PackId,detail.LocationId,detail.BatchNo,detail.LPNNo,detail.Qty)" class="btn btn-default p-1">Allocate</a>
-                          
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <a class="modal-close" href="" data-dismiss="modal">
-          <i class="ti-close"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
 <ng2-toasty [position]="position"></ng2-toasty>

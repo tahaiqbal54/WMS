@@ -12,3 +12,5 @@ export * from './inventory_view.service';
 export * from './excel.service';
 export * from './shipment.service';
 export * from './allocation.service';
+export * from './pick.service';
+export * from './ship.service';
