@@ -57,13 +57,13 @@ export class ShipService {
       });
   }
 
-  createReceive(Purchase: any): Observable<any> {
+  createShip(Pick: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.post<any>(this.APIConfig.getUrl(this.API.POST_RECEIVES), Purchase, httpOptions)
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.POCK_SHIP, "AllocationId="+ Pick), {}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

@@ -40,8 +40,8 @@ export class ShipmentListComponent implements AfterViewInit, OnDestroy, OnInit {
       },
       columnDefs: [
         { width: "20%", searchable: true, targets: 1 },
-        { orderData: 5, targets: 0},
-        { visible: false, targets: 5 }
+        { orderData: 6, targets: 1},
+        { visible: false, targets: 6 }
       ]
     };
     this.ShipmentService.getShipments(this.user_id)

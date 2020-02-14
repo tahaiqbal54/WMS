@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="page-title">
-    <h4>Shipment Order Deatils</h4>
+    <h4>Shipping List</h4>
   </div>
-  <div class="mrg-top-10 text-right">
-    <button class="btn btn-default text-right" float="right" [routerLink]="['/shipment/add']">Create Order
+  <!-- <div class="mrg-top-10 text-right">
+    <button class="btn btn-default text-right" float="right" [routerLink]="['/users/add']">Create ASN
     </button>
-  </div>
+  </div> -->
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -15,9 +15,9 @@
               <thead>
               <tr>
                 <!--<th class="text-center">ID</th>-->
-                <th maxWidth="150" class="text-center">SO #</th>
-                <th maxWidth="150" class="text-center">SO Date</th>
-                <th class="text-center">Customer Ref No</th>
+                <th maxWidth="150" class="text-center">SO No</th>
+                <th class="text-center">SO Date</th>
+                <th class="text-center">Warehouse</th>
                 <th class="text-center">Customer Name</th>
                 <th class="text-center">Ship To</th>
                 <th class="text-center">Status</th>
@@ -26,10 +26,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr  *ngFor="let data of users; let i = index">
+              <tr *ngFor="let data of users; let i = index">
+                <!--<td class="text-center">{{ user.id }}</td>-->
                 <td class="text-center">{{ data.SONo }}</td>
-                <td class="text-center">{{ data.SODate_formatted }}</td>
-                <td class="text-center">{{ data.CustomerRefNo}}</td>
+                <td class="text-center">{{ data.SODate_formatted}}</td>
+                <td class="text-center">{{ data.WarehouseName }}</td>
                 <td class="text-center">{{ data.CustomerName }}</td>
                 <td class="text-center">{{ data.VendorName }}</td>
                 <td class="text-center">{{ data.StatusName }}</td>
@@ -39,10 +40,11 @@
                   </div>
                 </td>
                  <td class="text-center">
-                   <div class="d-inline-block">
-                       <a [routerLink]="['/shipment/edit/' + data.Id]" class="btn btn-default p-1"><i class="ti-pencil"></i></a>
-                       <a class="btn btn-default p-1" (click)="DeleteOrder(data.Id,i)"><i class="ei-delete"></i></a>
-                   </div>
+                  <a [routerLink]="['/ship/add/' + data.SONo]" class="btn btn-default p-1">Ship</a>
+                  <!-- <a class="btn btn-default p-1" (click)="DeleteASN(data.Id,i)">Delete</a> -->
+                  <!--<a [routerLink]="['/users/edit/']" class="btn btn-default p-1">Edit</a>
+                   <a  (click)="disablebutton(user.id, user.first_name)" class="btn btn-default p-1"  *ngIf="user.status == 'active'" ng-show="true" href="javascript:void(0)">Disable</a> 
+                   <a  (click)="enablebutton(user.id)" class="btn btn-default p-1" *ngIf="user.status == 'disabled'" ng-show="true" href="javascript:void(0)">Active</a> -->
                 </td>
               </tr>
               </tbody>

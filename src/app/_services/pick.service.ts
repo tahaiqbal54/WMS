@@ -57,13 +57,13 @@ export class PickService {
       });
   }
 
-  createReceive(Purchase: any): Observable<any> {
+  createPick(Pick: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.post<any>(this.APIConfig.getUrl(this.API.POST_RECEIVES), Purchase, httpOptions)
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.POST_PICK, "AllocationId="+ Pick), {}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -77,13 +77,13 @@ export class PickService {
       .pipe(catchError(this.handleError));
   }
 
-  DeletePurchaseDetail(PurchaseDetailID: any,PurchaseId:any): Observable<any> {
+  DeleteAllocate(PurchaseDetailID: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': this.accessToken
       })
     };
-    return this.http.delete<any>(this.APIConfig.getUrl2(this.API.DELETE_ORDERDETAIL,"PurchaseDetailId="+ PurchaseDetailID, "PurchaseId=" + PurchaseId), httpOptions)
+    return this.http.delete<any>(this.APIConfig.getUrl(this.API.DEALLOCATE_PICK,"Id="+ PurchaseDetailID), httpOptions)
       .pipe(catchError(this.handleError));
   }
 

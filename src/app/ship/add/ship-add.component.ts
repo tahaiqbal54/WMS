@@ -4,7 +4,7 @@ import { OrderHeader } from '../../_models/OrderHeader';
 import { Router, ActivatedRoute } from "@angular/router";
 import swal from 'sweetalert2';
 import { OrderService } from '../../_services/order.service';
-import { ReceiveService, AllocationService, ExcelService, PickService } from '../../_services';
+import { ReceiveService, AllocationService, ExcelService, PickService , ShipService} from '../../_services';
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from 'rxjs';
 declare var $: any;
@@ -13,11 +13,11 @@ import { NotificationCommunicationService } from '../../_services';
 
 
 @Component({
-  templateUrl: 'pick-add.html',
+  templateUrl: 'ship-add.html',
   providers: [OrderService, ReceiveService]
 })
 
-export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
+export class ShipAddComponent implements AfterViewInit, OnDestroy, OnInit {
   @ViewChildren(DataTableDirective)
   dtElement: QueryList<DataTableDirective>;
   // dtInstance: DataTables.Api;
@@ -64,7 +64,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
   allocationId: any = [];
   checked: number;
 
-  constructor(private router: Router, private PickService: PickService, private excelService: ExcelService, private AllocationService: AllocationService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
+  constructor(private router: Router, private ShipService: ShipService, private excelService: ExcelService, private AllocationService: AllocationService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.user_id = this.currentUser.User[0].Id;
     this.Id = this.route.snapshot.paramMap.get('SONo');
@@ -122,7 +122,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
 
     console.log(this.Id);
 
-    this.PickService.getPickDetails(this.Id)
+    this.ShipService.getShipDetails(this.Id)
       .subscribe(
         (data: any) => {
           this.OrderDetail = data;
@@ -169,7 +169,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
   PickAll() {
     this.ShipmentId = this.allocationId.join();
     console.log(this.ShipmentId);
-    this.PickService.createPick(this.ShipmentId)
+    this.ShipService.createShip(this.ShipmentId)
       .subscribe(
         (data: any) => {
           if (data) {
@@ -183,7 +183,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
             };
             this.toastyService.success(toastOptions);
             this.toastCommunicationService.setPosition(this.position);
-            this.PickService.getPickDetails(this.Id)
+            this.ShipService.getShipDetails(this.Id)
               .subscribe(
                 (data: any) => {
                   this.OrderDetail = data;
@@ -212,49 +212,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
       );
   }
 
-  Deallocate(Id:any){
-    this.PickService.DeleteAllocate(Id)
-    .subscribe(
-      (data: any) => {
-        if (data) {
-          let toastOptions: ToastOptions = {
-            title: 'Success',
-            msg: 'Deallocated Successfully',
-            showClose: true,
-            timeout: 2000,
-            theme: 'default',
-
-          };
-          this.toastyService.success(toastOptions);
-          this.toastCommunicationService.setPosition(this.position);
-          this.PickService.getPickDetails(this.Id)
-            .subscribe(
-              (data: any) => {
-                this.OrderDetail = data;
-                console.log(data);
-                this.dtOptions = {
-                  pagingType: 'full_numbers',
-                  destroy: true,
-                  language: {
-                    emptyTable: "No Pick found"
-                  },
-
-                };
-                this.rerender();
-                (error: any) => {
-                  console.log(error);
-                  this.inserted = 'failure';
-                  this.message = error.error.message;
-                }
-              });
-        }
-      },
-      (error: any) => {
-        console.log(error);
-        swal(error.error['Message']);
-      }
-    );
-  }
+  
 
 
   CloseDetail() {
@@ -309,94 +267,12 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
 
-  editDetail(DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
-    this.detailId = DetailId;
-    this.ShipmentId = ShipmentId;
-    this.AllocationService.GetAllocationDetail(productId, WarehouseID, BatchNo)
-      .subscribe(
-        (data: any) => {
-          this.dtOptions1 = {
-            pagingType: 'full_numbers',
-            destroy: true,
-            language: {
-              emptyTable: "No detail found"
-            },
+  
 
-          };
-          console.log(data);
-          this.Detail = data;
-          this.rerender();
-          setTimeout(() => {
-            $("#modaladddis").modal("show");
-          }, 1500);
-
-        },
-        (error: any) => {
-          console.log(error);
-          swal(error.error['Message']);
-        }
-      );
-  }
-
-  Allocate(Id, ProductId, UnitId, PackId, LocationId, BatchNo, LPNNo, Qty) {
-    let detail = {
-      Id: 0,
-      ShipmentId: this.ShipmentId,
-      ShipmentDetailId: this.detailId,
-      ProductId: ProductId,
-      UnitId: UnitId,
-      PackId: PackId,
-      LocationId: LocationId,
-      BatchNo: BatchNo,
-      LPNNo: LPNNo,
-      QtyAllocated: Qty,
-      InventTransactionId: Id
-    }
-
-    this.AllocationService.AllocateDetail(detail)
-      .subscribe(
-        (data: any) => {
-          if (data) {
-            let toastOptions: ToastOptions = {
-              title: 'Success',
-              msg: 'Allocated Successfully',
-              showClose: true,
-              timeout: 2000,
-              theme: 'default',
-
-            };
-            this.toastyService.success(toastOptions);
-            this.toastCommunicationService.setPosition(this.position);
-            this.AllocationService.getAllocationDetails(this.Id)
-              .subscribe(
-                (data: any) => {
-                  this.OrderDetail = data;
-                  console.log(data);
-                  this.dtOptions = {
-                    pagingType: 'full_numbers',
-                    language: {
-                      emptyTable: "No users found"
-                    },
-
-                  };
-                  this.rerender();
-                  (error: any) => {
-                    console.log(error);
-                    this.inserted = 'failure';
-                    this.message = error.error.message;
-                  }
-                });
-          }
-        },
-        (error: any) => {
-          console.log(error);
-          swal(error.error['Message']);
-        }
-      );
-  }
+  
 
   pick(id: any) {
-    this.PickService.createPick(id)
+    this.ShipService.createShip(id)
       .subscribe(
         (data: any) => {
           if (data) {
@@ -410,7 +286,7 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
             };
             this.toastyService.success(toastOptions);
             this.toastCommunicationService.setPosition(this.position);
-            this.PickService.getPickDetails(this.Id)
+            this.ShipService.getShipDetails(this.Id)
               .subscribe(
                 (data: any) => {
                   this.OrderDetail = data;

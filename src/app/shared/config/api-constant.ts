@@ -106,7 +106,10 @@ export class APIConstants {
         GET_PICKS:'/Allocations/GetShipmentAllocatedOrders',
         GET_PICK_SONO: '/Allocations/GetShipmentAllocatedLineItemDetail',
         GET_SHIPS:'/Allocations/GetShipmentPickOrders',
-        GET_SHIP_SONO:'/Allocations/GetShipmentPickedLineItemDetail'
+        GET_SHIP_SONO:'/Allocations/GetShipmentPickedLineItemDetail',
+        POST_PICK:'/Allocations/PostShipmentAllocationToPickNew',
+        POCK_SHIP:'/Allocations/PostShipmentPickedToShipNew',
+        DEALLOCATE_PICK:'/allocations'
       }
     };
   }
