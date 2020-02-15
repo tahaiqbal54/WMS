@@ -61,6 +61,9 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   position: any;
   Detail: any;
   ShipmentId: any;
+  QtyShiped: any;
+  QtyIssued: any;
+  QtyRemained: any;
 
   constructor(private router: Router, private AllocationService: AllocationService, private orderservice: OrderService, private receiveservice: ReceiveService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -255,9 +258,12 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
 
-  editDetail(DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
+  editDetail(index:any,DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
     this.detailId = DetailId;
     this.ShipmentId = ShipmentId;
+    this.QtyShiped = this.OrderDetail[index].QtyShiped;
+    this.QtyIssued = this.OrderDetail[index].QtyIssued;
+    this.QtyRemained = this.OrderDetail[index].QtyRemained;
     this.AllocationService.GetAllocationDetail(productId, WarehouseID, BatchNo)
       .subscribe(
         (data: any) => {

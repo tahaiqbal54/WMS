@@ -297,11 +297,13 @@ export class PickAddComponent implements AfterViewInit, OnDestroy, OnInit {
     this.OrderDetail.forEach(data => {
       let obj = {
         Product: data.SKU,
-        Expected_Delivery_Quantity: data.QtyShiped,
-        Allocated_Quantity: data.QtyIssued,
-        Balance: data.QtyRemained,
+        Product_Description: data.Description,
         UOM: data.UnitName,
-        Batch: data.BatchNo
+        Location: data.LocationName,
+        LPN_NO: data.LPNNo,
+        Lot_No: data.LotNo,
+        Batch: data.BatchNo,
+        Qty:data.QtyAllocated
       }
       arr.push(obj);
     });

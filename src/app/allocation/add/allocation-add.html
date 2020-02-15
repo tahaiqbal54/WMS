@@ -120,7 +120,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-heading border bottom">
-          <h4 class="card-title">{{Id}}</h4>
+          <h4 class="card-title">SO No: {{Id}}</h4>
         </div>
         <div class="card-block">
           <div class="container-fluid">
@@ -190,9 +190,9 @@
                             </td>
                             <td>
                               <div>
-                                <a (click)="valid()" class="btn btn-default p-1">Auto</a>
-                                <a (click)="editDetail(detail.Id,detail.ShipmentId,detail.ProductId,detail.WarehouseId,detail.BatchNo)"
-                                  class="btn btn-default p-1">Manual</a>
+                                <button (click)="valid()" class="btn btn-default p-1" [disabled]="detail.QtyRemained === 0">Auto</button>
+                                <button (click)="editDetail(i,detail.Id,detail.ShipmentId,detail.ProductId,detail.WarehouseId,detail.BatchNo)"
+                                  [disabled]="detail.QtyRemained === 0" class="btn btn-default p-1">Manual</button>
                               </div>
                             </td>
                           </tr>
@@ -215,102 +215,101 @@
 </div>
 
 
-<div class="modal fade modal-fs" id="modaladddis">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="modaladddis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" style="width: 100%; max-width: none;" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">SO No: {{Id}}, Expected Quantity: {{QtyShiped}}, Allocated : {{QtyIssued}}, Balance: {{QtyRemained}}</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <div class="modal-body">
-        <div class="vertical-align text-center">
-          <div class="table-cell">
-            <div class="container">
+        <div class="table-overflow" style="overflow:auto ">
+          <table class="table compact table-sm table-hover" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1"
+            style="height: 80%;">
+            <thead>
+              <tr>
+                <th>Sr. No</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">Product Description</th>
+                <th class="text-center">UOM</th>
+                <th class="text-center">Location</th>
+                <th>LPN No</th>
+                <th>LOT No</th>
+                <th>Batch</th>
+                <th>Quantity</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of Detail; let i = index">
+                <td>
+                  <div>
+                    <div class="info">
+                      <span class="title">{{i + 1}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <div class="info">
+                      <span class="title">{{detail.SKU}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <span class="text-center">{{detail.Description}}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <span class="text-center">{{detail.UnitName}}</span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span class="text-info"><b>{{detail.LocationName}}</b></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span class="text-info"><b>{{detail.LPNNo}}</b></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span class="text-info"><b>{{detail.LotNo}}</b></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span class="text-info"><b>{{detail.BatchNo}}</b></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <span class="text-info"><b>{{detail.Qty}}</b></span>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a (click)="Allocate(detail.Id,detail.ProductId,detail.UnitId,detail.PackId,detail.LocationId,detail.BatchNo,detail.LPNNo,detail.Qty)"
+                      class="btn btn-default p-1">Allocate</a>
 
-
-              <div class="table-overflow">
-                <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions1"
-                  [dtTrigger]="dtTrigger1">
-                  <thead>
-                    <tr>
-                      <th>Sr. No</th>
-                      <th class="text-center">Product</th>
-                      <th class="text-center">Product Description</th>
-                      <th class="text-center">UOM</th>
-                      <th class="text-center">Location</th>
-                      <th>LPN No</th>
-                      <th>LOT No</th>
-                      <th>Batch</th>
-                      <th>Quantity</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let detail of Detail; let i = index">
-                      <td>
-                        <div>
-                          <div class="info">
-                            <span class="title">{{i + 1}}</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <div class="info">
-                            <span class="title">{{detail.SKU}}</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="text-center">
-                          <span class="text-center">{{detail.Description}}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="text-center">
-                          <span class="text-center">{{detail.UnitName}}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LocationName}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LPNNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.LotNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.BatchNo}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <span class="text-info"><b>{{detail.Qty}}</b></span>
-                        </div>
-                      </td>
-                      <td>
-                        <div>
-                          <a (click)="Allocate(detail.Id,detail.ProductId,detail.UnitId,detail.PackId,detail.LocationId,detail.BatchNo,detail.LPNNo,detail.Qty)" class="btn btn-default p-1">Allocate</a>
-                          
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <a class="modal-close" href="" data-dismiss="modal">
-          <i class="ti-close"></i>
-        </a>
+
+        <div class="modal-footer">
+          
+        </div>
       </div>
     </div>
   </div>
-</div>
-<ng2-toasty [position]="position"></ng2-toasty>
+  <ng2-toasty [position]="position"></ng2-toasty>
