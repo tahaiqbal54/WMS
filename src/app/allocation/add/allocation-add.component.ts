@@ -64,6 +64,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   QtyShiped: any;
   QtyIssued: any;
   QtyRemained: any;
+  warehouseId: any;
 
   constructor(private router: Router, private AllocationService: AllocationService, private orderservice: OrderService, private receiveservice: ReceiveService, private route: ActivatedRoute, private toastyService: ToastyService, private toastCommunicationService: NotificationCommunicationService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -104,7 +105,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   ngOnInit() {
 
     this.position = "bottom-right";
-    
+
 
     // this.receiveservice.UpdatePurchaseStatus(3,this.Id)
     // .subscribe(
@@ -130,7 +131,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
           console.log(data);
           this.dtOptions = {
             pagingType: 'full_numbers',
-            destroy:true,
+            destroy: true,
             language: {
               emptyTable: "No users found"
             },
@@ -242,8 +243,8 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   ngAfterViewInit(): void {
     this.dtElement.forEach((table) => {
       if (table.dtTrigger) {
-          // Call the dtTrigger to rerender again
-          table.dtTrigger.next();
+        // Call the dtTrigger to rerender again
+        table.dtTrigger.next();
       }
     });
   }
@@ -251,29 +252,31 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   ngOnDestroy(): void {
     this.dtElement.forEach((table) => {
       if (table.dtTrigger) {
-          // Call the dtTrigger to rerender again
-          table.dtTrigger.unsubscribe();
+        // Call the dtTrigger to rerender again
+        table.dtTrigger.unsubscribe();
       }
     });
   }
 
 
-  editDetail(index:any,DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
+  editDetail(index: any, DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
     this.detailId = DetailId;
     this.ShipmentId = ShipmentId;
     this.QtyShiped = this.OrderDetail[index].QtyShiped;
     this.QtyIssued = this.OrderDetail[index].QtyIssued;
     this.QtyRemained = this.OrderDetail[index].QtyRemained;
+    this.warehouseId = WarehouseID;
+    this.BatchNo = BatchNo;
     this.AllocationService.GetAllocationDetail(productId, WarehouseID, BatchNo)
       .subscribe(
         (data: any) => {
           this.dtOptions1 = {
             pagingType: 'full_numbers',
-            destroy:true,
+            destroy: true,
             language: {
               emptyTable: "No detail found"
             },
-            
+
           };
           console.log(data);
           this.Detail = data;
@@ -338,6 +341,27 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
                     this.message = error.error.message;
                   }
                 });
+            this.AllocationService.GetAllocationDetail(ProductId, this.warehouseId, this.BatchNo)
+              .subscribe(
+                (data: any) => {
+                  this.dtOptions1 = {
+                    pagingType: 'full_numbers',
+                    destroy: true,
+                    language: {
+                      emptyTable: "No detail found"
+                    },
+
+                  };
+                  console.log(data);
+                  this.Detail = data;
+                  this.rerender();
+                },
+                (error: any) => {
+                  console.log(error);
+                  swal(error.error['Message']);
+                }
+              );
+
           }
         },
         (error: any) => {
@@ -347,7 +371,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
       );
   }
 
-  valid(){
+  valid() {
     swal('Feature is under development')
   }
 
