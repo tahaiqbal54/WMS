@@ -193,7 +193,7 @@ export class UsersEditComponent implements AfterViewInit, OnDestroy, OnInit {
       .getWarehouses(event)
       .subscribe(
         (data: any) => {
-          this.warehouseOptions = data['CustomerWrehouseList'];
+          this.warehouseOptions = data;
           console.log(this.warehouseOptions);
         },
         (error: any) => console.log(error)

@@ -123,7 +123,7 @@ export class ShipmentService {
       );
   }
 
-  getBatch(Product_Id: any) {
+  getBatch(Product_Id: any,Warehouse_Id:any) {
 
     // Add safe, URL encoded search parameter if there is a search term
     const httpOptions = {
@@ -134,7 +134,7 @@ export class ShipmentService {
     };
     console.log(httpOptions);
     return this.http
-      .get(this.APIConfig.getUrl(this.API.GET_BATCH_NO,"ProductId="+ Product_Id), httpOptions)
+      .get(this.APIConfig.getUrl2(this.API.GET_BATCH_NO,"ProductId="+ Product_Id,"WarehouseId=" + Warehouse_Id), httpOptions)
       .pipe(
         map((data: any) => {
           if (data) {

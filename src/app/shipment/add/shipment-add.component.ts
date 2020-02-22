@@ -299,7 +299,7 @@ export class ShipmentAddComponent implements AfterViewInit, OnDestroy, OnInit {
       }
     });
     this.ShipmentService
-    .getBatch(event)
+    .getBatch(event,this.OrderHeader.WarehouseId)
     .subscribe(
       (data: any) => {
         console.log(data);

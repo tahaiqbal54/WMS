@@ -139,8 +139,8 @@ export class UsersAddComponent implements AfterViewInit, OnDestroy, OnInit {
       .getWarehouses(event)
       .subscribe(
         (data: any) => {
-          this.warehouseOptions = data['CustomerWrehouseList'];
-          console.log(this.warehouseOptions);
+          this.warehouseOptions = data;
+          console.log(data);
         },
         (error: any) => console.log(error)
       );
