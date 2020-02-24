@@ -260,6 +260,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
 
 
   editDetail(index: any, DetailId: any, ShipmentId: any, productId: any, WarehouseID: any, BatchNo: any) {
+    this.index = index;
     this.detailId = DetailId;
     this.ShipmentId = ShipmentId;
     this.QtyShiped = this.OrderDetail[index].QtyShiped;
@@ -332,8 +333,10 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
                     language: {
                       emptyTable: "No users found"
                     },
-
                   };
+                  this.QtyShiped = this.OrderDetail[this.index].QtyShiped;
+                  this.QtyIssued = this.OrderDetail[this.index].QtyIssued;
+                  this.QtyRemained = this.OrderDetail[this.index].QtyRemained;
                   this.rerender();
                   (error: any) => {
                     console.log(error);
