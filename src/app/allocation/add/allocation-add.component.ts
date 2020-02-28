@@ -295,6 +295,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
   }
 
   Allocate(Id, ProductId, UnitId, PackId, LocationId, BatchNo, LPNNo, Qty) {
+    console.log(Qty);
     let detail = {
       Id: 0,
       ShipmentId: this.ShipmentId,
@@ -308,6 +309,7 @@ export class AllocationAddComponent implements AfterViewInit, OnDestroy, OnInit 
       QtyAllocated: Qty,
       InventTransactionId: Id
     }
+    console.log(detail);
 
     this.AllocationService.AllocateDetail(detail)
       .subscribe(
