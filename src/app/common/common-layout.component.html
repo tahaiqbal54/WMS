@@ -66,36 +66,52 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
+                                    <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
 									</span>
-                                <span class="title">Inventory</span>
+                                <span class="title">Outbound</span>
                                 <span class="arrow">
                                     <i class="ti-angle-right"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a [routerLink]="['/inventory/list']">
+                                    <a [routerLink]="['/shipment/list']">
                                         <span class="icon-holder">
-                                            <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
+                                            <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
                                             </span>
-                                        <span class="title">&nbsp;Inventory View</span>
+                                        <span class="title">&nbsp;Shipment</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a>
+                                    <a [routerLink]="['/inventory/list']">
                                         <span class="icon-holder">
                                             <img src="/assets/images/icons/outbound32_1.png" style="padding-bottom: 5px;">
                                             </span>
-                                        <span class="title">&nbsp;Out Bound</span>
+                                        <span class="title">&nbsp;Allocation</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a>
                                         <span class="icon-holder">
-                                            <img src="/assets/images/icons/outbound32_2.png" style="padding-bottom: 8px;">
+                                            <img src="/assets/images/icons/outbound32_2.png" style="padding-bottom: 5px;">
                                             </span>
-                                        <span class="title">&nbsp;Out Bound</span>
+                                        <span class="title">&nbsp;Picking</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/ship32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Ship</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/wave32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Wave</span>
                                     </a>
                                 </li>
                             </ul>
@@ -103,7 +119,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
+                                    <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
 									</span>
                                 <span class="title">Shipment</span>
                                 <span class="arrow">
@@ -114,25 +130,49 @@
                                 <li class="nav-item">
                                     <a>
                                         <span class="icon-holder">
-                                            <img src="/assets/images/icons/shipment32_1.png" style="padding-bottom: 5px;">
+                                            <img src="/assets/images/icons/inventory32.png" style="padding-bottom: 5px;">
                                             </span>
-                                        <span class="title">&nbsp;Shipment</span>
+                                        <span class="title">&nbsp;Inventory Transfer</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a>
                                         <span class="icon-holder">
-                                            <img src="/assets/images/icons/shipment32_2.png" style="padding-bottom: 5px;">
+                                            <img src="/assets/images/icons/hold32.png" style="padding-bottom: 5px;">
                                             </span>
-                                        <span class="title">&nbsp;Shipment</span>
+                                        <span class="title">&nbsp;HOLD/UNHOLD</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a>
                                         <span class="icon-holder">
-                                            <img src="/assets/images/icons/shipment32_3.png" style="padding-bottom: 8px;">
+                                            <img src="/assets/images/icons/release32.png" style="padding-bottom: 8px;">
                                             </span>
-                                        <span class="title">&nbsp;Shipment</span>
+                                        <span class="title">&nbsp;QC/Release</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/transaction32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Inventory Transaction</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/count32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Physical Count</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a>
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/adjust32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Inventory Adjustment</span>
                                     </a>
                                 </li>
                             </ul>
@@ -140,7 +180,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <img src="/assets/images/icons/setup32.png" style="padding-bottom: 5px;">
+                                    <img src="/assets/images/icons/site32.png" style="padding-bottom: 5px;">
 									</span>
                                 <span class="title">Setup</span>
                                 <span class="arrow">
@@ -180,12 +220,36 @@
                                         <span class="title">&nbsp;Customer</span>
                                     </a>
                                 </li>
-                                <li class="nav-item" style="margin-bottom:50px;">
+                                <li class="nav-item">
                                     <a [routerLink]="['/product/list']">
                                         <span class="icon-holder">
                                             <img src="/assets/images/icons/products32.png" style="padding-bottom: 8px;">
                                             </span>
                                         <span class="title">&nbsp;Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/product/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/pack32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;Pack Key</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/product/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/uom32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;UOM</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item" style="margin-bottom:50px;">
+                                    <a [routerLink]="['/product/list']">
+                                        <span class="icon-holder">
+                                            <img src="/assets/images/icons/user32.png" style="padding-bottom: 8px;">
+                                            </span>
+                                        <span class="title">&nbsp;User Management</span>
                                     </a>
                                 </li>
                             </ul>
