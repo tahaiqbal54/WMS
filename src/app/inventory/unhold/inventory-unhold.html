@@ -1,0 +1,250 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Inventory</h4>
+  </div>
+
+<div class="col-md-12 d-inline-block">
+  <div class="timepicker-input input-icon form-group col-md-3 d-inline-block p-0">
+    <label>Warehouse <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+    <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
+    [(ngModel)]="WarehouseId" #customer="ngModel" name="customer"  placeholder="Select Warehouse"
+     ngDefaultControl required></ng-selectize>
+   </div>
+ <div class="timepicker-input input-icon form-group col-md-3 d-inline-block p-0">
+  <label>Location</label>
+  <ng-selectize [config]="CustomerSelectConfig" [options]="CustomerOptions" id="vendor"
+    name="vendor" placeholder="Select Location" [(ngModel)]="CustomerId"
+    ngDefaultControl required></ng-selectize>
+   </div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>Product</label>
+  <ng-selectize [config]="ProductSelectConfig" [options]="ProductOptions"
+    name="warehouse" placeholder="Select Product" [(ngModel)]="ProductId"
+    ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>Batch #</label>
+  <ng-selectize [config]="BatchSelectConfig" [options]="BatchOptions"
+    name="warehouse" placeholder="Select Location" [(ngModel)]="BatchNo"
+    ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>LOT # </label>
+      <ng-selectize [config]="LOTSelectConfig" [options]="LOTOptions"
+    name="warehouse" placeholder="Select LOT #" [(ngModel)]="LotNo"
+      ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>LPN # </label>
+      <ng-selectize [config]="LPNSelectConfig" [options]="LPNOptions"
+    name="warehouse" placeholder="Select LOT #" [(ngModel)]="LPNNo"
+      ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>Journal # </label>
+      <ng-selectize [config]="JournalSelectConfig" [options]="JournalOptions"
+    name="journal" placeholder="Select Journal #" [(ngModel)]="journalNo"
+      ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block pb-3 stationOptions">
+    <button class="btn btn-primary text-right" float="right" (click)="Fetch()">Fetch
+  </button> 
+  <!-- <button [disabled]="users.length == 0" class="btn btn-primary d-inline-block" (click)="ExportToExcel()">Export File
+  </button>  -->
+</div>
+<!-- <div class="col-md-3 d-inline-block">
+  
+</div> -->
+</div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" style="overflow:auto ">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                
+                <th class="text-center">S.No</th>
+                <th maxWidth="150" class="text-center">Journal #</th>
+                <th class="text-center">Warehouse Name</th>
+                <th class="text-center">Reason</th>
+                <th class="text-center">Remarks</th>
+                <th class="text-center">Action</th>
+                
+               
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of users; let i = index">
+                
+                <td class="text-center">{{ i }}</td>
+                <td class="text-center">{{ data.JournalNo }}</td>
+                <td class="text-center">{{ data.WarehouseName}}</td>
+                <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
+                <td class="text-center">{{ data.Reason }}</td>
+                <td class="text-center">{{ data.HoldRemarks }}</td>
+                <td class="text-center"><div>
+                  <a 
+                    class="btn btn-default p-1" (click)="OpenModal(data.InventoryHoldUnholdId,data.JournalNo,data.Reason,data.HoldRemarks)">View</a>
+
+                </div></td>
+                
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" >
+            <div class="col-md-12 d-inline-block pb-3 stationOptions text-right">
+              <button class="btn btn-primary text-right" type="submit" float="right" (click)="OpenModal()">View Selection Details</button>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Journal #</label>
+                      <input class="form-control" placeholder="ASN NO" [(ngModel)]="AsnNo" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Reason <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <ng-selectize [config]="ReasonSelectConfig" [options]="ReasonOptions"
+                  [(ngModel)]="reasonId" #customer="ngModel" name="customer"  placeholder="Select Reason"
+                   ></ng-selectize>
+              </div>
+                  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Remarks<a class="text-danger" style="font-size: 10px;"></a></label>
+                  <input type="text" class="form-control" [(ngModel)]="remarks" placeholder="Remarks" ngModel name="email" #email="ngModel" email="false">
+
+              </div>
+              </div>
+            </div>
+            <button [disabled]="AsnNo" class="btn btn-primary" type="submit" (click)="Holddata()">Hold</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>
+
+<div class="modal fade" id="modaladddis" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" style="width: 100%; max-width: none;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-overflow" style="overflow:auto ">
+          <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1">
+            <thead>
+            <tr>
+              
+              <th class="text-center">S.No</th>
+              <th maxWidth="150" class="text-center">Warehouse Name</th>
+              <th class="text-center">Customer Name</th>
+              <th class="text-center">Product</th>
+              <th class="text-center">Product Description</th>
+              <th class="text-center">Quantity</th>
+              <th class="text-center">UOM</th>
+              <th class="text-center">Pack Key</th>
+             <th class="text-center">Location</th>
+             <th class="text-center">LPN No</th>
+             <th class="text-center" width="20%">LOT No</th>
+             <th class="text-center">Batch</th>
+             
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of holddata; let i = index">
+              
+              <td class="text-center">{{ i }}</td>
+              <td class="text-center">{{ data.WarehouseName }}</td>
+              <td class="text-center">{{ data.CustomerName}}</td>
+              <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
+              <td class="text-center">{{ data.ProductCode }}</td>
+              <td class="text-center">{{ data.ProductDescription }}</td>
+              <td class="text-center">{{ data.Qty }}</td>
+              <td>
+                <div class="text-center">
+                  <span class=""><b>{{data.UnitName }}</b></span>
+                </div>
+              </td>
+              <td class="text-center" width="40%">{{ data.PackKey }}</td>
+              <td class="text-center">{{ data.LocationName }}</td>
+              <td class="text-center">{{ data.LPNNo }}</td>
+              <td class="text-center" width="20%">{{ data.LotNo }}</td>
+              <td class="text-center">{{ data.BatchNo }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-block">
+                <div class="table-overflow" >
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Journal #</label>
+                            <input class="form-control" placeholder="ASN NO" [(ngModel)]="AsnNo" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Reason<a class="text-danger" style="font-size: 10px;"></a></label>
+                        <input type="text" class="form-control" [(ngModel)]="reasonId" placeholder="Remarks"  disabled="true" ngModel name="email" #email="ngModel" email="false">
+                    </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Hold Remarks<a class="text-danger" style="font-size: 10px;"></a></label>
+                        <input type="text" class="form-control" [(ngModel)]="remarks" placeholder="Remarks"  disabled="true" ngModel name="email" #email="ngModel" email="false">
+      
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Unhold Remarks<a class="text-danger" style="font-size: 10px;"></a></label>
+                        <input type="text" class="form-control" [(ngModel)]="unholdremarks" placeholder="Remarks" ngModel name="email" #email="ngModel" email="false">
+      
+                    </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" type="submit" (click)="UnHolddata()">UnHold</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+<ng2-toasty [position]="position"></ng2-toasty>

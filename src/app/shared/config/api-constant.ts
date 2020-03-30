@@ -109,7 +109,17 @@ export class APIConstants {
         GET_SHIP_SONO:'/Allocations/GetShipmentPickedLineItemDetail',
         POST_PICK:'/Allocations/PostShipmentAllocationToPickNew',
         POCK_SHIP:'/Allocations/PostShipmentPickedToShipNew',
-        DEALLOCATE_PICK:'/allocations'
+        DEALLOCATE_PICK:'/allocations',
+        GET_BATCH: '/InventTransactions/GetBatchNo',
+        GET_LPN: '/InventTransactions/GetLpnNo',
+        FETCH_HOLD: '/InventoryHoldUnholds/FetchHold',
+        GET_REASONS: '/InventoryHoldUnholds/GetReasons',
+        POST_HOLD_DATA: '/InventoryHoldUnholds/Post',
+        FETCH_UNHOLD: '/InventoryHoldUnholds/FetchUnHold',
+        GET_UNHOLD_DETAIL: '/InventoryHoldUnholds/GetJournalNoDetail',
+        POST_UNHOLD: '/InventoryHoldUnholds/UnHold',
+        GET_Journal: '/InventoryHoldUnholds/GetJournals',
+        FETCH_TRANSACTIONS: '/InventTransactions/FetchTransactionData'
       }
     };
   }
@@ -132,6 +142,22 @@ export class APIConstants {
 
   getUrl4(endpoint: string, params1: string = '', params2: string = '',params3: string = '') {
     return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3;
+  }
+
+  getUrl5(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '',params6: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5+ '&' + params6;
+  }
+
+  getUrl6(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4;
+  }
+
+  getUrl7(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '',params6: string = '',params7: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5+ '&' + params6+ '&' + params7;
+  }
+
+  getUrl8(endpoint: string, params1: string = '', params2: string = '',params3: string = '',params4: string = '',params5: string = '',params6: string = '',params7: string = '',params8: string = '',params9: string = '') {
+    return this.apiConfig[this.apiConfig.env].BASE_URL + endpoint + '?' + params1 + '&' + params2+ '&' + params3+ '&' + params4+ '&' + params5+ '&' + params6+ '&' + params7+ '&' + params8+ '&' + params9;
   }
 
 }

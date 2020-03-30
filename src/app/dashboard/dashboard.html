@@ -117,20 +117,24 @@
               <p class="text-center">Inventory View</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
+              <a [routerLink]="['/inventory/hold']">
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <img src="/assets/images/icons/shipment64_2.png">
                   </div></div></div>
-              <p class="text-center">Inventory Transfer</p>
+                </a>
+              <p class="text-center">Inventory Hold</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
+              <a [routerLink]="['/inventory/unhold']">
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <img src="/assets/images/icons/shipment64_3.png">
                   </div></div></div>
-              <p class="text-center">HOLD/UNHOLD</p>
+                </a>
+              <p class="text-center">Inventory UNHOLD</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
               <div class="overlay-dark">
@@ -141,19 +145,23 @@
               <p class="text-center">QC/Release</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
+              <a [routerLink]="['/inventory/transaction']">
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <i class="ti-info-alt font-size-30 text-info"></i>
                   </div></div></div>
+                </a>
               <p class="text-center">Inventory Transaction</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">
+              
               <div class="overlay-dark">
                 <div class="card-block app-dashboard">
                   <div class="mrg-top-5 d-flex justify-content-center">
                     <i class="ti-info-alt font-size-30 text-info"></i>
                   </div></div></div>
+               
               <p class="text-center">Physical Count</p>
             </div>
             <div class="col-sm-8 col-md-4 col-lg-4">

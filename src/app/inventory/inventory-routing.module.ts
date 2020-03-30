@@ -3,6 +3,9 @@ import { Routes, CanActivate } from '@angular/router';
 
 // Users Components
 import {PutawaysListComponent} from './list/inventory-list.component';
+import {InventoryHoldComponent} from './hold/inventory-hold.component';
+import {InventoryUnHoldComponent} from './unhold/inventory-unhold.component';
+import {TransactionComponent} from './transaction/inventory-transaction.component';
 
 
 export const InventoryRoutes: Routes = [
@@ -20,15 +23,39 @@ export const InventoryRoutes: Routes = [
         },
         // canActivateChild: [NoAuthGuard]
       },
-      // {
-      //   path: 'add/:id',
-      //   component: PutAwayAddComponent,
-      //   data: {
-      //     title: 'Inventory'
-      //   },
-      // },
+      {
+        path: 'hold',
+        component: InventoryHoldComponent,
+        // resolve: {
+        //   data: UsersResolver
+        // },
+        data: {
+          title: 'Inventory'
+        },
         // canActivateChild: [NoAuthGuard]
-      // },
+      },
+      {
+        path: 'unhold',
+        component: InventoryUnHoldComponent,
+        // resolve: {
+        //   data: UsersResolver
+        // },
+        data: {
+          title: 'Inventory'
+        },
+        // canActivateChild: [NoAuthGuard]
+      },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        // resolve: {
+        //   data: UsersResolver
+        // },
+        data: {
+          title: 'Inventory'
+        },
+        // canActivateChild: [NoAuthGuard]
+      },
       // {
       //   path: 'view/:id',
       //   component: UsersViewComponent,

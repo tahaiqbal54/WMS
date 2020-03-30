@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Inventory Transaction</h4>
+  </div>
+
+<div class="col-md-12 d-inline-block" >
+  <div class="timepicker-input input-icon form-group col-md-6 d-inline-block p-0" >
+    <label>From Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+    <input class="form-control" [value]="Fromdate | date: 'yyyy-MM-dd'" [(ngModel)]="Fromdate"
+                    placeholder="From Date" type="date"/>
+   </div>
+   <div class="timepicker-input input-icon form-group col-md-6 d-inline-block p-0" style="float: right;">
+    <label>To Date <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+    <input class="form-control" [value]="Todate | date: 'yyyy-MM-dd'" [(ngModel)]="Todate"
+                    placeholder="To Date" type="date"/>
+   </div>
+<br/>
+  <div class="timepicker-input input-icon form-group col-md-3 d-inline-block p-0" >
+    <label>Warehouse <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+    <ng-selectize [config]="warehousesSelectConfig" [options]="warehouseOptions"
+    [(ngModel)]="WarehouseId" #customer="ngModel" name="customer"  placeholder="Select Warehouse"
+     ngDefaultControl required></ng-selectize>
+   </div>
+ <div class="timepicker-input input-icon form-group col-md-3 d-inline-block p-0">
+  <label>Customer <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+  <ng-selectize [config]="CustomerSelectConfig" [options]="CustomerOptions" id="vendor"
+    name="vendor" placeholder="Select Customer" [(ngModel)]="CustomerId"
+    ngDefaultControl required></ng-selectize>
+   </div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>Product <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+  <ng-selectize [config]="ProductSelectConfig" [options]="ProductOptions"
+  (ngModelChange)="onProductChange($event)"
+    name="warehouse" placeholder="Select Product" [(ngModel)]="ProductId"
+    ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>Batch #</label>
+  <ng-selectize [config]="BatchSelectConfig" [options]="BatchOptions"
+    name="warehouse" placeholder="Select Location" [(ngModel)]="BatchNo"
+    ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block p-0 stationOptions">
+  <label>LOT # </label>
+      <ng-selectize [config]="LOTSelectConfig" [options]="LOTOptions"
+    name="warehouse" placeholder="Select LOT #" [(ngModel)]="LotNo"
+      ngDefaultControl required></ng-selectize>
+</div>
+<div class="col-md-3 d-inline-block pb-3 stationOptions">
+  <button class="btn btn-primary text-right" float="right" (click)="Fetch()">Fetch
+  </button> 
+  <button [disabled]="users.length == 0" class="btn btn-primary d-inline-block" (click)="ExportToExcel()">Export File
+  </button> 
+</div>
+<!-- <div class="col-md-3 d-inline-block">
+  
+</div> -->
+</div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" style="overflow:auto ">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                <th class="text-center">S.No</th>
+                <th class="text-center">Document Type</th>
+               <th class="text-center">Document No</th>
+               <th class="text-center">Document Date</th>
+                <th maxWidth="150" class="text-center">Warehouse Name</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">Product Description</th>
+                <th class="text-center">Available Quantity</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">UOM</th>
+                <th class="text-center">Pack Key</th>
+               <th class="text-center">Location</th>
+               <th class="text-center">LPN No</th>
+               <th class="text-center" width="20%">LOT No</th>
+               <th class="text-center">Batch</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of users; let i = index">
+                <td class="text-center">{{ i }}</td>
+                <td class="text-center">{{ data.DocumentType }}</td>
+                <td class="text-center">{{ data.DocumentNo}}</td>
+                <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
+                <td class="text-center">{{ data.DocumentDate }}</td>
+                <td class="text-center">{{ data.WarehouseName }}</td>
+                <td class="text-center">{{ data.CustomerName }}</td>
+                <td>
+                  <div class="text-center">
+                    <span class=""><b>{{data.SKU }}</b></span>
+                  </div>
+                </td>
+                <td class="text-center" width="40%">{{ data.ProductDescription }}</td>
+                <td class="text-center">{{ data.AvailableQty }}</td>
+                <td class="text-center">{{ data.Qty }}</td>
+                <td class="text-center" width="20%">{{ data.UnitDescription }}</td>
+                <td class="text-center">{{ data.PackKey }}</td>
+                <td class="text-center">{{ data.LocationTypeDesc }}</td>
+                <td class="text-center">{{ data.LPNNo }}</td>
+                <td class="text-center">{{ data.LotNo }}</td>
+                <td class="text-center">{{ data.BatchNo }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng2-toasty [position]="position"></ng2-toasty>

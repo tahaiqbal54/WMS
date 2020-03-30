@@ -145,6 +145,112 @@ export class InventoryService {
       );
   }
 
+  getLPN() {
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_LPN), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getBatch() {
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_BATCH), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getBatchById(Product_Id: any,Warehouse_Id:any) {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+    console.log(httpOptions);
+    return this.http
+      .get(this.APIConfig.getUrl2(this.API.GET_BATCH_NO,"ProductId="+ Product_Id,"WarehouseId=" + Warehouse_Id), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data) {
+            return data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getReason() {
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_REASONS), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getJournal() {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_Journal , "UserId=" + this.user_ID), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
   getInvebtoryData(WarehouseId:any,CustomerId:any,ProductId:any,LocationId:any,Lot:any) {
     // user_id = user_id.trim();
     // Add safe, URL encoded search parameter if there is a search term
@@ -165,6 +271,115 @@ export class InventoryService {
           return data;
         })
       );
+  }
+
+  getHoldData(WarehouseId:any,CustomerId:any,ProductId:any,Batch:any,Lot:any,LPN:any) {
+    // user_id = user_id.trim();
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl5(this.API.FETCH_HOLD, "WarehouseId="+WarehouseId,"CustomerId=" +CustomerId, "ProductId=" +ProductId, "BatchNo=" + Batch,"LPNNO=" + LPN, "LotNo=" + Lot), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getUnHoldData(WarehouseId:any,CustomerId:any,ProductId:any,Batch:any,Lot:any,LPN:any,JournalNo:any) {
+    // user_id = user_id.trim();
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl7(this.API.FETCH_UNHOLD, "WarehouseId="+WarehouseId,"LocationId=" +CustomerId, "ProductId=" +ProductId, "BatchNo=" + Batch,"LPNNO=" + LPN, "LotNo=" + Lot, "JournalNo=" + JournalNo), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getUnholdDetail(UnholdId:any) {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_UNHOLD_DETAIL , "InventoryHoldUnholdId=" + UnholdId), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getTransactionData(Todate:any,Fromdate:any,WarehouseId:any,CustomerId:any,ProductId:any,LocationId:any,Batch:any,Lot:any,LPN:any) {
+    // user_id = user_id.trim();
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl8(this.API.FETCH_TRANSACTIONS,"FromDate=" + Fromdate,"TillDate=" + Todate, "WarehouseId="+WarehouseId,"CustomerId=" +CustomerId, "ProductId=" +ProductId,"LocationId="+ LocationId, "BatchNo=" + Batch,"LPNNO=" + LPN, "LotNo=" + Lot), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  createUnHold(Id:any,Remarks:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl2(this.API.POST_UNHOLD,"InventoryHoldUnholdId=" + Id, "UnholdRemarks=" +Remarks), {}, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+
+  createHold(WarehouseId: any, Reason:any, Remarks:any, TransactionId:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl6(this.API.POST_HOLD_DATA,"WarehouseId="+WarehouseId,"ReasonId=" +Reason, "HoldRemarks=" +Remarks, "InventTransactionId=" + TransactionId), {}, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
   getUsers(offset: string = null) {
