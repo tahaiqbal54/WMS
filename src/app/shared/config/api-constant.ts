@@ -119,7 +119,9 @@ export class APIConstants {
         GET_UNHOLD_DETAIL: '/InventoryHoldUnholds/GetJournalNoDetail',
         POST_UNHOLD: '/InventoryHoldUnholds/UnHold',
         GET_Journal: '/InventoryHoldUnholds/GetJournals',
-        FETCH_TRANSACTIONS: '/InventTransactions/FetchTransactionData'
+        FETCH_TRANSACTIONS: '/InventTransactions/FetchTransactionData',
+        FETCH_UPDATE: '/InventoryUpdates/Fetch',
+        POST_UPDATE: '/InventoryUpdates'
       }
     };
   }

@@ -6,6 +6,7 @@ import {PutawaysListComponent} from './list/inventory-list.component';
 import {InventoryHoldComponent} from './hold/inventory-hold.component';
 import {InventoryUnHoldComponent} from './unhold/inventory-unhold.component';
 import {TransactionComponent} from './transaction/inventory-transaction.component';
+import {InventoryUpdateComponent} from './update/inventory-update.component';
 
 
 export const InventoryRoutes: Routes = [
@@ -48,6 +49,17 @@ export const InventoryRoutes: Routes = [
       {
         path: 'transaction',
         component: TransactionComponent,
+        // resolve: {
+        //   data: UsersResolver
+        // },
+        data: {
+          title: 'Inventory'
+        },
+        // canActivateChild: [NoAuthGuard]
+      },
+      {
+        path: 'update',
+        component: InventoryUpdateComponent,
         // resolve: {
         //   data: UsersResolver
         // },

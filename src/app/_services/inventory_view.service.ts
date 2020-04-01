@@ -361,6 +361,28 @@ export class InventoryService {
       );
   }
 
+  getUpdateData(WarehouseId:any,CustomerId:any,ProductId:any,LocationId:any,Batch:any,Lot:any,LPN:any) {
+    // user_id = user_id.trim();
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl7(this.API.FETCH_UPDATE, "WarehouseId="+WarehouseId,"CustomerId=" +CustomerId, "ProductId=" +ProductId, "LocationId=" +LocationId, "BatchNo=" + Batch,"LPNNO=" + LPN, "LotNo=" + Lot), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
   createUnHold(Id:any,Remarks:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -379,6 +401,16 @@ export class InventoryService {
       })
     };
     return this.http.post<any>(this.APIConfig.getUrl6(this.API.POST_HOLD_DATA,"WarehouseId="+WarehouseId,"ReasonId=" +Reason, "HoldRemarks=" +Remarks, "InventTransactionId=" + TransactionId), {}, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  createUpdate(Id:any,Remarks:any, Update:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl2(this.API.POST_UPDATE,"ReasonId=" + Id, "UpdateRemarks=" +Remarks), Update, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

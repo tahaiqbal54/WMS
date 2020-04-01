@@ -11,6 +11,7 @@ import {PutawaysListComponent} from './list/inventory-list.component';
 import {InventoryHoldComponent} from './hold/inventory-hold.component';
 import {InventoryUnHoldComponent} from './unhold/inventory-unhold.component';
 import {TransactionComponent} from './transaction/inventory-transaction.component';
+import {InventoryUpdateComponent} from './update/inventory-update.component';
 // import {PutAwayAddComponent} from './add/putaway-add.component';
 import {DataTablesModule} from 'angular-datatables';
 import {CommonModule} from '@angular/common';
@@ -41,7 +42,8 @@ import {ToastyModule} from 'ng2-toasty'
     PutawaysListComponent,
     InventoryHoldComponent,
     InventoryUnHoldComponent,
-    TransactionComponent
+    TransactionComponent,
+    InventoryUpdateComponent
     // PutAwayAddComponent,
     // //UsersViewComponent,
     // UsersEditComponent
