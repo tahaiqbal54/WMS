@@ -383,6 +383,126 @@ export class InventoryService {
       );
   }
 
+  getQCJournal() {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.GET_QC_JOURNAL , "Userid=" + this.user_ID), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getQCData(WarehouseId:any,LocationId:any,ProductId:any,Batch:any = "",Lot:any = "",LPN:any = "",cust_id:any) {
+    // user_id = user_id.trim();
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+    return this.http
+      .get(this.APIConfig.getUrl7(this.API.GETCH_LINE_ITEMS_QC, "WarehouseId="+WarehouseId,"CustomerId=" + cust_id, "ProductId=" +ProductId, "LocationId=" +LocationId, "BatchNo=" + Batch,"LPNNO=" + LPN, "LotNo=" + Lot), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getQCByJournal(JournalNo: any) {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.LINE_ITEMS_QC_JOURNAL , "Id=" + JournalNo), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  
+  getReleaseJournal() {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.QC_RELEASE , "Userid=" + this.user_ID), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  getReleaseByJournal(JournalNo: any) {
+
+    // Add safe, URL encoded search parameter if there is a search term
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      }),
+      // params: offset ? new HttpParams().set('offset', offset.toString()) : {}
+    };
+
+    return this.http
+      .get(this.APIConfig.getUrl(this.API.QC_RELEASE_BY_JOURNAL , "JournalNo=" + JournalNo), httpOptions)
+      .pipe(
+        map((data: any) => {
+          if (data.success) {
+            return data.data;
+          }
+          return data;
+        })
+      );
+  }
+
+  createRelease(Id:any,Remarks:any,Action:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl2(this.API.QC_RELEASE_SAVE,"Id=" + Id, "ReleaseRemarks=" +Remarks), Action, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   createUnHold(Id:any,Remarks:any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -411,6 +531,36 @@ export class InventoryService {
       })
     };
     return this.http.post<any>(this.APIConfig.getUrl2(this.API.POST_UPDATE,"ReasonId=" + Id, "UpdateRemarks=" +Remarks), Update, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  createQC(WarehouseId:any,ReasonId:any,Remarks:any,inventId:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl6(this.API.CTEATE_QC,"WarehouseId=" + WarehouseId, "ReasonId=" +ReasonId, "Remarks=" +Remarks, "InventTransactionId=" +inventId), {}, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  AddAction(JournalNo:any,QCaction:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl(this.API.POST_ACTION,"JournalNo=" + JournalNo), QCaction, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  MarkQC(JournalNo:any,ReasonId:any,Remarks:any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': this.accessToken
+      })
+    };
+    return this.http.post<any>(this.APIConfig.getUrl6(this.API.MARK_QC,"JournalNo=" + JournalNo, "Remarks=" +Remarks, "ReasonId=" +ReasonId), {}, httpOptions)
       .pipe(catchError(this.handleError));
   }
 

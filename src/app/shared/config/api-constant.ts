@@ -121,7 +121,16 @@ export class APIConstants {
         GET_Journal: '/InventoryHoldUnholds/GetJournals',
         FETCH_TRANSACTIONS: '/InventTransactions/FetchTransactionData',
         FETCH_UPDATE: '/InventoryUpdates/Fetch',
-        POST_UPDATE: '/InventoryUpdates'
+        POST_UPDATE: '/InventoryUpdates',
+        GET_QC_JOURNAL: '/InventoryQcReleases/GetAllQc',
+        GETCH_LINE_ITEMS_QC: '/InventoryQcReleases/Fetch',
+        LINE_ITEMS_QC_JOURNAL: '/InventoryQcReleases/GetQcById',
+        CTEATE_QC: '/InventoryQcReleases',
+        POST_ACTION: '/InventoryQcReleases/PostAction',
+        MARK_QC: '/InventoryQcReleases/MarkQC', //JournalNo,Remarks,ReasonId
+        QC_RELEASE: '/InventoryQcReleases/GetQcForRelease',
+        QC_RELEASE_BY_JOURNAL: '/InventoryQcReleases/GetQcByJournalNo',
+        QC_RELEASE_SAVE: '/InventoryQcReleases/PostQCRelease'
       }
     };
   }

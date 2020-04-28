@@ -109,6 +109,16 @@ export const AppRoutes: Routes = [
         loadChildren: './ship/ship.module#ShipModule',
         //canActivate: [AuthGuard]
       },
+      {
+        path: 'QC',
+        loadChildren: './QC/QC.module#QCModule',
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'release',
+        loadChildren: './release/release.module#ReleaseModule',
+        //canActivate: [AuthGuard]
+      },
       // {
       //   path: 'regional-structure',
       //   loadChildren: './regional-structure/regional.modules#RegionalModule',
