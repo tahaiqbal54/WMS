@@ -14,6 +14,7 @@ import {ShipRoutes} from './QC-routing.module';
 import {QCListComponent} from './list/QC-list.component';
 import {QCAddComponent} from './add/QC-add.component';
 import {QCEditComponent} from './edit/QC-edit.component';
+import {QCViewComponent} from './view/QC-view.component'
 import {DataTablesModule} from 'angular-datatables';
 import {CommonModule} from '@angular/common';
 import {HttpClient, HttpResponse} from '@angular/common/http';
@@ -43,7 +44,8 @@ import {ToastyModule} from 'ng2-toasty'
   declarations: [
     QCListComponent,
     QCAddComponent,
-    QCEditComponent
+    QCEditComponent,
+    QCViewComponent
     // //UsersViewComponent,
     // UsersEdiComponent
   ],

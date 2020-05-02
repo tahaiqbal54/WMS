@@ -1,0 +1,129 @@
+<div class="container-fluid">
+  <div class="page-title">
+    <h4>Inventory</h4>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" style="overflow:auto ">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+              <tr>
+                
+                <th class="text-center">S.No</th>
+                <th maxWidth="150" class="text-center">Warehouse Name</th>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Product</th>
+                <th class="text-center">Product Description</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">UOM</th>
+                <th class="text-center">Pack Key</th>
+               <th class="text-center">Location</th>
+               <th class="text-center">LPN No</th>
+               <th class="text-center" width="20%">LOT No</th>
+               <th class="text-center">Batch</th>
+               
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of users; let i = index">
+                <td class="text-center">{{ i }}</td>
+                <td class="text-center">{{ data.WarehouseName }}</td>
+                <td class="text-center">{{ data.CustomerName}}</td>
+                <!-- <td class="text-center">{{ data.ReceiptDate }}</td> -->
+                <td class="text-center">{{ data.ProductCode }}</td>
+                <td class="text-center">{{ data.ProductDescription }}</td>
+                <td class="text-center">{{ data.Qty }}</td>
+                <td>
+                  <div class="text-center">
+                    <span class=""><b>{{data.UnitName }}</b></span>
+                  </div>
+                </td>
+                <td class="text-center" width="40%">{{ data.PackKey }}</td>
+                <td class="text-center">{{ data.LocationName }}</td>
+                <td class="text-center">{{ data.LPNNo }}</td>
+                <td class="text-center" width="20%">{{ data.LotNo }}</td>
+                <td class="text-center">{{ data.BatchNo }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" >
+            <div class="col-md-12 d-inline-block pb-3 stationOptions text-right">
+              <!-- <button class="btn btn-primary text-right" type="submit" float="right" (click)="OpenModal()">View Selection Details</button> -->
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>Journal #</label>
+                      <input class="form-control" placeholder="ASN NO" [(ngModel)]="AsnNo" type="text" ngModel name="minlength" #minlength="ngModel"  disabled="true"/>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Reason <a class="text-danger" style="font-size: 10px;">&nbsp;*</a></label>
+                  <input type="text" class="form-control" [(ngModel)]="reasonId" placeholder="Reasons" disabled="true"  ngModel name="email" #email="ngModel" email="false">
+              </div>
+                  
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Remarks<a class="text-danger" style="font-size: 10px;"></a></label>
+                  <input type="text" class="form-control" [(ngModel)]="remarks" placeholder="Remarks" disabled="true"  ngModel name="email" #email="ngModel" email="false">
+
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" >
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-block">
+          <div class="table-overflow" >
+          <div class="row">
+            <div class="col-md-12">
+            <table class="table compact table-lg table-hover" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1">
+              <thead>
+              <tr>
+                
+                <th class="text-center">S.No</th>
+                <th maxWidth="150" class="text-center">List of QC Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of QCActions; let i = index">
+                
+                <td class="text-center">{{ i }}</td>
+                <td class="text-center">{{ data.QcAction }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<ng2-toasty [position]="position"></ng2-toasty>

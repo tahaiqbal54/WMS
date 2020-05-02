@@ -12,6 +12,7 @@ import { Routes, CanActivate } from '@angular/router';
 import {QCListComponent} from './list/QC-list.component'
 import {QCAddComponent} from './add/QC-add.component';
 import {QCEditComponent} from './edit/QC-edit.component'
+import {QCViewComponent} from './view/QC-view.component'
 
 
 export const ShipRoutes: Routes = [
@@ -39,6 +40,13 @@ export const ShipRoutes: Routes = [
       {
         path: 'edit/:JournalNo',
         component: QCEditComponent,
+        data: {
+          title: 'Add Receiving'
+        },
+      },
+      {
+        path: 'view/:JournalNo',
+        component: QCViewComponent,
         data: {
           title: 'Add Receiving'
         },
