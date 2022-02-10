@@ -48,7 +48,7 @@
     "ng2-validation": "^4.2.0",
     "ngx-masonry": "^1.1.2",
     "ngx-perfect-scrollbar": "^5.3.5",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "nouislider": "^10.1.0",
     "nvd3": "^1.8.6",
     "pace-js": "^1.0.2",
